@@ -1,46 +1,31 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import Counter from "./Calculate";
 import About from "./About";
 
 function App() {
-  // Initialize the counter state to 0
-  // const [count, setCount] = useState(0);
-
-  // // Function to increment the counter
-  // const increment = () => setCount(count + 1);
-
-  // // Function to decrement the counter
-  // const decrement = () => setCount(count - 1);
-
-  // // Function to reset the counter
-  // const reset = () => setCount(0);
-
   return (
-    <div className="App" style={{ width: "500px", height: "400px" }}>
-      This is the extension
-      <ul>
-        <li>
-          <a href="#/">Home</a>
-          
-        </li>
-        <li>
-        <a href='#/about'>About</a>
-        </li>
-      </ul>
-      {/* <h2>Counter: {count}</h2>
-      <button onClick={increment}>Increment</button>
-      <button onClick={decrement}>Decrement</button>
-      <button onClick={reset}>Reset</button> */}
+    <div className="App" style={{ width: "700px", height: "500px" }}>
+      <div className=" font-bold mt-2 text-xl">DSA Extension</div>
 
+      <div className=" flex flex-col">
+        <Link to="/">
+          <button className=" p-2 m-2 bg-blue-500 text-white rounded-lg">
+            Home
+          </button>
+        </Link>
+        <Link to="/about">
+          <button className=" p-2 bg-blue-500 text-white rounded-lg">
+            About
+          </button>
+        </Link>
+      </div>
 
       <Routes>
-        
-        <Route path="/" element={<Counter/>} />
-        <Route path="/about" element={<About/>}/>
+        <Route path="/" element={<Counter />} />
+        <Route path="/about" element={<About />} />
       </Routes>
-  
     </div>
   );
 }
