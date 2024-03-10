@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import './App.css';
-import { Route, Router, Routes } from 'react-router-dom';
-import Calculate from "./Calculate"
+import React, { useState } from "react";
+import "./App.css";
+import { Route, Router, Routes } from "react-router-dom";
+import Calculate from "./Calculate";
 function App() {
   // Initialize the counter state to 0
   const [count, setCount] = useState(0);
@@ -16,20 +16,19 @@ function App() {
   const reset = () => setCount(0);
 
   return (
-    <div className="App" style={{ width: '500px', height: '400px' }}>
-
+    <div className="App" style={{ width: "500px", height: "400px" }}>
+      This is the extension
       {/* <h2>Counter: {count}</h2>
       <button onClick={increment}>Increment</button>
       <button onClick={decrement}>Decrement</button>
       <button onClick={reset}>Reset</button> */}
-
-<Router>
+      {/* <Router>
       <Routes>
         
         <Route path="/" element={<Calculate/>} />
         
       </Routes>
-    </Router>
+    </Router> */}
     </div>
   );
 }
