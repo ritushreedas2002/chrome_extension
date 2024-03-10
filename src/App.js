@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Counter from "./Calculate";
+import About from "./About";
+
 function App() {
   // Initialize the counter state to 0
   // const [count, setCount] = useState(0);
@@ -18,18 +20,27 @@ function App() {
   return (
     <div className="App" style={{ width: "500px", height: "400px" }}>
       This is the extension
+      <ul>
+        <li>
+          <a href="#/">Home</a>
+          
+        </li>
+        <li>
+        <a href='#/about'>About</a>
+        </li>
+      </ul>
       {/* <h2>Counter: {count}</h2>
       <button onClick={increment}>Increment</button>
       <button onClick={decrement}>Decrement</button>
       <button onClick={reset}>Reset</button> */}
 
-<Router>
+
       <Routes>
         
         <Route path="/" element={<Counter/>} />
-        
+        <Route path="/about" element={<About/>}/>
       </Routes>
-    </Router>
+  
     </div>
   );
 }
