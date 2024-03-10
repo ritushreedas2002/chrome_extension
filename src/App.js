@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import { Route, Router, Routes } from "react-router-dom";
-import Calculate from "./Calculate";
+import Counter from "./Calculate";
 function App() {
   // Initialize the counter state to 0
   // const [count, setCount] = useState(0);
