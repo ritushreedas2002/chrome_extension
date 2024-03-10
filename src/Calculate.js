@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import './App.css';
-import { Route, Router, Routes } from 'react-router-dom';
-import Calculate from "./Calculate"
-function App() {
+
+function Counter() {
   // Initialize the counter state to 0
   const [count, setCount] = useState(0);
 
@@ -16,22 +14,13 @@ function App() {
   const reset = () => setCount(0);
 
   return (
-    <div className="App" style={{ width: '500px', height: '400px' }}>
-
-      {/* <h2>Counter: {count}</h2>
+    <div>
+      <h2>Counter: {count}</h2>
       <button onClick={increment}>Increment</button>
       <button onClick={decrement}>Decrement</button>
-      <button onClick={reset}>Reset</button> */}
-
-<Router>
-      <Routes>
-        
-        <Route path="/" element={<Calculate/>} />
-        
-      </Routes>
-    </Router>
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }
 
-export default App;
+export default Counter;
