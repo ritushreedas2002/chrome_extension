@@ -9,5 +9,8 @@
   },
   "background":{
     "service_worker":"background.js"
-  }
+  },
+  "host_permissions": [
+    "https://practiceapi.geeksforgeeks.org/*"
+  ]
 }
