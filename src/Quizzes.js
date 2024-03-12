@@ -1,7 +1,9 @@
 import React from "react";
-import questions from "./questions.json";
+
+import { useNavigate } from "react-router-dom";
 
 const Quizzes = () => {
+  const navigate=useNavigate();
   return (
     <div
       className=" bg-yellow-100"
@@ -23,9 +25,9 @@ const Quizzes = () => {
           className="buttons-container flex flex-col"
           style={{ marginTop: "20px" }}
         >
-          <button className="p-4 m-2 w-48 text-lg font-semibold bg-blue-500 text-white rounded-lg">
+          <button className="p-4 m-2 w-48 text-lg font-semibold bg-blue-500 text-white rounded-lg" onClick={()=>{navigate(`/quiz/${0}`)}}>
             C++
-          </button>
+          </button >
           <button className="p-4 m-2 w-48 text-lg font-semibold bg-blue-500 text-white rounded-lg">
             Java
           </button>
