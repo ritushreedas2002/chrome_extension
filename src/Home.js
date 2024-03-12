@@ -26,7 +26,7 @@ const Home = () => {
             Revise Concepts
           </button>
         </Link>
-        <Link to="/about">
+        <Link to="/quiz">
           <button className="p-4 m-4 w-48 bg-blue-500 text-xl font-semibold text-white rounded-lg">
             Take Quiz
           </button>

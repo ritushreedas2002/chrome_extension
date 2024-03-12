@@ -4,6 +4,8 @@ import { Link, Route, Routes } from "react-router-dom";
 import Revision from "./Revise";
 import Home from "./Home";
 import DailyChallenge from "./DailyChallenge";
+import Quizzes from "./Quizzes";
+import QuizPage from "./QuizPage";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/revise" element={<Revision />} />
           <Route path="/dailychallenge" element={<DailyChallenge />} />
+          <Route path="/quiz" element={<Quizzes />} />
+          <Route path="/quiz/:topic" element={<QuizPage />} />
         </Routes>
       </div>
     </div>
