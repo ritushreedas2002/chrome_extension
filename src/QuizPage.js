@@ -1,7 +1,5 @@
 // import React, { useState, useEffect } from 'react';
 
-
-
 // const QuizPage = ({ questions }) => {
 //   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 //   const [selectedOption, setSelectedOption] = useState(null);
@@ -31,7 +29,7 @@
 //         {currentQuestion.options.map((option, index) => (
 //           <button
 //             key={index}
-//             className={`option-btn font-medium my-2 p-3 rounded-full w-full 
+//             className={`option-btn font-medium my-2 p-3 rounded-full w-full
 //                         ${selectedOption === option ? 'bg-yellow-300' : 'bg-white'}`}
 //             onClick={() => handleOptionClick(option)}
 //             disabled={selectedOption !== null}
@@ -51,65 +49,99 @@
 
 // export default QuizPage;
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import cquestions from "./c++questions.json";
+import cquestions from "./questions.json";
+
+const shuffleArray = (array) => {
+  const newArray = array.slice();
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+};
 
 const QuizPage = () => {
-  const { index, topicindex } = useParams();
-  
-  const topic = cquestions[index]?.topics[topicindex] || [];
-  const [selectedAnswers, setSelectedAnswers] = useState(Array(topic.questions.length).fill(null));
 
-  const handleAnswerSelection = (questionIndex, answer) => {
-    const newSelectedAnswers = [...selectedAnswers];
-    newSelectedAnswers[questionIndex] = answer;
-    setSelectedAnswers(newSelectedAnswers);
+  const { index, topicindex } = useParams();
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+
+  // Fetch and set random 10 questions for the selected topic
+  useEffect(() => {
+    const topicQuestions =
+      cquestions[index]?.topics[topicindex]?.questions || [];
+    const shuffledQuestions = shuffleArray(topicQuestions);
+    setQuestions(shuffledQuestions.slice(0, 10));
+  }, [index, topicindex]);
+
+  const handleAnswerSelection = (optionIndex) => {
+    setSelectedAnswer(optionIndex);
   };
+
+  const isCorrectAnswer = (optionIndex) => {
+    const letters = ["A", "B", "C", "D"]; // Add more letters if there are more than 4 options per question
+    return (
+      letters[optionIndex] === questions[currentQuestionIndex].answer.Letter
+    );
+  };
+
+  const currentQuestion = questions[currentQuestionIndex];
 
   return (
     <div
-      className="bg-yellow-100"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        width: "700px",
-        minHeight: "500px",
-        position: "relative",
-        padding: "20px",
-      }}
+      className="quiz-container bg-yellow-100 p-4"
+      style={{ width: "700px", minHeight: "500px", position: "relative" }}
     >
-      <h1 className="font-bold text-2xl mb-4">Quiz Questions</h1>
-      <div className="overflow-auto" style={{ maxHeight: "440px", width: "100%" }}>
-        {topic.questions.map((question, qIndex) => (
-          <div key={qIndex} className="bg-white p-4 rounded-lg shadow mb-4">
-            <div className="font-semibold mb-2">{question.questionText}</div>
-            <div className="flex flex-col">
-              {question.options.map((option, oIndex) => (
+      <h1 className="text-2xl font-bold mb-4">Quiz Questions</h1>
+      {currentQuestion && (
+        <div className="question-card bg-white p-4 rounded-md shadow-lg">
+          <p className="question mb-4 font-semibold text-lg text-start">
+            {currentQuestionIndex + 1}
+            {". "}
+            {currentQuestion.questionText}
+          </p>
+          <div className="options flex flex-col">
+            {currentQuestion.options.map((option, index) => {
+              // Map index to option letter (A, B, C, D, ...)
+              const optionLetter = String.fromCharCode(65 + index); // ASCII value for 'A' is 65
+              return (
                 <button
-                  key={oIndex}
-                  className={`text-left p-2 rounded-lg ${selectedAnswers[qIndex] === option.optionTxt ? 'bg-blue-200' : 'hover:bg-blue-100'}`}
-                  onClick={() => handleAnswerSelection(qIndex, option.optionTxt)}
+                  key={index}
+                  className={`option p-2 rounded-md text-left text-base
+                  ${selectedAnswer === index ? (isCorrectAnswer(index) ? 'bg-green-500' : 'bg-red-500') : 'hover:bg-blue-100'}`}
+                  onClick={() => handleAnswerSelection(index)}
+                  disabled={selectedAnswer !== null}
                 >
-                  {option.optionTxt}
+                  {optionLetter}. {option.optionTxt}{" "}
+                  {/* Display the option letter */}
                 </button>
-              ))}
-            </div>
-            {selectedAnswers[qIndex] && (
-              <div className="mt-4 p-2 border-t">
-                <span className="font-semibold">Answer: Option</span> {question.answer.Letter}
-              </div>
-            )}
+              );
+            })}
           </div>
-        ))}
-      </div>
+          {selectedAnswer !== null && (
+            <div className="mt-4 p-2 border-t">
+              <span className="font-semibold">Correct Answer:</span>{" "}
+              {currentQuestion.answer.text} {currentQuestion.answer.Letter}
+            </div>
+          )}
+        </div>
+      )}
+      {currentQuestionIndex < questions.length - 1 && (
+        <button
+          className="next-question bg-blue-500 text-white p-2 mt-4 rounded-md"
+          onClick={() => {
+            setCurrentQuestionIndex((currentIndex) => currentIndex + 1);
+            setSelectedAnswer(null); // Reset selected answer for the next question
+          }}
+        >
+          Next Question
+        </button>
+      )}
     </div>
   );
 };
 
 export default QuizPage;
-
-
-
-
