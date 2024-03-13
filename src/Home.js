@@ -2,6 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  // const handleReviseClick = () => {
+  //   // Send a message to the background script to clear the badge
+  //   chrome.runtime.sendMessage({ action: 'clearBadge' })
+  
+  // };
+  
   return (
     <div
       style={{
@@ -25,7 +31,7 @@ const Home = () => {
           <button className="p-4 m-4 w-48 text-xl font-semibold bg-blue-500 text-white rounded-lg">
             Revise Concepts
           </button>
-        </Link>
+          </Link>
         <Link to="/quiz">
           <button className="p-4 m-4 w-48 bg-blue-500 text-xl font-semibold text-white rounded-lg">
             Take Quiz
