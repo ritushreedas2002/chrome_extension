@@ -90,6 +90,19 @@ const QuizPage = () => {
 
   const currentQuestion = questions[currentQuestionIndex];
 
+
+  function formatQuestionText(questionText) {
+    // Split the questionText by '\n' to get an array of lines
+    const lines = questionText.split('\n');
+    // Map the lines to span elements, adding <br /> after each line except the last
+    return lines.map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        {index < lines.length - 1 && <br />}
+      </React.Fragment>
+    ));
+  }
+  
   return (
     <div
       className="quiz-container bg-yellow-100 p-4"
@@ -101,7 +114,7 @@ const QuizPage = () => {
           <p className="question mb-4 font-semibold text-lg text-start">
             {currentQuestionIndex + 1}
             {". "}
-            {currentQuestion.questionText}
+            {formatQuestionText(currentQuestion.questionText)}
           </p>
           <div className="options flex flex-col">
             {currentQuestion.options.map((option, index) => {

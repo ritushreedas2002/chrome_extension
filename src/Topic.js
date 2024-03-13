@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import cquestions from "./c++questions.json";
+import cquestions from "./questions.json";
 const Topic = () => {
   const { index } = useParams(); // Destructure the index from useParams
   const topics = cquestions[index]?.topics || []; // Access topics based on index, handle edge case if index doesn't exist
