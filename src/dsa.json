@@ -173,6 +173,38 @@
     }
   },
   {
+    "Topic": "Trees",
+    "Info": {
+      "Definition": "A binary tree is a tree data structure in which each node has at most two children, referred to as the left child and the right child.",
+      "Algorithms": {
+        "Perfect Binary Tree": "A perfect binary tree is a type of binary tree in which every internal node has exactly two children and all leaf nodes are at the same level.\n\nNode* createPerfectBinaryTree(int depth) {\n  if (depth == 0) return NULL;\n  Node* node = new Node(0); // Assuming Node is a structure with an int value, and left and right child pointers\n  node->left = createPerfectBinaryTree(depth - 1);\n  node->right = createPerfectBinaryTree(depth - 1);\n  return node;\n}",
+        "Full Binary Tree": "A full binary tree (sometimes proper binary tree or 2-tree) is a tree in which every node other than the leaves has two children.\n\n/* The creation or insertion in a full binary tree is context-specific and varies based on application. The complexity will depend on the method used for maintaining the fullness of the tree. */",
+        "Complete Binary Tree": "A complete binary tree is a binary tree in which every level, except possibly the last, is completely filled, and all nodes are as far left as possible.\n\nvoid insertInCompleteBinaryTree(Node* &root, int value) {\n  queue<Node*> q;\n  q.push(root);\n  while (!q.empty()) {\n    Node* temp = q.front();\n    q.pop();\n    if (!temp->left) {\n      temp->left = new Node(value);\n      break;\n    } else q.push(temp->left);\n    if (!temp->right) {\n      temp->right = new Node(value);\n      break;\n    } else q.push(temp->right);\n  }\n}",
+        "Balanced Binary Tree": "A balanced binary tree is a type of binary tree where the difference between heights of left and right subtrees of any node is not more than one. Balanced binary trees, such as AVL trees or Red-Black trees, automatically maintain height balance to ensure operation complexities.\n\n/* Pseudocode for inserting in a balanced binary tree (like AVL tree) */\nNode* insert(Node* node, int key) {\n  // 1. Perform standard BST insertion\n  // 2. Update height of this ancestor node\n  // 3. Get the balance factor\n  // 4. Rotate appropriately\n}",
+        "Binary Search Tree": "A binary search tree (BST) is a binary tree where each node has a key greater than all keys in the node's left subtree and less than those in the right subtree.\n\nNode* insertBST(Node* node, int key) {\n  if (node == NULL) return new Node(key);\n  if (key < node->data) node->left = insertBST(node->left, key);\n  else if (key > node->data) node->right = insertBST(node->right, key);\n  return node;\n}",
+        "AVL Tree": "An AVL tree is a self-balancing binary search tree, where the difference between heights of left and right subtrees cannot be more than one for all nodes.\n\nNode* insertAVL(Node* node, int key) {\n  // 1. Perform the normal BST insert\n  if (node == NULL) return (new Node(key));\n  if (key < node->key) node->left = insertAVL(node->left, key);\n  else if (key > node->key) node->right = insertAVL(node->right, key);\n  else return node;\n  // 2. Update height of this ancestor node\n  node->height = 1 + max(height(node->left), height(node->right));\n  // 3. Get the balance factor\n  int balance = getBalance(node);\n  // 4. Balance the tree\n  // Left Left Case\n  if (balance > 1 && key < node->left->key) return rightRotate(node);\n  // Right Right Case\n  if (balance < -1 && key > node->right->key) return leftRotate(node);\n  // Left Right Case\n  if (balance > 1 && key > node->left->key) {\n    node->left = leftRotate(node->left);\n    return rightRotate(node);\n  }\n  // Right Left Case\n  if (balance < -1 && key < node->right->key) {\n    node->right = rightRotate(node->right);\n    return leftRotate(node);\n  }\n  return node;\n}"
+      },
+      "Complexities": {
+        "Time Complexities": {
+          "Perfect Binary Tree": "O(2^depth - 1) - Because it visits every node.",
+          "Full Binary Tree": "Varies - Depends on insertion method and tree structure.",
+          "Complete Binary Tree": "O(n) - Where n is the number of nodes. Insertion requires traversal to the first open position.",
+          "Balanced Binary Tree": "O(log n) - For operations like insertion and deletion, due to height-balancing.",
+          "Binary Search Tree": "O(n) in the worst case (unbalanced tree), O(log n) in the best case (balanced tree) - For operations like search, insertion, and deletion.",
+          "AVL Tree": "O(log n) - For insertion, deletion, and lookup, due to the tree being balanced."
+        },
+        "Space Complexity": {
+          "Perfect Binary Tree": "O(2^depth - 1) - Due to storing all nodes.",
+          "Full Binary Tree": "Varies - Depends on the number of nodes in the tree.",
+          "Complete Binary Tree": "O(n) - All nodes are stored, and O(w) for the queue, where w is the width of the tree.",
+          "Balanced Binary Tree": "O(n) - Space needed to store all nodes in the tree.",
+          "Binary Search Tree": "O(n) - Space needed to store all nodes in the tree.",
+          "AVL Tree": "O(n) - Space needed to store all nodes in the tree."
+        }
+      }
+    }
+  },
+  {
     "Topic": "Tree Traversal",
     "Info": {
       "Definition": "Traversing a tree means visiting every node in the tree. You might, for instance, want to add all the values in the tree or find the largest one. For all these operations, you will need to visit each node of the tree.Tree traversal algorithms are methods for visiting all the nodes in a tree data structure. There are several types of traversals, each visiting the nodes in a different order. The three fundamental depth-first search (DFS) traversals for binary trees are preorder, inorder, and postorder.\nPreorder Traversal : Visits the current node before its child nodes (Root, Left, Right). \n Inorder Traversal:  Visits the left child, then the current node, and finally the right child (Left, Root, Right). This traversal method is used especially for binary search trees where it returns nodes in non-decreasing order. \n PostOrder Traversal :Visits the current node after its child nodes (Left, Right, Root). This method is used to delete the tree or get the postfix expression of an expression tree.",
@@ -192,23 +224,164 @@
       }
     }
   },
+  
   {
-    "Topic": "Binary Tree",
+    "Topic": "Linked List Data Structure",
     "Info": {
-      "Definition": "A binary tree is a tree data structure in which each parent node can have at most two children.\n Each node of a binary tree consists of three items:\n> data item\n> address of left child\n> address of right child",
+      "Definition": "A linked list is a linear data structure where each element is a separate object called a node. Each node contains a value and a reference (link) to the next node in the sequence.",
       "Algorithms": {
-        "Preorder Traversal": "void preorderTraversal(Node* root) {\n  if (root == NULL) return;\n  cout << root->data << ' ';\n  preorderTraversal(root->left);\n  preorderTraversal(root->right);\n}",
-        "Inorder Traversal": "void inorderTraversal(Node* root) {\n  if (root == NULL) return;\n  inorderTraversal(root->left);\n  cout << root->data << ' ';\n  inorderTraversal(root->right);\n}",
-        "Postorder Traversal": "void postorderTraversal(Node* root) {\n  if (root == NULL) return;\n  postorderTraversal(root->left);\n  postorderTraversal(root->right);\n  cout << root->data << ' ';\n}"
-        
+        "Single Linked List": "A single linked list is a type of linked list in which each node points to the next node in the list and the last node points to null.\n\nvoid insertAtEnd(Node** head, int newData) {\n  Node* newNode = new Node();\n  Node* last = *head;\n  newNode->data = newData;\n  newNode->next = NULL;\n  if (*head == NULL) {\n    *head = newNode;\n    return;\n  }\n  while (last->next != NULL) {\n    last = last->next;\n  }\n  last->next = newNode;\n}",
+        "Double Linked List": "A double linked list is a type of linked list in which each node contains two links: one pointing to the next node and one to the previous node.\n\nvoid insertAtEnd(DoubleNode** head, int newData) {\n  DoubleNode* newNode = new DoubleNode();\n  DoubleNode* last = *head;\n  newNode->data = newData;\n  newNode->next = NULL;\n  if (*head == NULL) {\n    newNode->prev = NULL;\n    *head = newNode;\n    return;\n  }\n  while (last->next != NULL) {\n    last = last->next;\n  }\n  last->next = newNode;\n  newNode->prev = last;\n}",
+        "Circular Linked List": "A circular linked list is a type of linked list where all nodes are connected to form a circle. There is no NULL at the end. A circular linked list can be a singly circular linked list or doubly circular linked list.\n\nvoid insertAtEnd(CircularNode** head, int newData) {\n  CircularNode* newNode = new CircularNode();\n  CircularNode* last = *head;\n  newNode->data = newData;\n  if (*head == NULL) {\n    newNode->next = newNode;\n    *head = newNode;\n    return;\n  }\n  while (last->next != *head) {\n    last = last->next;\n  }\n  last->next = newNode;\n  newNode->next = *head;\n}"
       },
       "Complexities": {
         "Time Complexities": {
-            "Preorder": "O(n)",
-            "Inorder": "O(n)",
-            "Postorder": "O(n)"
+          "Single Linked List": "Insertion at end: O(n), Search: O(n), Deletion: O(n)",
+          "Double Linked List": "Insertion at end: O(n), Search: O(n), Deletion: O(n)",
+          "Circular Linked List": "Insertion at end: O(n), Search: O(n), Deletion: O(n)"
         },
-        "Space Complexity": "O(h) - where h is the height of the tree. This space complexity accounts for the call stack during recursive calls."
+        "Space Complexity": {
+          "Single Linked List": "O(n) - Storing n elements.",
+          "Double Linked List": "O(n) - Storing n elements, but requires additional space for the previous link in each node.",
+          "Circular Linked List": "O(n) - Storing n elements. Similar to singly or doubly linked lists but forms a circle."
+        }
+      }
+    }
+  },
+  {
+    "Topic": "Sorting Algorithms",
+    "Info": {
+      "Definition": "Sorting algorithms are methods of reorganizing a large number of items into a specific order, such as ascending or descending. They play a fundamental role in computer science for optimizing data search and manipulation.",
+      "Algorithms": {
+        "Bubble Sort": "Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted.\n\nvoid bubbleSort(int arr[], int n) {\n  for (int i = 0; i < n-1; i++)\n    for (int j = 0; j < n-i-1; j++)\n      if (arr[j] > arr[j+1])\n        swap(arr[j], arr[j+1]);\n}",
+        "Insertion Sort": "Insertion Sort is a simple sorting algorithm that builds the final sorted array one item at a time. It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort.\n\nvoid insertionSort(int arr[], int n) {\n  int i, key, j;\n  for (i = 1; i < n; i++) {\n    key = arr[i];\n    j = i - 1;\n    while (j >= 0 && arr[j] > key) {\n      arr[j + 1] = arr[j];\n      j = j - 1;\n    }\n    arr[j + 1] = key;\n  }\n}",
+        "Selection Sort": "Selection Sort is an in-place comparison sorting algorithm. It divides the input list into two parts: a sorted sublist of items which is built up from left to right at the front of the list, and a sublist of the remaining unsorted items that occupy the rest of the list. Initially, the sorted sublist is empty and the unsorted sublist is the entire input list. The algorithm proceeds by finding the smallest (or largest, depending on sorting order) element in the unsorted sublist, swapping it with the leftmost unsorted element, and moving the sublist boundaries one element to the right.\n\nvoid selectionSort(int arr[], int n) {\n  int i, j, min_idx;\n  for (i = 0; i < n-1; i++) {\n    min_idx = i;\n    for (j = i+1; j < n; j++)\n      if (arr[j] < arr[min_idx])\n        min_idx = j;\n    swap(arr[min_idx], arr[i]);\n  }\n}"
+      },
+      "Complexities": {
+        "Time Complexities": {
+          "Bubble Sort": "Worst and Average Case: O(n^2). Best Case: O(n) when the array is already sorted.",
+          "Insertion Sort": "Worst and Average Case: O(n^2). Best Case: O(n) when the array is already sorted.",
+          "Selection Sort": "Worst, Average, and Best Case: O(n^2), as it always runs O(n^2) operations regardless of the input."
+        },
+        "Space Complexity": {
+          "Bubble Sort": "O(1) - Only requires a constant amount of additional space.",
+          "Insertion Sort": "O(1) - It is an in-place sorting algorithm.",
+          "Selection Sort": "O(1) - Like bubble sort and insertion sort, selection sort also uses a constant amount of additional space."
+        }
+      }
+    }
+  },
+  {
+    "Topic": "Heap Data Structure",
+    "Info": {
+      "Definition": "A Heap is a special Tree-based data structure that satisfies the heap property. In a max heap, for any given node C, if P is a parent node of C, then the key (the value) of P is greater than or equal to the key of C. The same property must be recursively true for all nodes in Binary Tree. Min heap is a heap where the value of parent nodes is less than or equal to that of child nodes.",
+      "Algorithms": {
+        "Insert (Heapify Up)": "Inserts a new element into the heap and re-arranges the heap to maintain the heap property.\n\nvoid insert(int key) {\n  heapSize++; // Assume heapSize is the current number of elements in the heap\n  int index = heapSize - 1;\n  heap[index] = key;\n  // Heapify up\n  while (index != 0 && heap[parent(index)] < heap[index]) {\n    swap(heap[index], heap[parent(index)]);\n    index = parent(index);\n  }\n}",
+        "Delete (Heapify Down)": "Removes the root element from the heap and re-arranges it to maintain the heap property.\n\nvoid deleteRoot() {\n  if (heapSize <= 0) return;\n  heap[0] = heap[heapSize-1];\n  heapSize--;\n  heapifyDown(0);\n}",
+        "Get Max or Min": "Retrieves the maximum element from a max heap or the minimum element from a min heap without removing it.\n\nint getPeak() {\n  return heap[0];\n}",
+        "Build Heap (Heapify)": "Converts an unsorted array into a heap.\n\nvoid buildHeap(int arr[], int n) {\n  for (int i = (n / 2) - 1; i >= 0; i--) {\n    heapify(arr, n, i);\n  }\n}"
+      },
+      "Complexities": {
+        "Time Complexities": {
+          "Insert (Heapify Up)": "O(log n) - Because it may traverse from the node inserted at the very end up to the root node.",
+          "Delete (Heapify Down)": "O(log n) - Due to the traversal down from the root to the leaf to maintain the heap property.",
+          "Get Max or Min": "O(1) - The peak element is always at the root of the heap.",
+          "Build Heap (Heapify)": "O(n) - Building the heap from an unsorted array takes linear time."
+        },
+        "Space Complexity": "O(n) - The space needed to store the heap structure."
+      }
+    }
+  },
+  {
+    "Topic": "Advanced Sorting Algorithms",
+    "Info": {
+      "Definition": "Advanced sorting algorithms offer more efficient ways to sort lists and arrays in computer science, typically leveraging divide-and-conquer strategies to achieve better average and worst-case performance compared to simpler sorting methods.",
+      "Algorithms": {
+        "Merge Sort": "Merge Sort is a divide-and-conquer algorithm that divides the input array into two halves, calls itself for the two halves, and then merges the two sorted halves. The merge() function is used for merging two halves.\n\nvoid merge(int arr[], int l, int m, int r) {\n  // Merge the temp arrays back into arr[l..r]\n}\nvoid mergeSort(int arr[], int l, int r) {\n  if (l < r) {\n    int m = l + (r - l) / 2;\n    mergeSort(arr, l, m);\n    mergeSort(arr, m + 1, r);\n    merge(arr, l, m, r);\n  }\n}",
+        "Quick Sort": "Quick Sort is a highly efficient sorting algorithm and is based on partitioning of array of data into smaller arrays. A large array is partitioned into two arrays one of which holds values smaller than the specified value, say pivot, based on which the partition is made and another array holds values greater than the pivot value.\n\nvoid quickSort(int arr[], int low, int high) {\n  if (low < high) {\n    int pi = partition(arr, low, high);\n    quickSort(arr, low, pi - 1);\n    quickSort(arr, pi + 1, high);\n  }\n}\nint partition(int arr[], int low, int high) {\n  // This function takes last element as pivot, places\n  // the pivot element at its correct position in sorted\n  // array, and places all smaller to left of pivot and all greater elements to right of pivot.\n}",
+        "Heap Sort": "Heap Sort is a comparison-based sorting technique based on Binary Heap data structure. It is similar to selection sort where we first find the maximum element and place the maximum element at the end. We repeat the same process for the remaining elements.\n\nvoid heapify(int arr[], int n, int i) {\n  int largest = i; // Initialize largest as root\n  int l = 2*i + 1; // left = 2*i + 1\n  int r = 2*i + 2; // right = 2*i + 2\n  // If left child is larger than root\n  if (l < n && arr[l] > arr[largest])\n    largest = l;\n  // If right child is larger than largest so far\n  if (r < n && arr[r] > arr[largest])\n    largest = r;\n  // If largest is not root\n  if (largest != i) {\n    swap(arr[i], arr[largest]);\n    // Recursively heapify the affected sub-tree\n    heapify(arr, n, largest);\n  }\n}\nvoid heapSort(int arr[], int n) {\n  // Build heap (rearrange array)\n  for (int i = n / 2 - 1; i >= 0; i--)\n    heapify(arr, n, i);\n  // One by one extract an element from heap\n  for (int i=n-1; i>=0; i--) {\n    // Move current root to end\n    swap(arr[0], arr[i]);\n    // call max heapify on the reduced heap\n    heapify(arr, i, 0);\n  }\n}"
+    },
+    
+      "Complexities": {
+        "Time Complexities": {
+          "Merge Sort": "Worst, Average, and Best Case: O(n log n) - Merge sort always divides the array in half and takes linear time to merge two halves.",
+          "Quick Sort": "Worst Case: O(n^2) when the pivot selection is poor. Average and Best Case: O(n log n) - The array is divided into subarrays that are processed recursively.",
+          "Heap Sort": "Worst, Average, and Best Case: O(n log n) - Since the tree is balanced and we perform heapify for each of the n elements."
+        },
+        "Space Complexity": {
+          "Merge Sort": "O(n) - Requires additional space for the temporary arrays used in the merge process.",
+          "Quick Sort": "O(log n) - The space complexity comes from the stack space used for recursion. The worst case is O(n), depending on the implementation.",
+          "Heap Sort": "O(1) - Heap sort is an in-place sorting algorithm but may require a small stack for recursion during heapify."
+        }
+      }
+    }
+  },
+  {
+    "Topic": "Non-Comparison Based Sorting Algorithms",
+    "Info": {
+      "Definition": "Non-comparison based sorting algorithms sort data without comparing the elements. They take advantage of the structure of the items being sorted to achieve better performance, typically linear time complexity, under certain conditions.",
+      "Algorithms": {
+        "Count Sort": "Count Sort is an integer sorting algorithm that operates by counting the number of objects that possess a distinct key value. Then, it does some arithmetic to calculate the position of each object in the output sequence.\n\nvoid countSort(int arr[], int n) {\n  int output[n];\n  int count[256] = {0};\n  for (int i=0; i <n; i++)\n    count[arr[i]]++;\n  for (int i=1; i <= 255; i++)\n    count[i] += count[i-1];\n  for (int i = n-1; i >= 0; i--) {\n    output[count[arr[i]]-1] = arr[i];\n    count[arr[i]]--;\n  }\n  for (int i=0; i < n; i++)\n    arr[i] = output[i];\n}",
+        "Radix Sort": "Radix Sort is a non-comparative integer sorting algorithm that sorts data with integer keys by grouping keys by the individual digits which share the same significant position and value. It uses Count Sort as a subroutine to sort.\n\nvoid radixSort(int arr[], int n) {\n  int m = getMax(arr, n);\n  for (int exp = 1; m/exp > 0; exp *= 10)\n    countSortForRadix(arr, n, exp);\n}",
+        "Bucket Sort": "Bucket Sort, or Bin Sort, operates by partitioning an array into a number of buckets. Each bucket is then sorted individually, either using a different sorting algorithm, or by recursively applying the bucket sort algorithm.\n\nvoid bucketSort(float arr[], int n) {\n  vector<float> b[n];\n  for (int i=0; i<n; i++) {\n    int bi = n*arr[i];\n    b[bi].push_back(arr[i]);\n  }\n  for (int i=0; i<n; i++)\n    sort(b[i].begin(), b[i].end());\n  int index = 0;\n  for (int i = 0; i < n; i++)\n    for (int j = 0; j < b[i].size(); j++)\n      arr[index++] = b[i][j];\n}"
+      },
+      "Complexities": {
+        "Time Complexities": {
+          "Count Sort": "O(n + k) - Where n is the number of elements in input array and k is the range of input.",
+          "Radix Sort": "O(nk) - Where n is the number of elements and k is the number of digits in the maximum number.",
+          "Bucket Sort": "Average Case: O(n + n^2/k + k), where k is the number of buckets. Worst Case: O(n^2), when all elements are in one bucket."
+        },
+        "Space Complexity": {
+          "Count Sort": "O(k) - The space complexity of Count Sort is directly proportional to the range of the input.",
+          "Radix Sort": "O(n + k) - For the intermediate count sort operations.",
+          "Bucket Sort": "O(n) - Space needed for the buckets."
+        }
+      }
+    }
+  },
+  {
+    "Topic": "Greedy Algorithms",
+    "Info": {
+      "Definition": "Greedy algorithms build up a solution piece by piece, always choosing the next piece that offers the most immediate benefit. They are used for optimization problems where the goal is to find the most optimal solution.",
+      "Algorithms": {
+        "Fractional Knapsack": "The Fractional Knapsack problem is a problem in combinatorial optimization where the goal is to fill a knapsack with as valuable a load as possible, but unlike the 0/1 knapsack, you can take fractions of items.\n\nPseudocode:\nSort all items by decreasing value per unit weight.\nfor each item in the sorted list:\n  if (knapsack can accommodate the whole item)\n    add it and move to the next item.\n  else\n    take the fraction that fits and stop.",
+        "Activity Selection": "The Activity Selection problem is a way to select the maximum number of activities that don't overlap with each other. It is solved by always picking the next activity with the earliest finish time that is compatible with the already selected activities.\n\nPseudocode:\nSort all activities by their finishing time.\nSelect the first activity from the sorted array and print it.\nfor each remaining activity in the sorted array\n  if (the start time of this activity is greater or equal to the finish time of the previously selected)\n    select this activity and print it.",
+        "Dijkstra's Algorithm": "Dijkstra's Algorithm finds the shortest paths from a single source vertex to all other vertices in a weighted graph.\n\nPseudocode:\nCreate a set that keeps track of vertices included in shortest path tree.\nAssign a distance value to all vertices from the source. Initialize all distance values as INFINITE.\nSet the distance value of the source vertex as 0.\nWhile set is not empty, pick the vertex with the minimum distance value and add it to the shortest path tree. Update distance value of adjacent vertices.\nRepeat until all vertices are processed.",
+        "Kruskal's Algorithm": "Kruskal's Algorithm finds a minimum spanning tree for a connected weighted graph, adding increasing cost edges at each step, avoiding any cycles.\n\nPseudocode:\nSort all the edges in non-decreasing order of their weight.\nPick the smallest edge. Check if it forms a cycle with the spanning tree formed so far. If not, add it to the spanning tree.\nRepeat step 2 until there are (V-1) edges in the spanning tree, where V is the number of vertices in the graph."
+      },
+      "Complexities": {
+        "Time Complexities": {
+          "Fractional Knapsack": "O(n log n) - Mainly due to the sorting of items based on their value/weight ratio.",
+          "Activity Selection": "O(n log n) - Primarily because of the sorting of activities based on their finish times.",
+          "Dijkstra's Algorithm": "O(V^2) - For the implementation using adjacency matrix. With a priority queue, it can be reduced to O(V + E log V) where E is the number of edges.",
+          "Kruskal's Algorithm": "O(E log E) - Or O(E log V) because of the sorting of edges, where E is the number of edges in the graph."
+        },
+        "Space Complexity": {
+          "Fractional Knapsack": "O(1) - If we ignore the input storage, the extra space required is constant.",
+          "Activity Selection": "O(1) - Apart from the input storage, the algorithm uses a constant amount of extra space.",
+          "Dijkstra's Algorithm": "O(V) - Space needed for the distance array, where V is the number of vertices.",
+          "Kruskal's Algorithm": "O(E) - For storing the sorted edges, where E is the number of edges in the graph."
+        }
+      }
+    }
+  },
+  {
+    "Topic": "Dynamic Programming",
+    "Info": {
+      "Definition": "Dynamic Programming is a method for solving complex problems by breaking them down into simpler subproblems. It is applicable where the problem can be divided into stages, with a decision required at each stage that will lead to a sequence of decisions.",
+      "Algorithms": {
+        "Floyd-Warshall Algorithm": "The Floyd-Warshall Algorithm is used to find shortest paths in a weighted graph with positive or negative edge weights (but with no negative cycles). The algorithm compares all possible paths through the graph between each pair of vertices.\n\nPseudocode:\nfor each vertex v in vertices\n  dist[v][v] = 0\nfor each edge (u,v) in edges\n  dist[u][v] = weight(u, v)\nfor k from 1 to |V|\n  for i from 1 to |V|\n    for j from 1 to |V|\n      if dist[i][k] + dist[k][j] < dist[i][j]\n        dist[i][j] = dist[i][k] + dist[k][j]",
+        "Longest Common Subsequence": "The Longest Common Subsequence (LCS) problem is finding the longest subsequence present in two (or more) sequences. A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.\n\nPseudocode:\nfunction LCS(X, Y)\n  m = length(X)\n  n = length(Y)\n  let L[m+1][n+1] be a new array\n  for i from 0 to m\n    for j from 0 to n\n      if i == 0 or j == 0\n        L[i][j] = 0\n      else if X[i-1] == Y[j-1]\n        L[i][j] = L[i-1][j-1] + 1\n      else\n        L[i][j] = max(L[i-1][j], L[i][j-1])\n  return L[m][n]"
+      },
+      "Complexities": {
+        "Time Complexities": {
+          "Floyd-Warshall Algorithm": "O(V^3) - Since it iterates over all pairs of vertices for each vertex in the graph, where V is the number of vertices.",
+          "Longest Common Subsequence": "O(mn) - Where m and n are the lengths of the two sequences. The time complexity arises from the need to fill an m by n matrix."
+        },
+        "Space Complexity": {
+          "Floyd-Warshall Algorithm": "O(V^2) - For storing the shortest path distances between every pair of vertices.",
+          "Longest Common Subsequence": "O(mn) - Due to the storage requirements of the matrix L."
+        }
       }
     }
   }
