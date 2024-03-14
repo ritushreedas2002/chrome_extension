@@ -52,6 +52,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import cquestions from "./questions.json";
+import { useNavigate } from "react-router-dom";
 
 const shuffleArray = (array) => {
   const newArray = array.slice();
@@ -63,11 +64,12 @@ const shuffleArray = (array) => {
 };
 
 const QuizPage = () => {
-
   const { index, topicindex } = useParams();
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [score, setScore] = useState(0);
+  const navigate = useNavigate();
 
   // Fetch and set random 10 questions for the selected topic
   useEffect(() => {
@@ -79,6 +81,10 @@ const QuizPage = () => {
 
   const handleAnswerSelection = (optionIndex) => {
     setSelectedAnswer(optionIndex);
+    const correct = isCorrectAnswer(optionIndex);
+    if (correct) {
+      setScore((prevScore) => prevScore + 1);
+    }
   };
 
   const isCorrectAnswer = (optionIndex) => {
@@ -88,12 +94,17 @@ const QuizPage = () => {
     );
   };
 
-  const currentQuestion = questions[currentQuestionIndex];
+  const handleSubmit = () => {
+    //alert(`Your quiz score: ${score} out of 10`);
+    // Reset for a new quiz or navigate to another page
+    navigate('/quizresult', { state: { score } });
+  };
 
+  const currentQuestion = questions[currentQuestionIndex];
 
   function formatQuestionText(questionText) {
     // Split the questionText by '\n' to get an array of lines
-    const lines = questionText.split('\n');
+    const lines = questionText.split("\n");
     // Map the lines to span elements, adding <br /> after each line except the last
     return lines.map((line, index) => (
       <React.Fragment key={index}>
@@ -102,7 +113,7 @@ const QuizPage = () => {
       </React.Fragment>
     ));
   }
-  
+
   return (
     <div
       className="quiz-container bg-yellow-100 p-4"
@@ -124,7 +135,13 @@ const QuizPage = () => {
                 <button
                   key={index}
                   className={`option p-2 rounded-md text-left text-base
-                  ${selectedAnswer === index ? (isCorrectAnswer(index) ? 'bg-green-500' : 'bg-red-500') : 'hover:bg-blue-100'}`}
+                  ${
+                    selectedAnswer === index
+                      ? isCorrectAnswer(index)
+                        ? "bg-green-500"
+                        : "bg-red-500"
+                      : "hover:bg-blue-100"
+                  }`}
                   onClick={() => handleAnswerSelection(index)}
                   disabled={selectedAnswer !== null}
                 >
@@ -142,7 +159,7 @@ const QuizPage = () => {
           )}
         </div>
       )}
-      {currentQuestionIndex < questions.length - 1 && (
+      {/* {currentQuestionIndex < questions.length - 1 && (
         <button
           className="next-question bg-blue-500 text-white p-2 mt-4 rounded-md text-md"
           onClick={() => {
@@ -152,7 +169,27 @@ const QuizPage = () => {
         >
           Next Question
         </button>
-      )}
+      )} */}
+      <div className="navigation mt-4">
+        {currentQuestionIndex === questions.length - 1 ? (
+          <button
+            className="submit-quiz bg-green-500 text-white p-2 rounded-md"
+            onClick={handleSubmit}
+          >
+            Submit Quiz
+          </button>
+        ) : (
+          <button
+            className="next-question bg-blue-500 text-white p-2 rounded-md"
+            onClick={() => {
+              setCurrentQuestionIndex((currentIndex) => currentIndex + 1);
+              setSelectedAnswer(null); // Reset selected answer for the next question
+            }}
+          >
+            Next Question
+          </button>
+        )}
+      </div>
     </div>
   );
 };
