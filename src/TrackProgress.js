@@ -1,28 +1,55 @@
-import React, { useEffect } from 'react';
-//import { spawn } from 'child_process';
+import React, { useState, useEffect } from "react";
 
 const TrackProgress = () => {
-  // useEffect(() => {
-  //   const childProcess = spawn('node', ['main.js']);
+  const [quizResults, setQuizResults] = useState([]);
 
-  //   childProcess.stdout.on('data', (data) => {
-  //     console.log(`stdout: ${data}`);
-  //   });
+  useEffect(() => {
+    // Fetch quiz results from local storage
+    const storedResults = JSON.parse(localStorage.getItem("quizResults")) || [];
+    setQuizResults(storedResults);
+  }, []);
 
-  //   childProcess.stderr.on('data', (data) => {
-  //     console.error(`stderr: ${data}`);
-  //   });
+  const deleteResult = (indexToDelete) => {
+    // Filter out the result at the specific index
+    const updatedResults = quizResults.filter((_, index) => index !== indexToDelete);
 
-  //   childProcess.on('close', (code) => {
-  //     console.log(`child process exited with code ${code}`);
-  //   });
+    // Update local storage with the new results array
+    localStorage.setItem("quizResults", JSON.stringify(updatedResults));
 
-  //   return () => {
-  //     childProcess.kill();
-  //   };
-  // }, []);
+    // Update state to reflect the change
+    setQuizResults(updatedResults);
+  };
 
-  // return <div>Tracking...</div>;
+  return (
+    <div
+      className="track-progress-container bg-yellow-100 p-4"
+      style={{ width: "700px", minHeight: "500px", position: "relative" }}
+    >
+      <h2 className="text-2xl font-bold mb-4">Your Quiz Results</h2>
+      <ul>
+        {quizResults.map((result, index) => (
+          <li
+            key={index}
+            className="m-2 p-2 rounded-lg bg-white flex justify-between items-center"
+          >
+            <div>
+              <p className="text-xl font-bold">
+                Topic: {result.sub} ({result.topic})
+              </p>
+              <p className="text-base">Date: {result.date}</p>
+              <p className="text-base">Score: {result.score} out of 10</p>
+            </div>
+            <button
+              className="p-2 bg-red-500 text-white rounded-md"
+              onClick={() => deleteResult(index)}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default TrackProgress;

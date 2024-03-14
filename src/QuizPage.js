@@ -95,8 +95,15 @@ const QuizPage = () => {
   };
 
   const handleSubmit = () => {
-    //alert(`Your quiz score: ${score} out of 10`);
-    // Reset for a new quiz or navigate to another page
+    const quizResult = {
+      score,
+      sub: cquestions[index]?.title,
+      topic: cquestions[index]?.topics[topicindex]?.topic, // Assuming your questions.json has a name property for topics
+      date: new Date().toLocaleDateString(),
+    };
+    const existingResults = JSON.parse(localStorage.getItem('quizResults')) || [];
+    existingResults.push(quizResult);
+    localStorage.setItem('quizResults', JSON.stringify(existingResults));
     navigate('/quizresult', { state: { score } });
   };
 

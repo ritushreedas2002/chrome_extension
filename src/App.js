@@ -38,7 +38,7 @@ function App() {
           <Route path="/quiz/:index" element={<Topic/>} />
           <Route path="/quiz/:index/:topicindex" element={<QuizPage/>}/>
           <Route path="/quizresult" element={<QuizResult />} />
-          {/* <Route path="/trackprogress" element={<TrackProgress/>}/> */}
+          <Route path="/trackprogress" element={<TrackProgress/>}/>
          
         </Routes>
         </IndexProvider>
