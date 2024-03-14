@@ -7,6 +7,7 @@ import DailyChallenge from "./DailyChallenge";
 import Quizzes from "./Quizzes";
 import QuizPage from "./QuizPage";
 import Topic from "./Topic";
+import TrackProgress from "./TrackProgress";
 
 function App() {
   useEffect(() => {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/quiz" element={<Quizzes />} />
           <Route path="/quiz/:index" element={<Topic/>} />
           <Route path="/quiz/:index/:topicindex" element={<QuizPage/>}/>
+          {/* <Route path="/trackprogress" element={<TrackProgress/>}/> */}
         </Routes>
       </div>
     </div>
