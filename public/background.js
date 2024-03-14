@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             // Once loaded, send the message
             setTimeout(() => {
               chrome.tabs.sendMessage(newTab.id, message);
-            }, 2000);
+            }, 4000);
             chrome.tabs.onUpdated.removeListener(listener); // Remove listener to avoid duplicate triggers
           }
         });
@@ -123,3 +123,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.action.setBadgeText({ text: '' });
   }
 });
+
+
+// background.js
+
+

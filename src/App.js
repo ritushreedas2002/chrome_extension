@@ -26,7 +26,7 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/revise" element={<Revision />} />
+          <Route path="/revise/:index" element={<Revision />} />
           <Route path="/dailychallenge" element={<DailyChallenge />} />
           <Route path="/quiz" element={<Quizzes />} />
           <Route path="/quiz/:index" element={<Topic/>} />

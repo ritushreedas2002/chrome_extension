@@ -1,0 +1,63 @@
+[
+    {
+        "Topic":"Binary Search",
+        "Info": {
+          "Definition": "Binary Search is a searching algorithm for finding an element's position in a sorted array. In this approach, the element is always searched in the middle of a portion of an array. Binary search can be implemented only on a sorted list of items. If the elements are not sorted already, we need to sort them first.",
+          "Algorithms": {
+            "Iterative Method": "do until the pointers low and high meet each other.\nmid = (low + high)/2\nif (x == arr[mid])\n    return mid\nelse if (x > arr[mid]) // x is on the right side\n    low = mid + 1\nelse                       // x is on the left side\n    high = mid - 1",
+            "Recursive Method": "binarySearch(arr, x, low, high)\nif low > high\n    return False \nelse\n    mid = (low + high) / 2 \n    if x == arr[mid]\n        return mid\n    else if x > arr[mid]        // x is on the right side\n        return binarySearch(arr, x, mid + 1, high)\n    else                               // x is on the left side\n        return binarySearch(arr, x, low, mid - 1)"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Best case": "O(1)",
+              "Average case": "O(log n)",
+              "Worst case": "O(log n)"
+            },
+            "Space Complexity": "The space complexity of the binary search is O(1)."
+          }
+        }
+      },
+      {
+        "Topic": "Linear Search",
+        "Info": {
+            "Definition": "Linear Search is a searching algorithm that finds the position of a target value within an array. It sequentially checks each element of the array for the target value until a match is found or until all the elements have been searched.",
+            "Algorithms": {
+                "Basic Method": "for i = 0 to arr.length\nif arr[i] == x\n    return i\nreturn -1"
+            },
+            "Complexities": {
+                "Time Complexities": {
+                    "Best case": "O(1)",
+                    "Average case": "O(n)",
+                    "Worst case": "O(n)"
+                },
+                "Space Complexity": "The space complexity of the linear search is O(1)."
+            }
+        }
+    },
+    {
+        "Topic": "Array Concept",
+        "Info":{ 
+            "Definition":"An array is a data structure that contains a group of elements. Typically these elements are all of the same data type, such as an integer or string. Arrays are commonly used to organize data so that a related set of values can be easily sorted or searched.",
+            "Algorithms": {
+            "Traversal":"for(int i = 0; i < arr.length; i++) {\n  System.out.println(arr[i]);\n}",
+            "Insertion":"for(int i = arr.length-1; i > position; i--) {\n  arr[i] = arr[i-1];\n}\narr[position] = newValue;",
+            "Deletion":"for(int i = position; i < arr.length-1; i++) {\n  arr[i] = arr[i+1];\n}",
+            "Search":"for(int i = 0; i < arr.length; i++) {\n  if(arr[i] == searchValue) {\n    return i;\n  }\n}\nreturn -1;",
+            "Update":"arr[position] = newValue;"
+          
+          
+        },
+        "Complexities": {
+          "Time Complexities": {
+            "Traversal": "O(n)",
+            "Insertion": "O(n)",
+            "Deletion": "O(n)",
+            "Search": "O(n)",
+            "Update": "O(1)"
+          },
+          "Space Complexity": "O(1)"
+        }
+    }
+      }
+      
+]
