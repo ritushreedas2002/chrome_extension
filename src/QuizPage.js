@@ -144,7 +144,7 @@ const QuizPage = () => {
       )}
       {currentQuestionIndex < questions.length - 1 && (
         <button
-          className="next-question bg-blue-500 text-white p-2 mt-4 rounded-md"
+          className="next-question bg-blue-500 text-white p-2 mt-4 rounded-md text-md"
           onClick={() => {
             setCurrentQuestionIndex((currentIndex) => currentIndex + 1);
             setSelectedAnswer(null); // Reset selected answer for the next question

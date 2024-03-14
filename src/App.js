@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Link, Route, Routes } from "react-router-dom";
 import Revision from "./Revise";
@@ -10,6 +10,10 @@ import Topic from "./Topic";
 import TrackProgress from "./TrackProgress";
 
 function App() {
+  useEffect(() => {
+    //Send a message to the background script to clear the badge when the popup opens
+    chrome.runtime.sendMessage({ action: 'clearBadge' });
+  }, []);
   return (
     <div className="App" style={{ width: "700px", height: "500px" }}>
       {/* <div className="font-bold -mt-20 text-2xl mb-20">DSA Revision Buddy</div> */}

@@ -6,7 +6,7 @@ const Revision = () => {
   const handleSendToChatGPT = () => {
     // Sending a message to the background script
     chrome.runtime.sendMessage({
-      // action: "searchChatGPT",
+       action: "navigateToChatGPT",
       topic: topic,
     });
   };
