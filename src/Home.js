@@ -1,15 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import dsa from "./dsa.json"
+import { useIndex } from './Context/Context';
 const Home = () => {
   // const handleReviseClick = () => {
   //   // Send a message to the background script to clear the badge
   //   chrome.runtime.sendMessage({ action: 'clearBadge' })
   
   // };
+  let navigate = useNavigate();
+  const { incrementIndex } = useIndex();
 
-  const generateRandomIndex = () => {
-    return Math.floor(Math.random() * dsa.length);
+  const handleReviseClick = () => {
+    incrementIndex();
+    navigate("/revise");
   };
   
   return (
@@ -31,11 +35,11 @@ const Home = () => {
         className="flex flex-wrap justify-center items-center"
         style={{ maxWidth: "70%" }}
       >
-       <Link to={`/revise/${generateRandomIndex()}`}>
-          <button className="p-4 m-4 w-48 text-xl font-semibold bg-blue-500 text-white rounded-lg">
+       
+          <button className="p-4 m-4 w-48 text-xl font-semibold bg-blue-500 text-white rounded-lg"onClick={handleReviseClick}>
             Revise Concepts
           </button>
-          </Link>
+          
         <Link to="/quiz">
           <button className="p-4 m-4 w-48 bg-blue-500 text-xl font-semibold text-white rounded-lg">
             Take Quiz

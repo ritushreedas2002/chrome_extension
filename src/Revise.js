@@ -46,14 +46,19 @@
 
 import dsa from './dsa.json'; // Ensure this is the correct path to your JSON data
 import { useParams } from 'react-router-dom';
+import { useIndex } from './Context/Context';
+import { useEffect } from 'react';
 
 const Revision = () => {
-  const { index } = useParams();
+  const { index } = useIndex();
   const topicIndex = parseInt(index, 10); // Ensure it's a number
   const topic = dsa[topicIndex];
   const topicInfo = topic?.Info;
   
-  
+  useEffect(() => {
+    console.log(`Current index: ${index}`); // Log to verify index updates
+  }, [index]); // Dependency array to re-run this effect when `index` changes
+
 
   const handleSendToChatGPT = () => {
     chrome.runtime.sendMessage({
@@ -68,8 +73,8 @@ const Revision = () => {
     <div className="flex flex-col items-center justify-center w-full h-screen p-4">
       <h1 className="text-3xl font-bold mb-10">DSA Revision Buddy</h1>
       <div className="flex flex-col items-start justify-start w-full max-w-4xl h-full overflow-auto p-4 bg-white rounded shadow">
-        <h2 className="text-2xl font-bold mb-4 ml-60">{topic.Topic}</h2>
-        <p className="mb-6 text-center">{topicInfo?.Definition}</p>
+        <h2 className="text-2xl font-bold mb-4 ml-56">{topic.Topic}</h2>
+        <p className="mb-6 text-center" style={{ whiteSpace: 'pre-wrap' }}>{topicInfo?.Definition}</p>
         {Object.entries(topicInfo?.Algorithms || {}).map(([key, value], index) => (
           <div key={index} className="mb-4 items-center w-full">
             <h3 className="text-xl font-semibold mb-2">{key}</h3>

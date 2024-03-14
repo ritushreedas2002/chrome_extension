@@ -8,6 +8,8 @@ import Quizzes from "./Quizzes";
 import QuizPage from "./QuizPage";
 import Topic from "./Topic";
 import TrackProgress from "./TrackProgress";
+import { IndexProvider } from './Context/Context'
+import dsa from "./dsa.json"
 import QuizResult from "./QuizResult";
 
 function App() {
@@ -26,16 +28,20 @@ function App() {
           justifyContent: "center",
         }}
       >
+        <IndexProvider totalTopics={dsa.length}>
         <Routes>
+          
           <Route path="/" element={<Home />} />
-          <Route path="/revise/:index" element={<Revision />} />
+          <Route path="/revise" element={<Revision />} />
           <Route path="/dailychallenge" element={<DailyChallenge />} />
           <Route path="/quiz" element={<Quizzes />} />
           <Route path="/quiz/:index" element={<Topic/>} />
           <Route path="/quiz/:index/:topicindex" element={<QuizPage/>}/>
           <Route path="/quizresult" element={<QuizResult />} />
           {/* <Route path="/trackprogress" element={<TrackProgress/>}/> */}
+         
         </Routes>
+        </IndexProvider>
       </div>
     </div>
   );
