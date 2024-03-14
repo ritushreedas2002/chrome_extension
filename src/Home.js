@@ -50,7 +50,7 @@ const Home = () => {
             Daily Challenge
           </button>
         </Link>
-        <Link to="/dailychallenge">
+        <Link to="/trackprogress">
           <button className="p-4 m-4 w-48 bg-blue-500 text-xl font-semibold text-white rounded-lg">
             Track Progress
           </button>
