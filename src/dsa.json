@@ -1,63 +1,215 @@
 [
-    {
-        "Topic":"Binary Search",
-        "Info": {
-          "Definition": "Binary Search is a searching algorithm for finding an element's position in a sorted array. In this approach, the element is always searched in the middle of a portion of an array. Binary search can be implemented only on a sorted list of items. If the elements are not sorted already, we need to sort them first.",
-          "Algorithms": {
-            "Iterative Method": "do until the pointers low and high meet each other.\nmid = (low + high)/2\nif (x == arr[mid])\n    return mid\nelse if (x > arr[mid]) // x is on the right side\n    low = mid + 1\nelse                       // x is on the left side\n    high = mid - 1",
-            "Recursive Method": "binarySearch(arr, x, low, high)\nif low > high\n    return False \nelse\n    mid = (low + high) / 2 \n    if x == arr[mid]\n        return mid\n    else if x > arr[mid]        // x is on the right side\n        return binarySearch(arr, x, mid + 1, high)\n    else                               // x is on the left side\n        return binarySearch(arr, x, low, mid - 1)"
-          },
-          "Complexities": {
-            "Time Complexities": {
-              "Best case": "O(1)",
-              "Average case": "O(log n)",
-              "Worst case": "O(log n)"
-            },
-            "Space Complexity": "The space complexity of the binary search is O(1)."
-          }
-        }
+  {
+    "Topic": "Binary Search",
+    "Info": {
+      "Definition": "Binary Search is a searching algorithm for finding an element's position in a sorted array. In this approach, the element is always searched in the middle of a portion of an array. Binary search can be implemented only on a sorted list of items. If the elements are not sorted already, we need to sort them first.",
+      "Algorithms": {
+        "Iterative Method": "do until the pointers low and high meet each other.\nmid = (low + high)/2\nif (x == arr[mid])\n    return mid\nelse if (x > arr[mid]) // x is on the right side\n    low = mid + 1\nelse                       // x is on the left side\n    high = mid - 1",
+        "Recursive Method": "binarySearch(arr, x, low, high)\nif low > high\n    return False \nelse\n    mid = (low + high) / 2 \n    if x == arr[mid]\n        return mid\n    else if x > arr[mid]        // x is on the right side\n        return binarySearch(arr, x, mid + 1, high)\n    else                               // x is on the left side\n        return binarySearch(arr, x, low, mid - 1)"
       },
-      {
-        "Topic": "Linear Search",
-        "Info": {
-            "Definition": "Linear Search is a searching algorithm that finds the position of a target value within an array. It sequentially checks each element of the array for the target value until a match is found or until all the elements have been searched.",
-            "Algorithms": {
-                "Basic Method": "for i = 0 to arr.length\nif arr[i] == x\n    return i\nreturn -1"
-            },
-            "Complexities": {
-                "Time Complexities": {
-                    "Best case": "O(1)",
-                    "Average case": "O(n)",
-                    "Worst case": "O(n)"
-                },
-                "Space Complexity": "The space complexity of the linear search is O(1)."
-            }
-        }
-    },
-    {
-        "Topic": "Array Concept",
-        "Info":{ 
-            "Definition":"An array is a data structure that contains a group of elements. Typically these elements are all of the same data type, such as an integer or string. Arrays are commonly used to organize data so that a related set of values can be easily sorted or searched.",
-            "Algorithms": {
-            "Traversal":"for(int i = 0; i < arr.length; i++) {\n  System.out.println(arr[i]);\n}",
-            "Insertion":"for(int i = arr.length-1; i > position; i--) {\n  arr[i] = arr[i-1];\n}\narr[position] = newValue;",
-            "Deletion":"for(int i = position; i < arr.length-1; i++) {\n  arr[i] = arr[i+1];\n}",
-            "Search":"for(int i = 0; i < arr.length; i++) {\n  if(arr[i] == searchValue) {\n    return i;\n  }\n}\nreturn -1;",
-            "Update":"arr[position] = newValue;"
-          
-          
+      "Complexities": {
+        "Time Complexities": {
+          "Best case": "O(1)",
+          "Average case": "O(log n)",
+          "Worst case": "O(log n)"
         },
-        "Complexities": {
-          "Time Complexities": {
-            "Traversal": "O(n)",
-            "Insertion": "O(n)",
-            "Deletion": "O(n)",
-            "Search": "O(n)",
-            "Update": "O(1)"
-          },
-          "Space Complexity": "O(1)"
-        }
-    }
+        "Space Complexity": "The space complexity of the binary search is O(1)."
       }
-      
+    }
+  },
+  {
+    "Topic": "Linear Search",
+    "Info": {
+      "Definition": "Linear Search is a searching algorithm that finds the position of a target value within an array. It sequentially checks each element of the array for the target value until a match is found or until all the elements have been searched.",
+      "Algorithms": {
+        "Basic Method": "for i = 0 to arr.length\nif arr[i] == x\n    return i\nreturn -1"
+      },
+      "Complexities": {
+        "Time Complexities": {
+          "Best case": "O(1)",
+          "Average case": "O(n)",
+          "Worst case": "O(n)"
+        },
+        "Space Complexity": "The space complexity of the linear search is O(1)."
+      }
+    }
+  },
+  {
+    "Topic": "Array Concept",
+    "Info": {
+      "Definition": "An array is a data structure that contains a group of elements. Typically these elements are all of the same data type, such as an integer or string. Arrays are commonly used to organize data so that a related set of values can be easily sorted or searched.",
+      "Algorithms": {
+        "Traversal": "for(int i = 0; i < arr.length; i++) {\n  System.out.println(arr[i]);\n}",
+        "Insertion": "for(int i = arr.length-1; i > position; i--) {\n  arr[i] = arr[i-1];\n}\narr[position] = newValue;",
+        "Deletion": "for(int i = position; i < arr.length-1; i++) {\n  arr[i] = arr[i+1];\n}",
+        "Search": "for(int i = 0; i < arr.length; i++) {\n  if(arr[i] == searchValue) {\n    return i;\n  }\n}\nreturn -1;",
+        "Update": "arr[position] = newValue;"
+      },
+      "Complexities": {
+        "Time Complexities": {
+          "Traversal": "O(n)",
+          "Insertion": "O(n)",
+          "Deletion": "O(n)",
+          "Search": "O(n)",
+          "Update": "O(1)"
+        },
+        "Space Complexity": "O(1)"
+      }
+    }
+  },
+  {
+    "Topic": "Stack Data Structure",
+    "Info": {
+      "Definition": "A stack is a linear data structure that follows the principle of Last In First Out (LIFO). This means the last element inserted inside the stack is removed first.You can think of the stack data structure as the pile of plates on top of another.LIFO Principle of Stack :In programming terms, putting an item on top of the stack is called push and removing an item is called pop.",
+      "Algorithms": {
+        "Push Operation": "void push(st *s, int newitem) {\n  if (isfull(s)) {\n    cout << \"STACK FULL\";\n  } else {\n    s->top++;\n    s->items[s->top] = newitem;\n  }\n  size++;\n}",
+        "Pop Operation": "int pop(st *s) {\n  if (isEmpty(s)) {\n    cout << \"STACK EMPTY\";\n    return -1;\n  } else {\n    return s->items[s->top--];\n  }\n}",
+        "isEmpty Operation": "bool isEmpty(st *s) {\n  return s->top == -1;\n}",
+        "isFull Operation": "bool isFull(st *s) {\n  return s->top == s->capacity - 1;\n}",
+        "Peek Opeartion": "int peek(st *s) {\n  if (isEmpty(s)) {\n    cout << \"STACK EMPTY\";\n    return -1;\n  } else {\n    return s->items[s->top];\n  }\n}"
+      },
+      "Complexities": {
+        "Time Complexities": {
+          "Push": "O(1)",
+          "isEmpty": "O(1)",
+          "isFull": "O(1)",
+          "Pop": "O(1)",
+          "Peek": "O(1)"
+        },
+        "Space Complexity": "O(n)"
+      }
+    }
+  },
+  {
+    "Topic": "Queue Data Structure",
+    "Info": {
+      "Definition": "A queue is a useful data structure in programming. It is similar to the ticket queue outside a cinema hall, where the first person entering the queue is the first person who gets the ticket.Queue follows the First In First Out (FIFO) rule - the item that goes in first is the item that comes out first.",
+      "Algorithms": {
+        "Enqueue Operation": "void enqueue(int item) {\n  if (isFull()) {\n    cout << \"Queue is full\";\n  } else {\n    rear = (rear + 1) % capacity;\n    arr[rear] = item;\n    count++;\n  }\n}",
+        "Dequeue Operation": "int dequeue() {\n  if (isEmpty()) {\n    cout << \"Queue is empty\";\n    return INT_MIN;\n  } else {\n    int item = arr[front];\n    front = (front + 1) % capacity;\n    count--;\n    return item;\n  }\n}",
+        "isEmpty Operation": "bool isEmpty() {\n  return (count == 0);\n}",
+        "isFull Operation": "bool isFull() {\n  return (count == capacity);\n}",
+        "Peek Opeartion": "int peek() {\n  if (isEmpty()) {\n    cout << \"Queue is empty\";\n    return INT_MIN;\n  } else {\n    return arr[front];\n  }\n}"
+      },
+      "Complexities": {
+        "Time Complexities": {
+          "Enqueue": "O(1)",
+          "Dequeue": "O(1)",
+          "isEmpty": "O(1)",
+          "isFull": "O(1)",
+          "Peek": "O(1)"
+        },
+        "Space Complexity": "O(n)"
+      }
+    }
+  },
+  {
+    "Topic": "Circular Queue",
+    "Info": {
+      "Definition": "A circular queue is the extended version of a regular queue where the last element is connected to the first element. Thus forming a circle-like structure.The circular queue solves the major limitation of the normal queue. In a normal queue, after a bit of insertion and deletion, there will be non-usable empty space.",
+      "Algorithms": {
+        "Enqueue Operation": "void enqueue(int item) {\n  if (isFull()) {\n    cout << \"Queue is full\";\n  } else {\n    rear = (rear + 1) % capacity;\n    arr[rear] = item;\n    count++;\n  }\n}",
+        "Dequeue Operation": "int dequeue() {\n  if (isEmpty()) {\n    cout << \"Queue is empty\";\n    return INT_MIN;\n  } else {\n    int item = arr[front];\n    front = (front + 1) % capacity;\n    count--;\n    return item;\n  }\n}",
+        "isEmpty Operation": "bool isEmpty() {\n  return (count == 0);\n}",
+        "isFull Operation": "bool isFull() {\n  return (count == capacity);\n}",
+        "Peek Opeartion": "int peek() {\n  if (isEmpty()) {\n    cout << \"Queue is empty\";\n    return INT_MIN;\n  }\n  return arr[front];\n}"
+      },
+      "Complexities": {
+        "Time Complexities": {
+          "Enqueue": "O(1)",
+          "Dequeue": "O(1)",
+          "isEmpty": "O(1)",
+          "isFull": "O(1)",
+          "Peek": "O(1)"
+        },
+        "Space Complexity": "O(n)"
+      }
+    }
+  },
+  {
+    "Topic": "Priority Queue",
+    "Info": {
+      "Definition": "A priority queue is a special type of queue in which each element is associated with a priority value. And, elements are served on the basis of their priority. That is, higher priority elements are served first.However, if elements with the same priority occur, they are served according to their order in the queue.",
+      "Algorithms": {
+        "Insert Operation": "void insert(int priority, int data) {\n  if (isFull()) {\n    cout << \"Priority Queue is full\";\n    return;\n  }\n  Node* newNode = new Node(priority, data);\n  if (isEmpty() || priority > front->priority) {\n    newNode->next = front;\n    front = newNode;\n  } else {\n    Node* temp = front;\n    while (temp->next != NULL && temp->next->priority >= priority) {\n      temp = temp->next;\n    }\n    newNode->next = temp->next;\n    temp->next = newNode;\n  }\n  size++;\n}",
+        "Delete Operation": "void delete() {\n  if (isEmpty()) {\n    cout << \"Priority Queue is empty\";\n    return;\n  }\n  Node* temp = front;\n  front = front->next;\n  delete temp;\n  size--;\n}",
+        "isEmpty Operation": "bool isEmpty() {\n  return (front == NULL);\n}",
+        "isFull Operation": "bool isFull() {\n  // This implementation might vary based on underlying data structure. For a linked list, it might be system memory dependent.\n}",
+        "Peek Opeartion": "int peek() {\n  if (isEmpty()) {\n    cout << \"Priority Queue is empty\";\n    return INT_MIN;\n  }\n  return front->data;\n}"
+      },
+      "Complexities": {
+        "Time Complexities": {
+            "Insert": "O(n) - In the worst case, we traverse the entire list.",
+            "Delete": "O(1) - Deletion always occurs at the front.",
+            "Peek": "O(1) - Peeking only looks at the front element.",
+            "isEmpty": "O(1)",
+            "isFull": "Varies - For linked list implementations, it might depend on available system memory."
+        },
+        "Space Complexity": "O(n)"
+      }
+    }
+  },
+  {
+    "Topic": "Deque Data Structure",
+    "Info": {
+      "Definition": "Deque or Double Ended Queue is a type of queue in which insertion and removal of elements can either be performed from the front or the rear. Thus, it does not follow FIFO rule (First In First Out).\nTypes of Deque:\nInput Restricted Deque:  In this deque, input is restricted at a single end but allows deletion at both the ends.\nOutput Restricted Deque:  In this deque, output is restricted at a single end but allows insertion at both the ends.",
+      "Algorithms": {
+        "Insert Operation": "void insert(int priority, int data) {\n  if (isFull()) {\n    cout << \"Priority Queue is full\";\n    return;\n  }\n  Node* newNode = new Node(priority, data);\n  if (isEmpty() || priority > front->priority) {\n    newNode->next = front;\n    front = newNode;\n  } else {\n    Node* temp = front;\n    while (temp->next != NULL && temp->next->priority >= priority) {\n      temp = temp->next;\n    }\n    newNode->next = temp->next;\n    temp->next = newNode;\n  }\n  size++;\n}",
+        "Delete Operation": "void delete() {\n  if (isEmpty()) {\n    cout << \"Priority Queue is empty\";\n    return;\n  }\n  Node* temp = front;\n  front = front->next;\n  delete temp;\n  size--;\n}",
+        "isEmpty Operation": "bool isEmpty() {\n  return (front == NULL);\n}",
+        "isFull Operation": "bool isFull() {\n  // This implementation might vary based on underlying data structure. For a linked list, it might be system memory dependent.\n}",
+        "Peek Opeartion": "int peek() {\n  if (isEmpty()) {\n    cout << \"Priority Queue is empty\";\n    return INT_MIN;\n  }\n  return front->data;\n}"
+      },
+      "Complexities": {
+        "Time Complexities": {
+            "Insert": "O(n) - In the worst case, we traverse the entire list.",
+            "Delete": "O(1) - Deletion always occurs at the front.",
+            "Peek": "O(1) - Peeking only looks at the front element.",
+            "isEmpty": "O(1)",
+            "isFull": "Varies - For linked list implementations, it might depend on available system memory."
+        },
+        "Space Complexity": "O(n)"
+      }
+    }
+  },
+  {
+    "Topic": "Tree Traversal",
+    "Info": {
+      "Definition": "Traversing a tree means visiting every node in the tree. You might, for instance, want to add all the values in the tree or find the largest one. For all these operations, you will need to visit each node of the tree.Tree traversal algorithms are methods for visiting all the nodes in a tree data structure. There are several types of traversals, each visiting the nodes in a different order. The three fundamental depth-first search (DFS) traversals for binary trees are preorder, inorder, and postorder.\nPreorder Traversal : Visits the current node before its child nodes (Root, Left, Right). \n Inorder Traversal:  Visits the left child, then the current node, and finally the right child (Left, Root, Right). This traversal method is used especially for binary search trees where it returns nodes in non-decreasing order. \n PostOrder Traversal :Visits the current node after its child nodes (Left, Right, Root). This method is used to delete the tree or get the postfix expression of an expression tree.",
+      "Algorithms": {
+        "Preorder Traversal": "void preorderTraversal(Node* root) {\n  if (root == NULL) return;\n  cout << root->data << ' ';\n  preorderTraversal(root->left);\n  preorderTraversal(root->right);\n}",
+        "Inorder Traversal": "void inorderTraversal(Node* root) {\n  if (root == NULL) return;\n  inorderTraversal(root->left);\n  cout << root->data << ' ';\n  inorderTraversal(root->right);\n}",
+        "Postorder Traversal": "void postorderTraversal(Node* root) {\n  if (root == NULL) return;\n  postorderTraversal(root->left);\n  postorderTraversal(root->right);\n  cout << root->data << ' ';\n}"
+        
+      },
+      "Complexities": {
+        "Time Complexities": {
+            "Preorder": "O(n)",
+            "Inorder": "O(n)",
+            "Postorder": "O(n)"
+        },
+        "Space Complexity": "O(h) - where h is the height of the tree. This space complexity accounts for the call stack during recursive calls."
+      }
+    }
+  },
+  {
+    "Topic": "Binary Tree",
+    "Info": {
+      "Definition": "A binary tree is a tree data structure in which each parent node can have at most two children.\n Each node of a binary tree consists of three items:\n> data item\n> address of left child\n> address of right child",
+      "Algorithms": {
+        "Preorder Traversal": "void preorderTraversal(Node* root) {\n  if (root == NULL) return;\n  cout << root->data << ' ';\n  preorderTraversal(root->left);\n  preorderTraversal(root->right);\n}",
+        "Inorder Traversal": "void inorderTraversal(Node* root) {\n  if (root == NULL) return;\n  inorderTraversal(root->left);\n  cout << root->data << ' ';\n  inorderTraversal(root->right);\n}",
+        "Postorder Traversal": "void postorderTraversal(Node* root) {\n  if (root == NULL) return;\n  postorderTraversal(root->left);\n  postorderTraversal(root->right);\n  cout << root->data << ' ';\n}"
+        
+      },
+      "Complexities": {
+        "Time Complexities": {
+            "Preorder": "O(n)",
+            "Inorder": "O(n)",
+            "Postorder": "O(n)"
+        },
+        "Space Complexity": "O(h) - where h is the height of the tree. This space complexity accounts for the call stack during recursive calls."
+      }
+    }
+  }
 ]
