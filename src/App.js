@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import "./App.css";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Revision from "./Revise";
 import Home from "./Home";
 import DailyChallenge from "./DailyChallenge";
@@ -11,8 +11,14 @@ import TrackProgress from "./TrackProgress";
 import { IndexProvider } from './Context/Context'
 import dsa from "./dsa.json"
 import QuizResult from "./QuizResult";
+import Category from "./Category";
 
 function App() {
+  const categoriesWithCounts = dsa.map(category => ({
+    category: category.category,
+    problemCount: category.Problems.length
+  }));
+
   useEffect(() => {
     //Send a message to the background script to clear the badge when the popup opens
     chrome.runtime.sendMessage({ action: 'clearBadge' });
@@ -28,11 +34,12 @@ function App() {
           justifyContent: "center",
         }}
       >
-        <IndexProvider totalTopics={dsa.length}>
+        <IndexProvider>
         <Routes>
           
-          <Route path="/" element={<Home />} />
-          <Route path="/revise" element={<Revision />} />
+          <Route path="/" element={<Home />}/>
+          <Route path="/revise" element={<Category/>}/>
+          <Route path="/revise/:category" element={<Revision/>}/>
           <Route path="/dailychallenge" element={<DailyChallenge />} />
           <Route path="/quiz" element={<Quizzes />} />
           <Route path="/quiz/:index" element={<Topic/>} />
