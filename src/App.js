@@ -9,15 +9,13 @@ import QuizPage from "./QuizPage";
 import Topic from "./Topic";
 import TrackProgress from "./TrackProgress";
 import { IndexProvider } from './Context/Context'
-import dsa from "./dsa.json"
+
 import QuizResult from "./QuizResult";
 import Category from "./Category";
+import Contest from "./Contest";
 
 function App() {
-  const categoriesWithCounts = dsa.map(category => ({
-    category: category.category,
-    problemCount: category.Problems.length
-  }));
+  
 
   useEffect(() => {
     //Send a message to the background script to clear the badge when the popup opens
@@ -46,7 +44,7 @@ function App() {
           <Route path="/quiz/:index/:topicindex" element={<QuizPage/>}/>
           <Route path="/quizresult" element={<QuizResult />} />
           <Route path="/trackprogress" element={<TrackProgress/>}/>
-         
+          <Route path="/contest" element={<Contest/>}/>
         </Routes>
         </IndexProvider>
       </div>
