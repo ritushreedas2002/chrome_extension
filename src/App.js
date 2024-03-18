@@ -12,6 +12,9 @@ import { IndexProvider } from './Context/Context'
 import dsa from "./dsa.json"
 import QuizResult from "./QuizResult";
 import Category from "./Category";
+import Daily2 from "./Daily2";
+import ToDoList from "./ToDoList";
+import CompletedTasks from "./CompletedTasks";
 
 function App() {
   const categoriesWithCounts = dsa.map(category => ({
@@ -41,11 +44,14 @@ function App() {
           <Route path="/revise" element={<Category/>}/>
           <Route path="/revise/:category" element={<Revision/>}/>
           <Route path="/dailychallenge" element={<DailyChallenge />} />
+          <Route path="/dailychallenge2" element={<Daily2 />} />
           <Route path="/quiz" element={<Quizzes />} />
           <Route path="/quiz/:index" element={<Topic/>} />
           <Route path="/quiz/:index/:topicindex" element={<QuizPage/>}/>
           <Route path="/quizresult" element={<QuizResult />} />
           <Route path="/trackprogress" element={<TrackProgress/>}/>
+          <Route path="/todo" element={<ToDoList/>}/>
+          <Route path="/completed" element={<CompletedTasks />} />
          
         </Routes>
         </IndexProvider>
