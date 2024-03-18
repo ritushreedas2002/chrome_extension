@@ -23,12 +23,15 @@ const ToDoList = () => {
 
   useEffect(() => {
     const loadedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const loadedCompletedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
     setTasks(loadedTasks);
+    setCompletedTasks(loadedCompletedTasks);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+    localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
+  }, [tasks, completedTasks]);
 
   const removeTask = (taskId) => {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
@@ -64,25 +67,56 @@ const ToDoList = () => {
   //   setTasks(updatedTasks);
   //   localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   // };
+  // const toggleTaskCompletion = (taskId) => {
+  //   const updatedTasks = tasks.map((task) => {
+  //     if (task.id === taskId) {
+  //       // Toggle the completed status and set completedDate if task is being completed
+  //       const updatedTask = {
+  //         ...task,
+  //         completed: !task.completed,
+  //       };
+  //       if (!task.completed) updatedTask.completedDate = new Date().toISOString(); // Set completed date
+  //       // setCompletedTasks([...completedTasks, updatedTask]);
+  //       // localStorage.setItem("completedtasks", JSON.stringify(completedTasks));
+  //       // console.log(completedTasks);
+        
+  //       return updatedTask;
+  //     }
+  //     return task;
+  //   });
+  //   setTasks(updatedTasks);
+  //   localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    
+  // };
   const toggleTaskCompletion = (taskId) => {
-    const updatedTasks = tasks.map((task) => {
+    const updatedTasks = tasks.map(task => {
       if (task.id === taskId) {
-        // Toggle the completed status and set completedDate if task is being completed
-        const updatedTask = {
-          ...task,
-          completed: !task.completed,
-        };
-        if (!task.completed) updatedTask.completedDate = new Date().toISOString(); // Set completed date
-        setCompletedTasks([...completedTasks, updatedTask]);
-        localStorage.setItem("completedtasks", JSON.stringify(completedTasks));
-        console.log(completedTasks);
-        return updatedTask;
+        return { ...task, completed: !task.completed };
       }
       return task;
     });
+  
+    let updatedCompletedTasks = [...completedTasks];
+  
+    if (updatedTasks.find(task => task.id === taskId && task.completed)) {
+      // Task was just completed, add to completedTasks if not already present
+      if (!updatedCompletedTasks.find(task => task.id === taskId)) {
+        const completedTask = updatedTasks.find(task => task.id === taskId);
+        updatedCompletedTasks.push(completedTask);
+        if (updatedCompletedTasks.length > 10) {
+          updatedCompletedTasks.shift(); // Removes the first element from the array
+        }
+      }
+    } else {
+      // Task was just unchecked, remove from completedTasks if present
+      updatedCompletedTasks = updatedCompletedTasks.filter(task => task.id !== taskId);
+    }
+  
     setTasks(updatedTasks);
+    setCompletedTasks(updatedCompletedTasks);
+    console.log(completedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    
+    localStorage.setItem("completedtasks", JSON.stringify(updatedCompletedTasks))
   };
 
   const showCompletedTasks = () => {
@@ -103,7 +137,7 @@ const ToDoList = () => {
       }}
     >
       <div className="absolute font-bold top-8 text-2xl mb-20">To Do Tasks</div>
-      <div className="absolute inset-0 overflow-y-auto mt-24 p-4  no-scrollbar">
+      <div className="absolute inset-0 overflow-y-auto mt-24 p-4  no-scrollbar max-h-96">
         <ul>
           {tasks.map((task) => (
             <li
