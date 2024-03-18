@@ -355,6 +355,43 @@
         }
       },
       {
+        "Topic": "B-Tree",
+        "Info": {
+          "Definition": "A B-Tree is a self-balancing tree data structure that maintains sorted data and allows searches, sequential access, insertions, and deletions in logarithmic time. It generalizes the binary search tree, allowing for nodes with more than two children.",
+          "Algorithms": {
+            "Insertion Code": "void insert(Node* &root, int key) {\n    // Check if the tree is empty\n    if (root == nullptr) {\n        root = createNode(key);\n        return;\n    }\n\n    // Recursive insert function\n    // Insert logic for B-Tree insertion\n}",
+            "Deletion Code": "void deleteKey(Node* &root, int key) {\n    // Deletion logic for B-Tree\n    // Handle cases: leaf and internal nodes\n}"
+          },
+          "Complexities": {
+            "Time Complexity": {
+              "Search": "O(log n)",
+              "Insert": "O(log n)",
+              "Delete": "O(log n)"
+            },
+            "Space Complexity": "O(n), where n is the number of keys in the tree."
+          }
+        }
+      },
+      {
+        "Topic": "B+ Tree",
+        "Info": {
+          "Definition": "A B+ Tree is a type of B-Tree used in databases and filesystems to store data for efficient retrieval. It differs from a B-Tree by storing all data in leaf nodes and using internal nodes as a means to provide a pathway to these leaf nodes.",
+          "Algorithms": {
+            "Insertion Code": "void BPlusTreeInsertion(Node* &root, int key) {\n    // Insert logic for B+ Tree\n    // Ensures that all data is in the leaf nodes\n}",
+            "Deletion Code": "void BPlusTreeDeletion(Node* &root, int key) {\n    // Deletion logic for B+ Tree\n    // Adjusts tree to maintain properties after deletion\n}"
+          },
+          "Complexities": {
+            "Time Complexity": {
+              "Search": "O(log n)",
+              "Insert": "O(log n)",
+              "Delete": "O(log n)"
+            },
+            "Space Complexity": "O(n), where n is the number of keys."
+          }
+        }
+      },
+      
+      {
         "Topic": "Merge Sort",
         "Info": {
           "Definition": "Merge Sort is a divide-and-conquer algorithm that divides the input array into two halves, calls itself for the two halves, and then merges the two sorted halves. It is known for its consistent performance and is often used in sorting libraries.",
@@ -515,6 +552,22 @@
         }
       },
       {
+        "Topic": "Hash Table",
+        "Info": {
+          "Definition": "A hash table, also known as a hash map, is a data structure that implements an associative array abstract data type, a structure that can map keys to values. A hash table uses a hash function to compute an index into an array of buckets or slots, from which the desired value can be found.",
+          "Algorithms": {
+            "Code": "class HashTable {\nprivate:\n  int BUCKET;\n  list<int> *table;\npublic:\n  HashTable(int V);\n  void insertItem(int key, int value);\n  void deleteItem(int key);\n  int hashFunction(int x) {\n    return (x % BUCKET);\n  }\n};\n\nHashTable::HashTable(int b) {\n  this->BUCKET = b;\n  table = new list<int>[BUCKET];\n}\n\nvoid HashTable::insertItem(int key, int value) {\n  int index = hashFunction(key);\n  table[index].push_back(value);\n}\n\nvoid HashTable::deleteItem(int key) {\n  int index = hashFunction(key);\n  list<int>::iterator i;\n  for (i = table[index].begin(); i != table[index].end(); i++) {\n    if (*i == key)\n      break;\n  }\n  if (i != table[index].end())\n    table[index].erase(i);\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Average case (insert/search/delete)": "O(1)",
+              "Worst case (insert/search/delete)": "O(n) - Occurs when all keys are mapped to a single bucket"
+            },
+            "Space Complexity": "O(n) - Where n is the number of keys stored in the hash table."
+          }
+        }
+      },
+      {
         "Topic": "Fibonacci Sequence",
         "Info": {
           "Definition": "The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones, usually starting with 0 and 1. It's a classic example demonstrating the power of Dynamic Programming in reducing the computational complexity of recursive algorithms.",
@@ -565,7 +618,228 @@
             }
           }
         }
-      } 
+      },
+      {
+        "Topic": "Prim's Algorithm",
+        "Info": {
+          "Definition": "Prim's Algorithm is a greedy algorithm that finds the minimum spanning tree for a weighted undirected graph, ensuring that every vertex is connected without any cycles and with the minimum possible total edge weight.",
+          "Algorithms": {
+            "Code": "void primMST(int graph[V][V]) {\n    int parent[V];\n    int key[V];\n    bool mstSet[V];\n    for (int i = 0; i < V; i++)\n        key[i] = INT_MAX, mstSet[i] = false;\n    key[0] = 0;\n    parent[0] = -1;\n    for (int count = 0; count < V-1; count++) {\n        int u = minKey(key, mstSet);\n        mstSet[u] = true;\n        for (int v = 0; v < V; v++)\n            if (graph[u][v] && !mstSet[v] && graph[u][v] < key[v])\n                parent[v] = u, key[v] = graph[u][v];\n    }\n    printMST(parent, V, graph);\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(V^2) - For a graph represented using adjacency matrix. Can be improved to O(E log V) with adjacency list and priority queue.",
+            "Space Complexity": "O(V) - To store the keys, MST set, and parent array."
+          }
+        }
+      },
+      {
+        "Topic": "Huffman Coding",
+        "Info": {
+          "Definition": "Huffman Coding is a widely used method of lossless data compression, which assigns variable-length codes to input characters, with shorter codes for more frequent characters. This algorithm uses a greedy technique to build a prefix-free binary tree called Huffman Tree.",
+          "Algorithms": {
+            "Code": "void buildHuffmanTree(vector<char>& data, vector<int>& freq, int size) {\n    priority_queue<HuffmanNode*, vector<HuffmanNode*>, compare> minHeap;\n    for (int i = 0; i < size; ++i)\n        minHeap.push(new HuffmanNode(data[i], freq[i]));\n    while (minHeap.size() != 1) {\n        HuffmanNode* left = minHeap.top(); minHeap.pop();\n        HuffmanNode* right = minHeap.top(); minHeap.pop();\n        HuffmanNode* top = new HuffmanNode('$', left->freq + right->freq);\n        top->left = left;\n        top->right = right;\n        minHeap.push(top);\n    }\n    printCodes(minHeap.top(), \"\");\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(n log n) - Where n is the number of unique characters. If there are N nodes, there will be N-1 merge operations and each operation involves a heap operation of O(log n).",
+            "Space Complexity": "O(n) - To store the tree."
+          }
+        }
+      },
+      {
+        "Topic": "Shell Sort",
+        "Info": {
+          "Definition": "Shell Sort is an in-place comparison sort which generalizes insertion sort to allow the exchange of items that are far apart. The idea is to arrange the list of elements so that, starting anywhere, taking every hth element produces a sorted list.",
+          "Algorithms": {
+            "Code": "void shellSort(int arr[], int n) {\n    for (int gap = n/2; gap > 0; gap /= 2) {\n        for (int i = gap; i < n; i += 1) {\n            int temp = arr[i];\n            int j;\n            for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)\n                arr[j] = arr[j - gap];\n            arr[j] = temp;\n        }\n    }\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "Worst-case time complexity is O(n^2), but it can perform better on partially sorted arrays. The best case is O(n log n).",
+            "Space Complexity": "O(1) - It is an in-place sorting algorithm."
+          }
+        }
+      },
+      {
+        "Topic": "Ford-Fulkerson Algorithm",
+        "Info": {
+          "Definition": "The Ford-Fulkerson algorithm computes the maximum flow in a flow network. It initializes the flow to 0 and repeatedly increases it by finding augmenting paths from the source to the sink. The process continues until no augmenting paths are left.",
+          "Algorithms": {
+            "Code": "int fordFulkerson(int graph[V][V], int s, int t) {\n    int u, v;\n    int rGraph[V][V];\n    for (u = 0; u < V; u++)\n        for (v = 0; v < V; v++)\n             rGraph[u][v] = graph[u][v];\n    int parent[V];\n    int max_flow = 0;\n    while (bfs(rGraph, s, t, parent)) {\n        int path_flow = INT_MAX;\n        for (v = t; v != s; v = parent[v]) {\n            u = parent[v];\n            path_flow = min(path_flow, rGraph[u][v]);\n        }\n        for (v = t; v != s; v = parent[v]) {\n            u = parent[v];\n            rGraph[u][v] -= path_flow;\n            rGraph[v][u] += path_flow;\n        }\n        max_flow += path_flow;\n    }\n    return max_flow;\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(max_flow * E), where E is the number of edges. The algorithm runs while there are augmenting paths, and each path can add at most 'max_flow' amount of flow.",
+            "Space Complexity": "O(V^2), as it requires storing the residual graph."
+          }
+        }
+      },
+      {
+        "Topic": "Floyd-Warshall Algorithm",
+        "Info": {
+          "Definition": "The Floyd-Warshall algorithm is a dynamic programming solution for finding the shortest paths between all pairs of vertices in a weighted graph. It can handle negative weights but not negative cycles.",
+          "Algorithms": {
+            "Code": "void floydWarshall(int graph[][V]) {\n    int dist[V][V], i, j, k;\n    for (i = 0; i < V; i++)\n        for (j = 0; j < V; j++)\n            dist[i][j] = graph[i][j];\n    for (k = 0; k < V; k++) {\n        for (i = 0; i < V; i++) {\n            for (j = 0; j < V; j++) {\n                if (dist[i][k] + dist[k][j] < dist[i][j])\n                    dist[i][j] = dist[i][k] + dist[k][j];\n            }\n        }\n    }\n    printSolution(dist);\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(V^3), where V is the number of vertices in the graph. The algorithm has three nested loops, each iterating through the vertices.",
+            "Space Complexity": "O(V^2), for storing the distance matrix."
+          }
+        }
+      },
+      {
+        "Topic": "Rabin-Karp Algorithm",
+        "Info": {
+          "Definition": "The Rabin-Karp Algorithm is a string-searching algorithm that uses hashing to find any one of a set of pattern strings in a text. It is particularly useful for detecting multiple patterns in a text in a single pass. The algorithm matches the hash value of the pattern with the hash value of current substring of the text, and if the hash values match, it then checks for individual character matches.",
+          "Algorithms": {
+            "Code": "void rabinKarp(string const& s, string const& t) {\n    const int p = 31;\n    const int m = 1e9 + 9;\n    int S = s.size(), T = t.size();\n\n    vector<long long> p_pow(max(S, T));\n    p_pow[0] = 1;\n    for (int i = 1; i < (int)p_pow.size(); i++)\n        p_pow[i] = (p_pow[i-1] * p) % m;\n\n    vector<long long> h(T + 1, 0);\n    for (int i = 0; i < T; i++)\n        h[i+1] = (h[i] + (t[i] - 'a' + 1) * p_pow[i]) % m;\n\n    long long h_s = 0;\n    for (int i = 0; i < S; i++)\n        h_s = (h_s + (s[i] - 'a' + 1) * p_pow[i]) % m;\n\n    for (int i = 0; i + S - 1 < T; i++) { \n        long long cur_h = (h[i+S] + m - h[i]) % m; \n        if (cur_h == h_s * p_pow[i] % m)\n            cout << \"Pattern found at index: \" << i << endl;\n    }\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "Average and best case is O(n+m), where n is the length of text and m is the length of the pattern, but its worst case is O(nm), which occurs when all characters of the pattern and text are same as the hash value of all the substrings of the text will be same.",
+            "Space Complexity": "O(n), where n is the length of the text, to store the hash values of all possible substrings of the text."
+          }
+        }
+      },
+      {
+        "Topic": "Fibonacci Heap",
+        "Info": {
+          "Definition": "A Fibonacci Heap is a data structure for priority queue operations, consisting of a collection of heap-ordered trees. It has a better amortized running time than many other priority queue data structures including the binary heap and binomial heap.",
+          "Algorithms": {
+            "Code": "struct Node {\n    int key;\n    Node *prev, *next;\n    Node *child, *parent;\n    int degree;\n    bool marked;\n};\n\n// Initial creation of a Fibonacci heap\nNode* createHeap() {\n    Node* np = nullptr;\n    return np;\n}\n\n// Insertion operation in a Fibonacci heap\nvoid insert(Node* &heap, Node* node) {\n    // Implementation details\n}\n\n// Decrease key operation in a Fibonacci heap\nvoid decreaseKey(Node* &heap, Node* node, int new_val) {\n    // Implementation details\n}\n\n// Delete node operation from a Fibonacci heap\nvoid deleteNode(Node* &heap, Node* node) {\n    // Implementation details\n}"
+          },
+          "Complexities": {
+            "Time Complexity": {
+              "Insert": "O(1)",
+              "Decrease Key": "O(1) amortized",
+              "Delete Node": "O(log n) amortized"
+            },
+            "Space Complexity": "O(n), where n is the number of elements in the heap."
+          }
+        }
+      },
+      {
+        "Topic": "Decrease Key and Delete Node from Fibonacci Heap",
+        "Info": {
+          "Definition": "In a Fibonacci Heap, the decrease key operation decreases the value of a given node, potentially breaking the heap property and requiring a cut and cascading cut operations. The delete node operation involves decreasing the value of the node to negative infinity (or a value lower than any heap element), thus moving it to the root list, and then performing a delete minimum operation.",
+          "Algorithms": {
+            "DecreaseKey Code": "void decreaseKey(Node* &heap, Node* node, int new_val) {\n    if (heap == nullptr || node == nullptr) return;\n    if (node->key < new_val) {\n        cout << \"New key is greater than current key\";\n        return;\n    }\n    node->key = new_val;\n    Node* parent = node->parent;\n    if (parent != nullptr && node->key < parent->key) {\n        cut(heap, node, parent);\n        cascadingCut(heap, parent);\n    }\n    if (node->key < heap->key) {\n        heap = node;\n    }\n}",
+            "DeleteNode Code": "void deleteNode(Node* &heap, Node* node) {\n    decreaseKey(heap, node, INT_MIN);\n    Node* min = removeMin(heap);\n    // Assuming removeMin removes and returns the minimum element from the heap\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "Decrease Key: O(1) amortized, Delete Node: O(log n) amortized",
+            "Space Complexity": "O(1), assuming no additional space is required apart from the input."
+          }
+        }
+      },
+      {
+        "Topic": "Red-Black Tree",
+        "Info": {
+          "Definition": "A Red-Black Tree is a kind of self-balancing binary search tree where each node has an extra bit for denoting the color of the node, either red or black. A Red-Black Tree ensures that the tree remains balanced, and operations like insertion, deletion, and search can be performed in logarithmic time complexity.",
+          "Algorithms": {
+            "Insertion Code": "void insert(Node *&root, int data) {\n    // Perform normal BST insert\n    // Color the new node as RED\n    // Fix Red Black Tree violations\n}",
+            "Deletion Code": "void deleteNode(Node *&root, int data) {\n    // Perform standard BST delete\n    // Fix Red Black Tree violations\n}"
+          },
+          "Complexities": {
+            "Time Complexity": {
+              "Search": "O(log n)",
+              "Insert": "O(log n)",
+              "Delete": "O(log n)"
+            },
+            "Space Complexity": "O(n), where n is the number of nodes in the tree."
+          }
+        }
+      },
+      {
+        "Topic": "Breadth-First Search (BFS) Algorithm",
+        "Info": {
+          "Definition": "Breadth-First Search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at a selected node and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.",
+          "Algorithms": {
+            "Code": "void bfs(int s, vector<int>& adj, vector<bool>& visited) {\n  queue<int> queue;\n  visited[s] = true;\n  queue.push(s);\n  while(!queue.empty()) {\n    int s = queue.front(); queue.pop();\n    cout << s << ' ';\n    for(auto u : adj[s]) {\n      if(!visited[u]) {\n        visited[u] = true;\n        queue.push(u);\n      }\n    }\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(V+E) - Where V is the number of vertices and E is the number of edges.",
+            "Space Complexity": "O(V) - Due to the storage of vertices in the queue."
+          }
+        }
+      },
+      {
+        "Topic": "Depth-First Search (DFS) Algorithm",
+        "Info": {
+          "Definition": "Depth-First Search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node and explores as far as possible along each branch before backtracking.",
+          "Algorithms": {
+            "Code": "void dfs(int v, vector<int>& adj, vector<bool>& visited) {\n  visited[v] = true;\n  cout << v << ' ';\n  for(int u : adj[v]) {\n    if(!visited[u]) {\n      dfs(u, adj, visited);\n    }\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(V+E) - Where V is the number of vertices and E is the number of edges.",
+            "Space Complexity": "O(V) - Due to the usage of the call stack in recursion."
+          }
+        }
+      },
+      {
+        "Topic": "Adjacency Matrix Representation",
+        "Info": {
+          "Definition": "An adjacency matrix is a square matrix used to represent a finite graph. The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph.",
+          "Algorithms": {
+            "Code": "int graph[V][V]; // V is the number of vertices\n// Initialize your matrix to 0\nfor(int i = 0; i < V; i++)\n  for(int j = 0; j < V; j++)\n    graph[i][j] = 0;\n// For every edge (u, v), set the value to 1 or the weight of the edge\ngraph[u][v] = 1; // For unweighted graph\ngraph[u][v] = w; // For weighted graph, where w is the weight"
+          },
+          "Complexities": {
+            "Time Complexity": "O(1) for adding or checking the existence of an edge. O(V^2) for initializing the graph.",
+            "Space Complexity": "O(V^2) - As it needs to store information for every possible edge."
+          }
+        }
+      },
+      {
+        "Topic": "Adjacency List Representation",
+        "Info": {
+          "Definition": "An adjacency list represents a graph as an array of linked lists. The index of the array represents a vertex and each element in its linked list represents the other vertices that form an edge with the vertex.",
+          "Algorithms": {
+            "Code": "vector<int> adj[V]; // V is the number of vertices\n// For every edge (u, v), add v to the adjacency list of u\nadj[u].push_back(v); // For directed graph\nadj[v].push_back(u); // For undirected graph, do this as well"
+          },
+          "Complexities": {
+            "Time Complexity": "O(V+E) for initializing the graph. O(deg(v)) for querying all adjacent vertices of a vertex v.",
+            "Space Complexity": "O(V+E) - As it needs to store information for every vertex and edge."
+          }
+        }
+      },
+      {
+        "Topic": "Spanning Tree",
+        "Info": {
+          "Definition": "A spanning tree of an undirected graph is a subgraph that includes all the vertices of the graph and is a tree. A single graph can have many different spanning trees.",
+          "Algorithms": {
+            "Code": "Prim's or Kruskal's algorithms are commonly used to find the minimum spanning tree of a graph. Refer to specific implementations for these algorithms."
+          },
+          "Complexities": {
+            "Time Complexity": "Depends on the algorithm used (e.g., O(E log V) for Prim's algorithm using a binary heap).",
+            "Space Complexity": "O(V+E) - As it stores the tree structure."
+          }
+        }
+      },
+      {
+        "Topic": "Bellman-Ford Algorithm",
+        "Info": {
+          "Definition": "The Bellman-Ford algorithm computes shortest paths from a single source vertex to all of the other vertices in a weighted graph. It is capable of handling graphs in which some of the edge weights are negative.",
+          "Algorithms": {
+            "Code": "int V, E; // V is the number of vertices and E is the number of edges\nstruct Edge { int u, v, w; };\nvector<Edge> edges;\n// Initialization\nvector<int> dist(V, INT_MAX);\ndist[src] = 0;\n// Relaxation\nfor(int i = 0; i < V-1; i++)\n  for(auto &edge : edges)\n    if(dist[edge.u] + edge.w < dist[edge.v])\n      dist[edge.v] = dist[edge.u] + edge.w;\n// Check for negative-weight cycles\nfor(auto &edge : edges)\n  if(dist[edge.u] + edge.w < dist[edge.v])\n    throw \"Graph contains a negative-weight cycle\";"
+          },
+          "Complexities": {
+            "Time Complexity": "O(VE) - As it relaxes all edges V-1 times.",
+            "Space Complexity": "O(V) - For storing distance and predecessor arrays."
+          }
+        }
+      },
+      {
+        "Topic": "Strongly Connected Components (SCC)",
+        "Info": {
+          "Definition": "In a directed graph, a strongly connected component is a maximal set of vertices such that each pair of vertices is reachable from the other, i.e., each vertex in the set is reachable from every other vertex in the set.",
+          "Algorithms": {
+            "Code": "Tarjan's or Kosaraju's algorithm can be used to find SCCs. These involve depth-first search (DFS) and use of a stack (Tarjan) or two passes of DFS (Kosaraju)."
+          },
+          "Complexities": {
+            "Time Complexity": "O(V+E) for both Tarjan's and Kosaraju's algorithms.",
+            "Space Complexity": "O(V) for Tarjan's algorithm due to the stack and O(V+E) for Kosaraju's due to the need to store the transpose graph."
+          }
+        }
+      }
+      
+        
+         
     ]
   } 
 ]
