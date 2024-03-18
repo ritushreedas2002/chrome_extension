@@ -54,7 +54,11 @@ const Home = () => {
             Track Progress
           </button>
         </Link>
-       
+        <Link to="/todo">
+          <button className="p-4 m-4 w-48 bg-blue-500 text-xl font-semibold text-white rounded-lg">
+            To Do Tasks
+          </button>
+        </Link>
       </div>
     </div>
   );
