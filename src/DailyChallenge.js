@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import gfg from "./assests/gfg.png";
+import gfg2 from "./assests/gfg-gg-logo.svg";
+import leet from "./assests/leetcode.png";
 import axios from "axios";
 
 const DailyChallenge = () => {
@@ -103,23 +105,26 @@ const DailyChallenge = () => {
       <div className="absolute font-bold top-12 text-2xl mb-20">
         DSA Revision Buddy
       </div>
-      <div className=" p-4   rounded-lg w-[80%] ">
-        <div className="mb-6 bg-slate-400 p-4 rounded-lg">
-          <div className=" text-start text-xl font-bold  text-white">
-            GeeksforGeeks Problem Of The Day
-          </div>
+      <div className=" p-4 mt-20 rounded-lg w-[80%] ">
+        <div className="mb-6 flex  bg-slate-400 p-4 rounded-lg">
+          <img
+            src={gfg2}
+            className="w-16 h-16 px-1 ml-4 items-center mt-3 bg-white mr-12 rounded-md"
+            alt="geeks"
+          />
           {problemData && (
-            <div className=" flex">
-              <img src={gfg} className="w-10 h-12 mr-16 rounded-md" alt="geeks" />
+            <div className=" ">
+              <div className=" text-start text-xl font-bold  text-white">
+                GeeksforGeeks Problem Of The Day
+              </div>
               <div>
-                <p className=" text-white text-base font-semibold text-start">
+                <p className=" text-white text-lg font-semibold text-start">
                   Title: {problemData.problem_name}
                 </p>
                 <p className=" text-white text-base font-semibold text-start">
                   Difficulty: {problemData.difficulty}
                 </p>
-                <button className=" text-white text-base bg-blue-500 p-2 font-semibold rounded-lg ">
-                  Link:
+                <button className=" text-white text-base -mb-3 mr-24 bg-blue-500 p-2 px-5 mt-3 font-semibold rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110">
                   <a
                     href={problemData.problem_url}
                     target="_blank"
@@ -132,14 +137,19 @@ const DailyChallenge = () => {
             </div>
           )}
         </div>
-        <div className=" bg-slate-400 p-4 rounded-lg">
-          <div className=" text-start text-xl  font-bold text-white">
-            Leetcode Daily Coding Challenge
-          </div>
+        <div className=" bg-slate-400 p-4 flex rounded-lg">
+          <img
+            src={leet}
+            className="w-16 h-16 p-1 ml-4 items-center mt-3 bg-white mr-12 rounded-md"
+            alt="geeks"
+          />
           {problemData2 && (
             <div>
-              <img src={gfg} className="w-10 h-8 absolute top-40" alt="gfg" />
-              <p className=" text-white text-base font-semibold text-start">
+              <div className="  text-start text-xl font-bold  text-white">
+                Leetcode Daily Coding Challenge
+              </div>
+              {/* <img src={gfg} className="w-10 h-8 absolute top-40" alt="gfg" /> */}
+              <p className=" text-white text-lg font-semibold text-start">
                 Title:{" "}
                 {
                   problemData2?.data?.activeDailyCodingChallengeQuestion
@@ -153,8 +163,7 @@ const DailyChallenge = () => {
                     ?.question?.difficulty
                 }
               </p>
-              <button className=" text-white text-base bg-blue-500 p-2 font-semibold rounded-lg ">
-                Link:
+              <button className=" text-white text-base -mb-3 mr-24 bg-blue-500 p-2 px-5 mt-3 font-semibold rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110 ">
                 <a href={urllink} target="_blank" rel="noopener noreferrer">
                   Solve Challenge
                 </a>
