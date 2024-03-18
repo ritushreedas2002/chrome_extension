@@ -281,7 +281,7 @@
         "Topic": "Full Binary Tree",
         "Info": {
           "Definition": "A full binary tree (sometimes proper binary tree or 2-tree) is a tree in which every node other than the leaves has two children.",
-          "Algorithms": "The creation or insertion in a full binary tree is context-specific and varies based on application. The complexity will depend on the method used for maintaining the fullness of the tree.",
+          "Algorithms":{"Code": "The creation or insertion in a full binary tree is context-specific and varies based on application. The complexity will depend on the method used for maintaining the fullness of the tree."},
           "Complexities": {
             "Time Complexity": "Varies - Depends on insertion method and tree structure.",
             "Space Complexity": "Varies - Depends on the number of nodes in the tree."
@@ -359,7 +359,7 @@
         "Info": {
           "Definition": "Merge Sort is a divide-and-conquer algorithm that divides the input array into two halves, calls itself for the two halves, and then merges the two sorted halves. It is known for its consistent performance and is often used in sorting libraries.",
           "Algorithms": {
-            "Code":"void mergeSort(int arr[], int l, int r) {\n  if (l < r) {\n    int m = l + (r - l) / 2;\n    mergeSort(arr, l, m);\n    mergeSort(arr, m + 1, r);\n    merge(arr, l, m, r);\n  }\n}\n\nvoid merge(int arr[], int l, int m, int r) {\n  // Merge the temp arrays back into arr[l..r]\n}"
+            "Code":"void merge(int arr[], int l, int m, int r) {\n    int n1 = m - l + 1;\n    int n2 = r - m;\n\n    // Create temp arrays\n    int L[n1], R[n2];\n\n    // Copy data to temp arrays L[] and R[]\n    for (int i = 0; i < n1; i++)\n        L[i] = arr[l + i];\n    for (int j = 0; j < n2; j++)\n        R[j] = arr[m + 1 + j];\n\n    // Merge the temp arrays back into arr[l..r]\n    int i = 0; // Initial index of first subarray\n    int j = 0; // Initial index of second subarray\n    int k = l; // Initial index of merged subarray\n    while (i < n1 && j < n2) {\n        if (L[i] <= R[j]) {\n            arr[k] = L[i];\n            i++;\n        } else {\n            arr[k] = R[j];\n            j++;\n        }\n        k++;\n    }\n\n    // Copy the remaining elements of L[], if there are any\n    while (i < n1) {\n        arr[k] = L[i];\n        i++;\n        k++;\n    }\n\n    // Copy the remaining elements of R[], if there are any\n    while (j < n2) {\n        arr[k] = R[j];\n        j++;\n        k++;\n    }\n}\n\nvoid mergeSort(int arr[], int l, int r) {\n    if (l < r) {\n        // Find the middle point to divide the array into two halves\n        int m = l + (r-l)/2;\n\n        // Call mergeSort for first half\n        mergeSort(arr, l, m);\n\n        // Call mergeSort for second half\n        mergeSort(arr, m+1, r);\n\n        // Merge the sorted halves\n        merge(arr, l, m, r);\n    }\n}"
           },
           "Complexities": {
             "Time Complexity": "Worst, Average, and Best Case: O(n log n) - Merge sort always divides the array in half and takes linear time to merge two halves.",
@@ -371,7 +371,9 @@
         "Topic": "Quick Sort",
         "Info": {
           "Definition": "Quick Sort is a highly efficient sorting algorithm and is based on partitioning of array of data into smaller arrays. A large array is partitioned into two arrays one of which holds values smaller than the specified value, say pivot, based on which the partition is made and another array holds values greater than the pivot value.",
-          "Algorithms": "void quickSort(int arr[], int low, int high) {\n  if (low < high) {\n    int pi = partition(arr, low, high);\n    quickSort(arr, low, pi - 1);\n    quickSort(arr, pi + 1, high);\n  }\n}\n\nint partition(int arr[], int low, int high) {\n  // This function takes last element as pivot, places the pivot element at its correct position in sorted array, and places all smaller to left of pivot and all greater elements to right of pivot.\n}",
+          "Algorithms": {
+            "Code":"void quickSort(int arr[], int low, int high) {\n  if (low < high) {\n    int pi = partition(arr, low, high);\n    quickSort(arr, low, pi - 1);\n    quickSort(arr, pi + 1, high);\n  }\n}\n\nint partition(int arr[], int low, int high) {\n  // This function takes last element as pivot, places the pivot element at its correct position in sorted array, and places all smaller to left of pivot and all greater elements to right of pivot.\n}"
+          },
           "Complexities": {
             "Time Complexity": "Worst Case: O(n^2) when the pivot selection is poor. Average and Best Case: O(n log n) - The array is divided into subarrays that are processed recursively.",
             "Space Complexity": "O(log n) - The space complexity comes from the stack space used for recursion. The worst case is O(n), depending on the implementation."

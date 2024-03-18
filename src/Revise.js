@@ -132,18 +132,28 @@ const Revision = () => {
   const { category } = useParams();
   const { indices } = useIndex();
   console.log(indices);
+  const initialIndex = indices[category] || 0; // Get initial index from context, default to 0
+  const [currentIndex, setCurrentIndex] = useState(initialIndex); 
   const [currentProblem, setCurrentProblem] = useState(null);
-
   useEffect(() => {
     const categoryData = dsa.find(cat => cat.category === category);
     if (!categoryData) {
       console.error('Category not found');
       return;
     }
-    const problem = categoryData.Problems[indices[category]];
+    const problem = categoryData.Problems[currentIndex];
     setCurrentProblem(problem);
-  }, [category, indices]);
+  }, [category, currentIndex]);
 
+
+  const handlePrev = () => {
+    setCurrentIndex(prevIndex => Math.max(prevIndex - 1, 0)); // Ensure index doesn't go below 0
+  };
+
+  const handleNext = () => {
+    const categoryData = dsa.find(cat => cat.category === category);
+    setCurrentIndex(prevIndex => Math.min(prevIndex + 1, categoryData.Problems.length - 1)); // Ensure index doesn't exceed max
+  };
   if (!currentProblem) {
     return <div>Loading...</div>;
   }
@@ -188,6 +198,14 @@ const Revision = () => {
               )}
             </div>
           ))}
+        </div>
+        <div className="flex justify-between mt-5">
+          <button onClick={handlePrev} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Prev
+          </button>
+          <button onClick={handleNext} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-[480px]">
+            Next
+          </button>
         </div>
         <button
           onClick={handleSendToChatGPT}
