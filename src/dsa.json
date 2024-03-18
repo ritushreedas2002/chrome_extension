@@ -175,6 +175,19 @@
         }
       },
       {
+        "Topic": "Fibonacci Sequence",
+        "Info": {
+          "Definition": "The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones, usually starting with 0 and 1. It's a classic example demonstrating the power of Dynamic Programming in reducing the computational complexity of recursive algorithms.",
+          "Algorithms": {
+            "Code": "int fib(int n) {\n    if(n <= 1) return n;\n    vector<int> f(n+1, 0);\n    f[1] = 1;\n    for(int i = 2; i <= n; i++)\n        f[i] = f[i-1] + f[i-2];\n    return f[n];\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(n) - Linear, as it iterates once up to n.",
+            "Space Complexity": "O(n) - For storing the Fibonacci sequence up to n."
+          }
+        }
+      },
+      {
         "Topic": "Singly Linked List",
         "Info": {
           "Definition": "A singly linked list is a type of linked list in which each node points to the next node in the list and the last node points to null. It allows for efficient insertion and removal of elements from any position in the sequence.",
@@ -212,12 +225,64 @@
             "Space Complexity": "O(n) - Storing n elements. Similar to singly or doubly linked lists but forms a circle."
           }
         }
+      },
+      {
+        "Topic": "Breadth-First Search (BFS) Algorithm",
+        "Info": {
+          "Definition": "Breadth-First Search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at a selected node and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.",
+          "Algorithms": {
+            "Code": "void bfs(int s, vector<int>& adj, vector<bool>& visited) {\n  queue<int> queue;\n  visited[s] = true;\n  queue.push(s);\n  while(!queue.empty()) {\n    int s = queue.front(); queue.pop();\n    cout << s << ' ';\n    for(auto u : adj[s]) {\n      if(!visited[u]) {\n        visited[u] = true;\n        queue.push(u);\n      }\n    }\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(V+E) - Where V is the number of vertices and E is the number of edges.",
+            "Space Complexity": "O(V) - Due to the storage of vertices in the queue."
+          }
+        }
+      },
+      {
+        "Topic": "Depth-First Search (DFS) Algorithm",
+        "Info": {
+          "Definition": "Depth-First Search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node and explores as far as possible along each branch before backtracking.",
+          "Algorithms": {
+            "Code": "void dfs(int v, vector<int>& adj, vector<bool>& visited) {\n  visited[v] = true;\n  cout << v << ' ';\n  for(int u : adj[v]) {\n    if(!visited[u]) {\n      dfs(u, adj, visited);\n    }\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(V+E) - Where V is the number of vertices and E is the number of edges.",
+            "Space Complexity": "O(V) - Due to the usage of the call stack in recursion."
+          }
+        }
       }
     ]
   },
   {
     "category": "Medium",
     "Problems": [
+      {
+        "Topic": "Adjacency Matrix Representation",
+        "Info": {
+          "Definition": "An adjacency matrix is a square matrix used to represent a finite graph. The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph.",
+          "Algorithms": {
+            "Code": "int graph[V][V]; // V is the number of vertices\n// Initialize your matrix to 0\nfor(int i = 0; i < V; i++)\n  for(int j = 0; j < V; j++)\n    graph[i][j] = 0;\n// For every edge (u, v), set the value to 1 or the weight of the edge\ngraph[u][v] = 1; // For unweighted graph\ngraph[u][v] = w; // For weighted graph, where w is the weight"
+          },
+          "Complexities": {
+            "Time Complexity": "O(1) for adding or checking the existence of an edge. O(V^2) for initializing the graph.",
+            "Space Complexity": "O(V^2) - As it needs to store information for every possible edge."
+          }
+        }
+      },
+      {
+        "Topic": "Adjacency List Representation",
+        "Info": {
+          "Definition": "An adjacency list represents a graph as an array of linked lists. The index of the array represents a vertex and each element in its linked list represents the other vertices that form an edge with the vertex.",
+          "Algorithms": {
+            "Code": "vector<int> adj[V]; // V is the number of vertices\n// For every edge (u, v), add v to the adjacency list of u\nadj[u].push_back(v); // For directed graph\nadj[v].push_back(u); // For undirected graph, do this as well"
+          },
+          "Complexities": {
+            "Time Complexity": "O(V+E) for initializing the graph. O(deg(v)) for querying all adjacent vertices of a vertex v.",
+            "Space Complexity": "O(V+E) - As it needs to store information for every vertex and edge."
+          }
+        }
+      },
       {
         "Topic": "Priority Queue",
         "Info": {
@@ -438,7 +503,6 @@
           }
         }
       },
-
       {
         "Topic": "Heap Sort",
         "Info":{
@@ -455,8 +519,46 @@
           "Space Complexity": "O(1) - Heap sort is an in-place algorithm but may require a small stack for recursion during heapify."
         }
         
-      }
-        
+        }   
+      },
+      {
+        "Topic": "Count Sort",
+        "Info": {
+          "Definition": "Count Sort is an integer sorting algorithm that operates by counting the number of occurrences of each distinct value in the input array. These counts are then used to compute the position of each element in the sorted array.",
+          "Algorithms": {
+            "Code": "void countSort(int arr[], int n) {\n    int output[n];\n    int count[256], i;\n    memset(count, 0, sizeof(count));\n\n    for(i = 0; arr[i]; ++i)\n        ++count[arr[i]];\n\n    for (i = 1; i <= 255; ++i)\n        count[i] += count[i-1];\n\n    for (i = 0; arr[i]; ++i) {\n        output[count[arr[i]]-1] = arr[i];\n        --count[arr[i]];\n    }\n\n    for (i = 0; arr[i]; ++i)\n        arr[i] = output[i];\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(n + k) - Where n is the number of elements and k is the range of the input.",
+            "Space Complexity": "O(k) - The space used by the count array."
+          }
+        }
+      },
+      {
+        "Topic": "Radix Sort",
+        "Info": {
+          "Definition": "Radix Sort is a non-comparative sorting algorithm that sorts integers by processing individual digits. Numbers are grouped by each digit, starting from the least significant digit to the most significant digit, using a stable algorithm like Count Sort as a subroutine.",
+          "Algorithms": {
+            "Code": "void countSort(int arr[], int n, int exp) {\n    vector<int> output(n);\n    int i, count[10] = {0};\n\n    for (i = 0; i < n; i++)\n        count[(arr[i] / exp) % 10]++;\n\n    for (i = 1; i < 10; i++)\n        count[i] += count[i - 1];\n\n    for (i = n - 1; i >= 0; i--) {\n        output[count[(arr[i] / exp) % 10] - 1] = arr[i];\n        count[(arr[i] / exp) % 10]--;\n    }\n\n    for (i = 0; i < n; i++)\n        arr[i] = output[i];\n}\n\nvoid radixSort(int arr[], int n) {\n    int m = getMax(arr, n);\n    for (int exp = 1; m / exp > 0; exp *= 10)\n        countSort(arr, n, exp);\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(nk) - Where n is the number of elements and k is the number of digits in the maximum number.",
+            "Space Complexity": "O(n + k) - For the intermediate count sort operations."
+          }
+        }
+      },
+      {
+        "Topic": "Bucket Sort",
+        "Info": {
+          "Definition": "Bucket Sort, or Bin Sort, operates by partitioning an array into a number of buckets. Each bucket is then sorted individually, either using a different sorting algorithm, or by recursively applying the bucket sort algorithm.",
+          "Algorithms": {
+            "Code": "void bucketSort(float arr[], int n) {\n    vector<float> b[n];\n    for (int i = 0; i < n; i++) {\n       int bi = n * arr[i]; // Index in bucket\n       b[bi].push_back(arr[i]);\n    }\n\n    for (int i = 0; i < n; i++)\n       sort(b[i].begin(), b[i].end());\n\n    int index = 0;\n    for (int i = 0; i < n; i++)\n       for (int j = 0; j < b[i].size(); j++)\n          arr[index++] = b[i][j];\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "Average Case: O(n + n^2/k + k), and Worst Case: O(n^2). Here, n is the number of elements, and k is the number of buckets.",
+            "Space Complexity": "O(n*k) - For the buckets used during sorting."
+          }
+        }
       },
       {
         "Topic": "Dijkstra's Algorithm",
@@ -512,45 +614,7 @@
   {
     "category":"Hard",
     "Problems":[
-      {
-        "Topic": "Count Sort",
-        "Info": {
-          "Definition": "Count Sort is an integer sorting algorithm that operates by counting the number of occurrences of each distinct value in the input array. These counts are then used to compute the position of each element in the sorted array.",
-          "Algorithms": {
-            "Code": "void countSort(int arr[], int n) {\n    int output[n];\n    int count[256], i;\n    memset(count, 0, sizeof(count));\n\n    for(i = 0; arr[i]; ++i)\n        ++count[arr[i]];\n\n    for (i = 1; i <= 255; ++i)\n        count[i] += count[i-1];\n\n    for (i = 0; arr[i]; ++i) {\n        output[count[arr[i]]-1] = arr[i];\n        --count[arr[i]];\n    }\n\n    for (i = 0; arr[i]; ++i)\n        arr[i] = output[i];\n}"
-          },
-          "Complexities": {
-            "Time Complexity": "O(n + k) - Where n is the number of elements and k is the range of the input.",
-            "Space Complexity": "O(k) - The space used by the count array."
-          }
-        }
-      },
-      {
-        "Topic": "Radix Sort",
-        "Info": {
-          "Definition": "Radix Sort is a non-comparative sorting algorithm that sorts integers by processing individual digits. Numbers are grouped by each digit, starting from the least significant digit to the most significant digit, using a stable algorithm like Count Sort as a subroutine.",
-          "Algorithms": {
-            "Code": "void countSort(int arr[], int n, int exp) {\n    vector<int> output(n);\n    int i, count[10] = {0};\n\n    for (i = 0; i < n; i++)\n        count[(arr[i] / exp) % 10]++;\n\n    for (i = 1; i < 10; i++)\n        count[i] += count[i - 1];\n\n    for (i = n - 1; i >= 0; i--) {\n        output[count[(arr[i] / exp) % 10] - 1] = arr[i];\n        count[(arr[i] / exp) % 10]--;\n    }\n\n    for (i = 0; i < n; i++)\n        arr[i] = output[i];\n}\n\nvoid radixSort(int arr[], int n) {\n    int m = getMax(arr, n);\n    for (int exp = 1; m / exp > 0; exp *= 10)\n        countSort(arr, n, exp);\n}"
-          },
-          "Complexities": {
-            "Time Complexity": "O(nk) - Where n is the number of elements and k is the number of digits in the maximum number.",
-            "Space Complexity": "O(n + k) - For the intermediate count sort operations."
-          }
-        }
-      },
-      {
-        "Topic": "Bucket Sort",
-        "Info": {
-          "Definition": "Bucket Sort, or Bin Sort, operates by partitioning an array into a number of buckets. Each bucket is then sorted individually, either using a different sorting algorithm, or by recursively applying the bucket sort algorithm.",
-          "Algorithms": {
-            "Code": "void bucketSort(float arr[], int n) {\n    vector<float> b[n];\n    for (int i = 0; i < n; i++) {\n       int bi = n * arr[i]; // Index in bucket\n       b[bi].push_back(arr[i]);\n    }\n\n    for (int i = 0; i < n; i++)\n       sort(b[i].begin(), b[i].end());\n\n    int index = 0;\n    for (int i = 0; i < n; i++)\n       for (int j = 0; j < b[i].size(); j++)\n          arr[index++] = b[i][j];\n}"
-          },
-          "Complexities": {
-            "Time Complexity": "Average Case: O(n + n^2/k + k), and Worst Case: O(n^2). Here, n is the number of elements, and k is the number of buckets.",
-            "Space Complexity": "O(n*k) - For the buckets used during sorting."
-          }
-        }
-      },
+      
       {
         "Topic": "Hash Table",
         "Info": {
@@ -567,19 +631,7 @@
           }
         }
       },
-      {
-        "Topic": "Fibonacci Sequence",
-        "Info": {
-          "Definition": "The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones, usually starting with 0 and 1. It's a classic example demonstrating the power of Dynamic Programming in reducing the computational complexity of recursive algorithms.",
-          "Algorithms": {
-            "Code": "int fib(int n) {\n    if(n <= 1) return n;\n    vector<int> f(n+1, 0);\n    f[1] = 1;\n    for(int i = 2; i <= n; i++)\n        f[i] = f[i-1] + f[i-2];\n    return f[n];\n}"
-          },
-          "Complexities": {
-            "Time Complexity": "O(n) - Linear, as it iterates once up to n.",
-            "Space Complexity": "O(n) - For storing the Fibonacci sequence up to n."
-          }
-        }
-      },
+      
       {
         "Topic": "0/1 Knapsack Problem",
         "Info": {
@@ -746,58 +798,8 @@
           }
         }
       },
-      {
-        "Topic": "Breadth-First Search (BFS) Algorithm",
-        "Info": {
-          "Definition": "Breadth-First Search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at a selected node and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.",
-          "Algorithms": {
-            "Code": "void bfs(int s, vector<int>& adj, vector<bool>& visited) {\n  queue<int> queue;\n  visited[s] = true;\n  queue.push(s);\n  while(!queue.empty()) {\n    int s = queue.front(); queue.pop();\n    cout << s << ' ';\n    for(auto u : adj[s]) {\n      if(!visited[u]) {\n        visited[u] = true;\n        queue.push(u);\n      }\n    }\n  }\n}"
-          },
-          "Complexities": {
-            "Time Complexity": "O(V+E) - Where V is the number of vertices and E is the number of edges.",
-            "Space Complexity": "O(V) - Due to the storage of vertices in the queue."
-          }
-        }
-      },
-      {
-        "Topic": "Depth-First Search (DFS) Algorithm",
-        "Info": {
-          "Definition": "Depth-First Search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node and explores as far as possible along each branch before backtracking.",
-          "Algorithms": {
-            "Code": "void dfs(int v, vector<int>& adj, vector<bool>& visited) {\n  visited[v] = true;\n  cout << v << ' ';\n  for(int u : adj[v]) {\n    if(!visited[u]) {\n      dfs(u, adj, visited);\n    }\n  }\n}"
-          },
-          "Complexities": {
-            "Time Complexity": "O(V+E) - Where V is the number of vertices and E is the number of edges.",
-            "Space Complexity": "O(V) - Due to the usage of the call stack in recursion."
-          }
-        }
-      },
-      {
-        "Topic": "Adjacency Matrix Representation",
-        "Info": {
-          "Definition": "An adjacency matrix is a square matrix used to represent a finite graph. The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph.",
-          "Algorithms": {
-            "Code": "int graph[V][V]; // V is the number of vertices\n// Initialize your matrix to 0\nfor(int i = 0; i < V; i++)\n  for(int j = 0; j < V; j++)\n    graph[i][j] = 0;\n// For every edge (u, v), set the value to 1 or the weight of the edge\ngraph[u][v] = 1; // For unweighted graph\ngraph[u][v] = w; // For weighted graph, where w is the weight"
-          },
-          "Complexities": {
-            "Time Complexity": "O(1) for adding or checking the existence of an edge. O(V^2) for initializing the graph.",
-            "Space Complexity": "O(V^2) - As it needs to store information for every possible edge."
-          }
-        }
-      },
-      {
-        "Topic": "Adjacency List Representation",
-        "Info": {
-          "Definition": "An adjacency list represents a graph as an array of linked lists. The index of the array represents a vertex and each element in its linked list represents the other vertices that form an edge with the vertex.",
-          "Algorithms": {
-            "Code": "vector<int> adj[V]; // V is the number of vertices\n// For every edge (u, v), add v to the adjacency list of u\nadj[u].push_back(v); // For directed graph\nadj[v].push_back(u); // For undirected graph, do this as well"
-          },
-          "Complexities": {
-            "Time Complexity": "O(V+E) for initializing the graph. O(deg(v)) for querying all adjacent vertices of a vertex v.",
-            "Space Complexity": "O(V+E) - As it needs to store information for every vertex and edge."
-          }
-        }
-      },
+      
+      
       {
         "Topic": "Spanning Tree",
         "Info": {
@@ -836,10 +838,7 @@
             "Space Complexity": "O(V) for Tarjan's algorithm due to the stack and O(V+E) for Kosaraju's due to the need to store the transpose graph."
           }
         }
-      }
-      
-        
-         
+      }         
     ]
   } 
 ]
