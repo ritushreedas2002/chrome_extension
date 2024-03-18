@@ -17,8 +17,10 @@ const CompletedTasks = () => {
   // }, []);
   useEffect(() => {
     // Load completed tasks from localStorage
-    const allTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    setCompletedTasks(allTasks.filter(task => task.completed));
+    const allTasks = JSON.parse(localStorage.getItem("completedtasks")) || [];
+    // setCompletedTasks(allTasks.filter(task => task.completed));
+    setCompletedTasks(allTasks);
+    console.log(allTasks);
   }, []);
 
   return (

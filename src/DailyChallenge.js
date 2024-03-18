@@ -9,6 +9,7 @@ const DailyChallenge = () => {
   const [problemData2, setProblemData2] = useState(null);
   const [loading2, setLoading2] = useState(true);
   const [error2, setError2] = useState("");
+  const [urllink, setUrllink] = useState("");
 
   const url = "https://leetcode.com/graphql";
   const headers = {
@@ -71,6 +72,12 @@ const DailyChallenge = () => {
       .post(url, data, { headers })
       .then((response) => {
         setProblemData2(response.data);
+        setUrllink(
+          "https://leetcode.com" +
+            response.data?.data?.activeDailyCodingChallengeQuestion?.link +
+            "description/?envType=daily-question&envId=" +
+            response.data?.data?.activeDailyCodingChallengeQuestion?.date
+        );
         console.log(response.data);
         setLoading2(false);
       })
@@ -96,58 +103,65 @@ const DailyChallenge = () => {
       <div className="absolute font-bold top-12 text-2xl mb-20">
         DSA Revision Buddy
       </div>
-      <div className=" p-4 bg-slate-400  rounded-lg w-[80%] ">
-        <div className="mb-6 ">
+      <div className=" p-4   rounded-lg w-[80%] ">
+        <div className="mb-6 bg-slate-400 p-4 rounded-lg">
           <div className=" text-start text-xl font-bold  text-white">
-            Daily Coding Challenge
+            GeeksforGeeks Problem Of The Day
           </div>
           {problemData && (
+            <div className=" flex">
+              <img src={gfg} className="w-10 h-12 mr-16 rounded-md" alt="geeks" />
+              <div>
+                <p className=" text-white text-base font-semibold text-start">
+                  Title: {problemData.problem_name}
+                </p>
+                <p className=" text-white text-base font-semibold text-start">
+                  Difficulty: {problemData.difficulty}
+                </p>
+                <button className=" text-white text-base bg-blue-500 p-2 font-semibold rounded-lg ">
+                  Link:
+                  <a
+                    href={problemData.problem_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Solve Challenge
+                  </a>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+        <div className=" bg-slate-400 p-4 rounded-lg">
+          <div className=" text-start text-xl  font-bold text-white">
+            Leetcode Daily Coding Challenge
+          </div>
+          {problemData2 && (
             <div>
               <img src={gfg} className="w-10 h-8 absolute top-40" alt="gfg" />
               <p className=" text-white text-base font-semibold text-start">
-                Title: {problemData.problem_name}
+                Title:{" "}
+                {
+                  problemData2?.data?.activeDailyCodingChallengeQuestion
+                    ?.question?.title
+                }
               </p>
               <p className=" text-white text-base font-semibold text-start">
-                Difficulty: {problemData.difficulty}
+                Difficulty:{" "}
+                {
+                  problemData2?.data?.activeDailyCodingChallengeQuestion
+                    ?.question?.difficulty
+                }
               </p>
               <button className=" text-white text-base bg-blue-500 p-2 font-semibold rounded-lg ">
                 Link:
-                <a
-                  href={problemData.problem_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={urllink} target="_blank" rel="noopener noreferrer">
                   Solve Challenge
                 </a>
               </button>
             </div>
           )}
         </div>
-
-        <div className=" text-start text-xl font-bold text-white">
-          Daily Coding Challenge
-        </div>
-        {problemData && (
-          <div>
-            <img src={gfg} className="w-10 h-8 absolute top-40" alt="gfg" />
-            <p className=" text-white text-base font-semibold text-start">
-              Title: {problemData.problem_name}
-            </p>
-            <p className=" text-white text-base font-semibold text-start">
-              Difficulty: {problemData.difficulty}
-            </p>
-            <button className=" text-white text-base bg-blue-500 p-2 font-semibold rounded-lg ">
-              Link:
-              <a
-                href={problemData.problem_url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Solve Challenge
-              </a>
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

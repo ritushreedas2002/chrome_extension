@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ToDoList = () => {
   const [tasks, setTasks] = useState([]);
-  //const [completedTasks, setCompletedTasks] = useState([]);
+  const [completedTasks, setCompletedTasks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [taskInput, setTaskInput] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -73,16 +73,20 @@ const ToDoList = () => {
           completed: !task.completed,
         };
         if (!task.completed) updatedTask.completedDate = new Date().toISOString(); // Set completed date
+        setCompletedTasks([...completedTasks, updatedTask]);
+        localStorage.setItem("completedtasks", JSON.stringify(completedTasks));
+        console.log(completedTasks);
         return updatedTask;
       }
       return task;
     });
     setTasks(updatedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    
   };
 
   const showCompletedTasks = () => {
-    const completedTasks = tasks.filter(task => task.completed);
+    // const completedTasks = tasks.filter(task => task.completed);
     navigate('/completed', { state: { completedTasks } });
   };
 
