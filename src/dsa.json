@@ -336,6 +336,7 @@
           "Algorithms": {
             "Code": "Node* createPerfectBinaryTree(int depth) {\n  if (depth == 0) return NULL;\n  Node* node = new Node(0);\n  node->left = createPerfectBinaryTree(depth - 1);\n  node->right = createPerfectBinaryTree(depth - 1);\n  return node;\n}"
           },
+          "imageLink":"/Perfect Binary Tree.png",
           "Complexities": {
             "Time Complexity": "O(2^depth - 1) - Because it visits every node.",
             "Space Complexity": "O(2^depth - 1) - Due to storing all nodes."
