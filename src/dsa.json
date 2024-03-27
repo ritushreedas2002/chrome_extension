@@ -24,7 +24,52 @@
             "Space Complexity": "O(1)"
           }
         }
+      },  
+      {
+        "Topic": "Pointers",
+        "Info": {
+          "Definition": "A pointer is a variable that stores the memory address of another variable. Pointers are used for various purposes in programming, such as accessing array elements, dynamic memory allocation, and for referencing functions. Pointers are a powerful feature of languages like C and C++, offering both flexibility and complexity.",
+          "Algorithms": {
+            "Pointer Initialization": "int* ptr = &var;",
+            "Pointer Dereferencing": "*ptr = 10;",
+            "Pointer to Pointer": "int** ptr2 = &ptr;",
+            "Dynamic Memory Allocation": "int* ptr = (int*)malloc(sizeof(int));",
+            "Deallocation": "free(ptr);",
+            "Array Access Through Pointers": "for(int i = 0; i < n; i++) {\n  printf(\"%d\\n\", *(arr + i));\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Pointer Initialization": "O(1)",
+              "Pointer Dereferencing": "O(1)",
+              "Pointer to Pointer": "O(1)",
+              "Dynamic Memory Allocation": "O(1) for allocation and deallocation",
+              "Array Access Through Pointers": "O(n)"
+            },
+            "Space Complexity": "O(1) for static allocation, varies for dynamic allocation"
+          }
+        }
       },
+      {
+        "Topic": "Dynamic Memory Allocation",
+        "Info": {
+          "Definition": "Dynamic memory allocation refers to the process of allocating memory at runtime, as opposed to static memory allocation where memory size must be specified at compile time. This allows for more flexible memory usage, enabling programs to use memory as needed during execution. Common operations include allocating, reallocating, and freeing memory.",
+          "Algorithms": {
+            "Allocation (malloc)": "void* ptr = malloc(size);",
+            "Deallocation (free)": "free(ptr);",
+            "Reallocation (realloc)": "ptr = realloc(ptr, newSize);",
+            "Allocation for arrays (calloc)": "void* ptr = calloc(nItems, sizeOfEachItem);"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Allocation (malloc)": "O(1), but depends on the system's memory manager",
+              "Deallocation (free)": "O(1), but can vary based on implementation",
+              "Reallocation (realloc)": "O(n), as it may involve copying memory if the new size cannot be accommodated at the current location",
+              "Allocation for arrays (calloc)": "O(n), as it initializes all bits to zero"
+            },
+            "Space Complexity": "O(n), where n is the amount of requested memory"
+          }
+        }
+      },     
       {
         "Topic": "Linear Search",
         "Info": {
@@ -41,7 +86,7 @@
             "Space Complexity": "The space complexity of the linear search is O(1)."
           }
         }
-      },
+      },            
       {
         "Topic": "Binary Search",
         "Info": {
@@ -84,6 +129,55 @@
         }
       },
       {
+        "Topic": "Stack Implementations (Using Arrays & Linked Lists)",
+        "Info": {
+          "Definition": "A stack is a linear data structure that follows the Last In First Out (LIFO) principle. Elements are added to and removed from the top of the stack. Stack implementations can use arrays or linked lists. An array-based stack has a fixed size, which limits its capacity, while a linked list-based stack can grow dynamically, allowing for more flexibility.",
+          "Algorithms": {
+            "Array-Based Stack Push": "void push(int x) {\n  if(top >= n-1) {\n    cout << \"Stack Overflow\";\n  } else {\n    arr[++top] = x;\n  }\n}",
+            "Array-Based Stack Pop": "int pop() {\n  if(top <= -1) {\n    cout << \"Stack Underflow\";\n    return 0;\n  } else {\n    int x = arr[top--];\n    return x;\n  }\n}",
+            "Array-Based Stack Peek": "int peek() {\n  if(top < 0) {\n    cout << \"Stack is Empty\";\n    return 0;\n  } else {\n    return arr[top];\n  }\n}",
+            "Array-Based Stack Is Empty": "bool isEmpty() {\n  return (top < 0);\n}",
+            "Array-Based Stack Is Full": "bool isFull() {\n  return (top >= n-1);\n}",
+            "Linked List-Based Stack Push": "void push(int x) {\n  Node* newNode = new Node();\n  if (!newNode) {\n    cout << \"Heap Overflow\";\n  } else {\n    newNode->data = x;\n    newNode->next = top;\n    top = newNode;\n  }\n}",
+            "Linked List-Based Stack Pop": "int pop() {\n  if (top == nullptr) {\n    cout << \"Stack Underflow\";\n    return 0;\n  } else {\n    Node* temp = top;\n    top = top->next;\n    int popped = temp->data;\n    delete temp;\n    return popped;\n  }\n}",
+            "Linked List-Based Stack Peek": "int peek() {\n  if (top == nullptr) {\n    cout << \"Stack is Empty\";\n    return 0;\n  } else {\n    return top->data;\n  }\n}",
+            "Linked List-Based Stack Is Empty": "bool isEmpty() {\n  return (top == nullptr);\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Array-Based Stack Operations": "O(1) - For push, pop, peek, isEmpty, and isFull operations",
+              "Linked List-Based Stack Operations": "O(1) - For push, pop, peek, and isEmpty operations"
+            },
+            "Space Complexity": "O(n) - For both array and linked list implementations, depending on the number of elements in the stack"
+          }
+        }
+      },      
+      {
+        "Topic": "Stack Applications (Expression Evaluation)",
+        "Info": {
+          "Definition": "Expression evaluation is a key application of stacks, enabling the processing of arithmetic expressions in various notations including infix, prefix (Polish notation), and postfix (Reverse Polish notation). This involves scanning the expression, using stacks to manage operands and operators, and systematically applying operators following precedence rules. It simplifies managing complex arithmetic expressions' order of operations and handling of parentheses.",
+          "Algorithms": {
+            "Infix to Postfix Conversion": "stack<char> opStack; \nstring postfix = \"\"; \nfor(char& c : infix) { \n  if(isOperand(c)) postfix += c; \n  else if(c == '(') opStack.push(c); \n  else if(c == ')') { \n    while(opStack.top() != '(') { \n      postfix += opStack.top(); \n      opStack.pop(); \n    } \n    opStack.pop(); \n  } \n  else { \n    while(!opStack.empty() && precedence(opStack.top()) >= precedence(c)) { \n      postfix += opStack.top(); \n      opStack.pop(); \n    } \n    opStack.push(c); \n  } \n} \nwhile(!opStack.empty()) { \n  postfix += opStack.top(); \n  opStack.pop(); \n}",
+            "Postfix Expression Evaluation": "stack<int> valStack; \nfor(char& c : postfix) { \n  if(isDigit(c)) valStack.push(c - '0'); \n  else { \n    int b = valStack.top(); \n    valStack.pop(); \n    int a = valStack.top(); \n    valStack.pop(); \n    valStack.push(applyOp(a, b, c)); \n  } \n}",
+            "Infix Expression Evaluation": "stack<int> values; \nstack<char> ops; \nfor(char& c : infix) { \n  if(isdigit(c)) { \n    int val = 0; \n    while(isdigit(c)) { \n      val = (val*10) + (c-'0'); \n      c++; \n    } \n    values.push(val); \n  } \n  else if(c == '(') ops.push(c); \n  else if(c == ')') { \n    while(ops.top() != '(') { \n      int val2 = values.top(); \n      values.pop(); \n      int val1 = values.top(); \n      values.pop(); \n      char op = ops.top(); \n      ops.pop(); \n      values.push(applyOp(val1, val2, op)); \n    } \n    ops.pop(); \n  } \n  else if(isOperator(c)) { \n    while(!ops.empty() && precedence(ops.top()) >= precedence(c)) { \n      int val2 = values.top(); \n      values.pop(); \n      int val1 = values.top(); \n      values.pop(); \n      char op = ops.top(); \n      ops.pop(); \n      values.push(applyOp(val1, val2, op)); \n    } \n    ops.push(c); \n  } \n}",
+            "Prefix to Postfix Conversion": "stack<string> s; \nfor(int i = prefix.length() - 1; i >= 0; i--) { \n  if(isOperand(prefix[i])) s.push(string(1, prefix[i])); \n  else { \n    string op1 = s.top(); \n    s.pop(); \n    string op2 = s.top(); \n    s.pop(); \n    s.push(op1 + op2 + prefix[i]); \n  } \n}",
+            "Prefix to Infix Conversion": "stack<string> s; \nfor(int i = prefix.length() - 1; i >= 0; i--) { \n  if(isOperand(prefix[i])) s.push(string(1, prefix[i])); \n  else { \n    string op1 = s.top(); \n    s.pop(); \n    string op2 = s.top(); \n    s.pop(); \n    s.push('(' + op1 + prefix[i] + op2 + ')'); \n  } \n}",
+            "Prefix Expression Evaluation": "stack<int> Stack; \nfor(int i = prefix.length() - 1; i >= 0; i--) { \n  if(isDigit(prefix[i])) Stack.push(prefix[i] - '0'); \n  else { \n    int op1 = Stack.top(); \n    Stack.pop(); \n    int op2 = Stack.top(); \n    Stack.pop(); \n    Stack.push(applyOp(prefix[i], op1, op2)); \n  } \n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Infix to Postfix Conversion": "O(n)",
+              "Postfix Expression Evaluation": "O(n)",
+              "Infix Expression Evaluation": "O(n)",
+              "Prefix to Postfix Conversion": "O(n)",
+              "Prefix to Infix Conversion": "O(n)",
+              "Prefix Expression Evaluation": "O(n)"
+            },
+            "Space Complexity": "O(n) - Requires space proportional to the length of the expression for the stack(s)"
+          }
+        }
+      },      
+      {
         "Topic": "Queue Data Structure",
         "Info": {
           "Definition": "A queue is a useful data structure in programming. It is similar to the ticket queue outside a cinema hall, where the first person entering the queue is the first person who gets the ticket.Queue follows the First In First Out (FIFO) rule - the item that goes in first is the item that comes out first.",
@@ -106,6 +200,36 @@
           }
         }
       },
+      {
+        "Topic": "Queue Implementations (Using Arrays & Linked Lists)",
+        "Info": {
+          "Definition": "A queue is a linear data structure that follows the First In First Out (FIFO) principle. Elements are added at one end, known as the rear, and removed from the other end, known as the front. Queue implementations commonly use arrays or linked lists. Array-based queues have a fixed size, while linked list-based queues can grow dynamically.",
+          "Algorithms": {
+            "Array-Based Queue Enqueue": "if(rear < SIZE) { queue[rear++] = element; }",
+            "Array-Based Queue Dequeue": "if(front < rear) { element = queue[front++]; for(int i = 0; i < rear - 1; i++) { queue[i] = queue[i + 1]; } rear--; }",
+            "Array-Based Queue Is Full": "return rear == SIZE;",
+            "Array-Based Queue Is Empty": "return rear == 0;",
+            "Linked List-Based Queue Enqueue": "Node* newNode = new Node(element); if(front == nullptr) { front = rear = newNode; } else { rear->next = newNode; rear = newNode; }",
+            "Linked List-Based Queue Dequeue": "if(front != nullptr) { Node* temp = front; front = front->next; delete temp; if(front == nullptr) { rear = nullptr; } }",
+            "Linked List-Based Queue Is Empty": "return front == nullptr;"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Array-Based Queue Enqueue": "O(1) - Amortized",
+              "Array-Based Queue Dequeue": "O(n) - Due to shifting elements",
+              "Array-Based Queue Is Full": "O(1)",
+              "Array-Based Queue Is Empty": "O(1)",
+              "Linked List-Based Queue Enqueue": "O(1)",
+              "Linked List-Based Queue Dequeue": "O(1)",
+              "Linked List-Based Queue Is Empty": "O(1)"
+            },
+            "Space Complexity": {
+              "Array-Based Queue": "O(n) - Fixed size based on initial allocation",
+              "Linked List-Based Queue": "O(n) - Dynamic, depends on the number of elements"
+            }
+          }
+        }
+      },      
       {
         "Topic": "Circular Queue",
         "Info": {
@@ -251,7 +375,135 @@
             "Space Complexity": "O(V) - Due to the usage of the call stack in recursion."
           }
         }
-      }
+      },
+      {
+        "Topic": "Bit Manipulation",
+        "Info": {
+          "Definition": "Bit manipulation involves the use of bitwise operations to directly manipulate individual bits of a binary number. This technique is useful for tasks such as setting, clearing, toggling, and testing bits, and is often utilized for optimization, as it can be more efficient than arithmetic operations.",
+          "Algorithms": {
+            "Set a Bit": "number |= 1 << x;",
+            "Clear a Bit": "number &= ~(1 << x);",
+            "Toggle a Bit": "number ^= 1 << x;",
+            "Check a Bit": "(number & (1 << x)) != 0;",
+            "Count Set Bits": "int countSetBits(int n) {\n  int count = 0;\n  while (n) {\n    count += n & 1;\n    n >>= 1;\n  }\n  return count;\n}",
+            "Find the Rightmost Set Bit": "int rsb = n & -n;",
+            "Turn Off the Rightmost Set Bit": "n = n & (n - 1);"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Set a Bit": "O(1)",
+              "Clear a Bit": "O(1)",
+              "Toggle a Bit": "O(1)",
+              "Check a Bit": "O(1)",
+              "Count Set Bits": "O(log n)",
+              "Find the Rightmost Set Bit": "O(1)",
+              "Turn Off the Rightmost Set Bit": "O(1)"
+            },
+            "Space Complexity": "O(1)"
+          }
+        }
+      },
+      {
+        "Topic": "Two Pointer Technique",
+        "Info": {
+          "Definition": "The two-pointer technique involves using two pointers to traverse an array, usually in a single pass, to solve problems such as finding a pair that sums up to a target value or identifying whether a sequence is a palindrome. This technique can significantly reduce the time complexity from O(n^2) to O(n) for certain problems by eliminating the need for nested loops.",
+          "Algorithms": {
+            "Find a Pair with a Given Sum": "while(left < right) {\n  int currentSum = arr[left] + arr[right];\n  if(currentSum == targetSum) {\n    return [left, right];\n  } else if(currentSum < targetSum) {\n    left++;\n  } else {\n    right--;\n  }\n}",
+            "Check for Palindrome": "while(left < right) {\n  if(arr[left] != arr[right]) {\n    return false;\n  }\n  left++;\n  right--;\n}\nreturn true;",
+            "Remove Duplicates from Sorted Array": "int i = 0;\nfor (int j = 1; j < n; j++) {\n  if (arr[j] != arr[i]) {\n    i++;\n    arr[i] = arr[j];\n  }\n}\nreturn i + 1;",
+            "Reverse Array": "int start = 0, end = n - 1;\nwhile(start < end) {\n  int temp = arr[start];\n  arr[start] = arr[end];\n  arr[end] = temp;\n  start++;\n  end--;\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Find a Pair with a Given Sum": "O(n)",
+              "Check for Palindrome": "O(n)",
+              "Remove Duplicates from Sorted Array": "O(n)",
+              "Reverse Array": "O(n)"
+            },
+            "Space Complexity": "O(1) - no additional space required apart from the input array"
+          }
+        }
+      },
+      {
+        "Topic": "Sliding Window Technique",
+        "Info": {
+          "Definition": "The sliding window technique involves creating a window that slides over the data structure (such as an array or a string) to consider subarrays/substrings of varying sizes. This technique is particularly useful for finding the longest or shortest subarray/substring that meets certain criteria, and it can significantly improve efficiency by reducing the time complexity from O(n^2) to O(n) for many problems.",
+          "Algorithms": {
+            "Maximum Sum Subarray of Size K": "int maxSum = 0, windowSum = 0;\nint windowStart = 0;\nfor(int windowEnd = 0; windowEnd < arr.length; windowEnd++) {\n  windowSum += arr[windowEnd];\n  if(windowEnd >= K - 1) {\n    maxSum = Math.max(maxSum, windowSum);\n    windowSum -= arr[windowStart];\n    windowStart++;\n  }\n}",
+            "Longest Substring Without Repeating Characters": "int start = 0, maxLength = 0;\nMap<Character, Integer> charIndexMap = new HashMap<>();\nfor(int end = 0; end < s.length(); end++) {\n  char rightChar = s.charAt(end);\n  if(charIndexMap.containsKey(rightChar)) {\n    start = Math.max(start, charIndexMap.get(rightChar) + 1);\n  }\n  charIndexMap.put(rightChar, end);\n  maxLength = Math.max(maxLength, end - start + 1);\n}",
+            "Minimum Size Subarray Sum": "int start = 0, minLength = Integer.MAX_VALUE, windowSum = 0;\nfor(int end = 0; end < arr.length; end++) {\n  windowSum += arr[end];\n  while(windowSum >= targetSum) {\n    minLength = Math.min(minLength, end - start + 1);\n    windowSum -= arr[start];\n    start++;\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Maximum Sum Subarray of Size K": "O(n)",
+              "Longest Substring Without Repeating Characters": "O(n)",
+              "Minimum Size Subarray Sum": "O(n)"
+            },
+            "Space Complexity": {
+              "Maximum Sum Subarray of Size K": "O(1)",
+              "Longest Substring Without Repeating Characters": "O(min(m, n)) - where m is the size of the character set",
+              "Minimum Size Subarray Sum": "O(1)"
+            }
+          }
+        }
+      },
+      {
+        "Topic": "String Manipulation",
+        "Info": {
+          "Definition": "String manipulation involves altering, parsing, or analyzing strings, which are sequences of characters. In C++, common operations include concatenation, comparison, searching for substrings, converting between uppercase and lowercase, trimming whitespace, and splitting strings into arrays of substrings. Efficient string manipulation is key in areas like data parsing, user input processing, and software development.",
+          "Algorithms": {
+            "Concatenation": "string result = string1 + string2;",
+            "Find Substring": "size_t index = string.find(substring);",
+            "Convert to Uppercase": "std::transform(string.begin(), string.end(), string.begin(), ::toupper);",
+            "Convert to Lowercase": "std::transform(string.begin(), string.end(), string.begin(), ::tolower);",
+            "Trim Whitespace": "string.erase(0, string.find_first_not_of(' '));\nstring.erase(string.find_last_not_of(' ') + 1);",
+            "Split String": "vector<std::string> tokens;\nstringstream check1(string);\nstring intermediate;\nwhile(getline(check1, intermediate, ' ')) {\n  tokens.push_back(intermediate);\n}",
+            "Replace Characters": "replace( string.begin(), string.end(), oldChar, newChar);",
+            "Reverse String": "reverse(string.begin(), string.end());"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Concatenation": "O(n) - Depends on the length of the strings",
+              "Find Substring": "O(n*m) - n is string length, m is substring length",
+              "Convert to Uppercase/Lowercase": "O(n) - n is the length of the string",
+              "Trim Whitespace": "O(n) - n is the length of the string",
+              "Split String": "O(n) - n is the length of the string, assuming fixed delimiter length",
+              "Replace Characters": "O(n) - n is the length of the string",
+              "Reverse String": "O(n) - n is the length of the string"
+            },
+            "Space Complexity": {
+              "General": "O(n) - Additional space may be needed depending on the operation"
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Matrix Operations",
+        "Info": {
+          "Definition": "Matrix operations include a variety of arithmetic and algebraic operations performed on matrices, which are rectangular arrays of numbers, symbols, or expressions arranged in rows and columns. Common operations include addition, subtraction, multiplication, transposition, and finding the determinant and inverse of a matrix. These operations are fundamental in linear algebra and are widely applied in scientific computing, engineering, and computer graphics.",
+          "Algorithms": {
+            "Matrix Addition": "for(int i = 0; i < rows; i++) {\n  for(int j = 0; j < cols; j++) {\n    result[i][j] = matA[i][j] + matB[i][j];\n  }\n}",
+            "Matrix Subtraction": "for(int i = 0; i < rows; i++) {\n  for(int j = 0; j < cols; j++) {\n    result[i][j] = matA[i][j] - matB[i][j];\n  }\n}",
+            "Matrix Multiplication": "for(int i = 0; i < rowsA; i++) {\n  for(int j = 0; j < colsB; j++) {\n    for(int k = 0; k < colsA; k++) {\n      result[i][j] += matA[i][k] * matB[k][j];\n    }\n  }\n}",
+            "Matrix Transpose": "for(int i = 0; i < rows; i++) {\n  for(int j = 0; j < cols; j++) {\n    transpose[j][i] = matrix[i][j];\n  }\n}",
+            "Determinant of a Matrix": "float determinant(float matrix[][], int n) {\n  // Implementation depends on the matrix size and method chosen, such as Laplace's formula or LU decomposition.\n}",
+            "Inverse of a Matrix": "void inverse(float matrix[][], int n) {\n  // Implementation can vary widely; often involves finding the adjoint and determinant.\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Matrix Addition/Subtraction": "O(n*m) - where n and m are the dimensions of the matrices",
+              "Matrix Multiplication": "O(n^3) using the standard algorithm, but can be reduced with more advanced algorithms like Strassen's algorithm",
+              "Matrix Transpose": "O(n*m) - where n and m are the dimensions of the matrix",
+              "Determinant of a Matrix": "O(n!) for a naive approach, but more efficient methods exist",
+              "Inverse of a Matrix": "O(n^3) - typically involves Gaussian elimination or other methods"
+            },
+            "Space Complexity": {
+              "General": "O(n*m) - Additional space needed for the resulting matrix, where n and m are the dimensions of the input matrices"
+            }
+          }
+        }
+      }     
+           
     ]
   },
   {
@@ -353,7 +605,6 @@
           }
         }
       },
-
       {
         "Topic": "Complete Binary Tree",
         "Info": {
@@ -401,7 +652,38 @@
         }
       },
       {
-        "Topic": "Tree Traversal",
+        "Topic": "Red-Black Tree",
+        "Info": {
+          "Definition": "A Red-Black Tree is a kind of self-balancing binary search tree where each node has an extra bit for denoting the color of the node, either red or black. A Red-Black Tree ensures that the tree remains balanced, and operations like insertion, deletion, and search can be performed in logarithmic time complexity.",
+          "Algorithms": {
+            "Insertion Code": "void insert(Node *&root, int data) {\n    // Perform normal BST insert\n    // Color the new node as RED\n    // Fix Red Black Tree violations\n}",
+            "Deletion Code": "void deleteNode(Node *&root, int data) {\n    // Perform standard BST delete\n    // Fix Red Black Tree violations\n}"
+          },
+          "Complexities": {
+            "Time Complexity": {
+              "Search": "O(log n)",
+              "Insert": "O(log n)",
+              "Delete": "O(log n)"
+            },
+            "Space Complexity": "O(n), where n is the number of nodes in the tree."
+          }
+        }
+      },
+      {
+        "Topic": "Spanning Tree",
+        "Info": {
+          "Definition": "A spanning tree of an undirected graph is a subgraph that includes all the vertices of the graph and is a tree. A single graph can have many different spanning trees.",
+          "Algorithms": {
+            "Code": "Prim's or Kruskal's algorithms are commonly used to find the minimum spanning tree of a graph. Refer to specific implementations for these algorithms."
+          },
+          "Complexities": {
+            "Time Complexity": "Depends on the algorithm used (e.g., O(E log V) for Prim's algorithm using a binary heap).",
+            "Space Complexity": "O(V+E) - As it stores the tree structure."
+          }
+        }
+      }, 
+      {
+        "Topic": "Tree Traversals",
         "Info": {
           "Definition": "Traversing a tree means visiting every node in the tree. You might, for instance, want to add all the values in the tree or find the largest one. For all these operations, you will need to visit each node of the tree.Tree traversal algorithms are methods for visiting all the nodes in a tree data structure. There are several types of traversals, each visiting the nodes in a different order. The three fundamental depth-first search (DFS) traversals for binary trees are preorder, inorder, and postorder.\nPreorder Traversal : Visits the current node before its child nodes (Root, Left, Right). \n Inorder Traversal:  Visits the left child, then the current node, and finally the right child (Left, Root, Right). This traversal method is used especially for binary search trees where it returns nodes in non-decreasing order. \n PostOrder Traversal :Visits the current node after its child nodes (Left, Right, Root). This method is used to delete the tree or get the postfix expression of an expression tree.",
           "Algorithms": {
@@ -454,8 +736,7 @@
             "Space Complexity": "O(n), where n is the number of keys."
           }
         }
-      },
-      
+      },      
       {
         "Topic": "Merge Sort",
         "Info": {
@@ -587,6 +868,19 @@
         }
       },
       {
+        "Topic": "Prim's Algorithm",
+        "Info": {
+          "Definition": "Prim's Algorithm is a greedy algorithm that finds the minimum spanning tree for a weighted undirected graph, ensuring that every vertex is connected without any cycles and with the minimum possible total edge weight.",
+          "Algorithms": {
+            "Code": "void primMST(int graph[V][V]) {\n    int parent[V];\n    int key[V];\n    bool mstSet[V];\n    for (int i = 0; i < V; i++)\n        key[i] = INT_MAX, mstSet[i] = false;\n    key[0] = 0;\n    parent[0] = -1;\n    for (int count = 0; count < V-1; count++) {\n        int u = minKey(key, mstSet);\n        mstSet[u] = true;\n        for (int v = 0; v < V; v++)\n            if (graph[u][v] && !mstSet[v] && graph[u][v] < key[v])\n                parent[v] = u, key[v] = graph[u][v];\n    }\n    printMST(parent, V, graph);\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(V^2) - For a graph represented using adjacency matrix. Can be improved to O(E log V) with adjacency list and priority queue.",
+            "Space Complexity": "O(V) - To store the keys, MST set, and parent array."
+          }
+        }
+      },
+      {
         "Topic": "Recursion and Backtracking",
         "Info": {
           "Definition": "Recursion\nRecursion is a method of solving a problem where the solution depends on solutions to smaller instances of the same problem. A recursive function calls itself with a base case to stop the recursion.\nBacktracking\nBacktracking is an algorithmic-technique for solving problems recursively by trying to build a solution incrementally, one piece at a time, removing those solutions that fail to satisfy the constraints of the problem at any point of time.",
@@ -613,8 +907,7 @@
   },
   {
     "category":"Hard",
-    "Problems":[
-      
+    "Problems":[  
       {
         "Topic": "Hash Table",
         "Info": {
@@ -630,8 +923,7 @@
             "Space Complexity": "O(n) - Where n is the number of keys stored in the hash table."
           }
         }
-      },
-      
+      },     
       {
         "Topic": "0/1 Knapsack Problem",
         "Info": {
@@ -672,19 +964,6 @@
         }
       },
       {
-        "Topic": "Prim's Algorithm",
-        "Info": {
-          "Definition": "Prim's Algorithm is a greedy algorithm that finds the minimum spanning tree for a weighted undirected graph, ensuring that every vertex is connected without any cycles and with the minimum possible total edge weight.",
-          "Algorithms": {
-            "Code": "void primMST(int graph[V][V]) {\n    int parent[V];\n    int key[V];\n    bool mstSet[V];\n    for (int i = 0; i < V; i++)\n        key[i] = INT_MAX, mstSet[i] = false;\n    key[0] = 0;\n    parent[0] = -1;\n    for (int count = 0; count < V-1; count++) {\n        int u = minKey(key, mstSet);\n        mstSet[u] = true;\n        for (int v = 0; v < V; v++)\n            if (graph[u][v] && !mstSet[v] && graph[u][v] < key[v])\n                parent[v] = u, key[v] = graph[u][v];\n    }\n    printMST(parent, V, graph);\n}"
-          },
-          "Complexities": {
-            "Time Complexity": "O(V^2) - For a graph represented using adjacency matrix. Can be improved to O(E log V) with adjacency list and priority queue.",
-            "Space Complexity": "O(V) - To store the keys, MST set, and parent array."
-          }
-        }
-      },
-      {
         "Topic": "Huffman Coding",
         "Info": {
           "Definition": "Huffman Coding is a widely used method of lossless data compression, which assigns variable-length codes to input characters, with shorter codes for more frequent characters. This algorithm uses a greedy technique to build a prefix-free binary tree called Huffman Tree.",
@@ -720,19 +999,6 @@
           "Complexities": {
             "Time Complexity": "O(max_flow * E), where E is the number of edges. The algorithm runs while there are augmenting paths, and each path can add at most 'max_flow' amount of flow.",
             "Space Complexity": "O(V^2), as it requires storing the residual graph."
-          }
-        }
-      },
-      {
-        "Topic": "Floyd-Warshall Algorithm",
-        "Info": {
-          "Definition": "The Floyd-Warshall algorithm is a dynamic programming solution for finding the shortest paths between all pairs of vertices in a weighted graph. It can handle negative weights but not negative cycles.",
-          "Algorithms": {
-            "Code": "void floydWarshall(int graph[][V]) {\n    int dist[V][V], i, j, k;\n    for (i = 0; i < V; i++)\n        for (j = 0; j < V; j++)\n            dist[i][j] = graph[i][j];\n    for (k = 0; k < V; k++) {\n        for (i = 0; i < V; i++) {\n            for (j = 0; j < V; j++) {\n                if (dist[i][k] + dist[k][j] < dist[i][j])\n                    dist[i][j] = dist[i][k] + dist[k][j];\n            }\n        }\n    }\n    printSolution(dist);\n}"
-          },
-          "Complexities": {
-            "Time Complexity": "O(V^3), where V is the number of vertices in the graph. The algorithm has three nested loops, each iterating through the vertices.",
-            "Space Complexity": "O(V^2), for storing the distance matrix."
           }
         }
       },
@@ -779,40 +1045,7 @@
             "Space Complexity": "O(1), assuming no additional space is required apart from the input."
           }
         }
-      },
-      {
-        "Topic": "Red-Black Tree",
-        "Info": {
-          "Definition": "A Red-Black Tree is a kind of self-balancing binary search tree where each node has an extra bit for denoting the color of the node, either red or black. A Red-Black Tree ensures that the tree remains balanced, and operations like insertion, deletion, and search can be performed in logarithmic time complexity.",
-          "Algorithms": {
-            "Insertion Code": "void insert(Node *&root, int data) {\n    // Perform normal BST insert\n    // Color the new node as RED\n    // Fix Red Black Tree violations\n}",
-            "Deletion Code": "void deleteNode(Node *&root, int data) {\n    // Perform standard BST delete\n    // Fix Red Black Tree violations\n}"
-          },
-          "Complexities": {
-            "Time Complexity": {
-              "Search": "O(log n)",
-              "Insert": "O(log n)",
-              "Delete": "O(log n)"
-            },
-            "Space Complexity": "O(n), where n is the number of nodes in the tree."
-          }
-        }
-      },
-      
-      
-      {
-        "Topic": "Spanning Tree",
-        "Info": {
-          "Definition": "A spanning tree of an undirected graph is a subgraph that includes all the vertices of the graph and is a tree. A single graph can have many different spanning trees.",
-          "Algorithms": {
-            "Code": "Prim's or Kruskal's algorithms are commonly used to find the minimum spanning tree of a graph. Refer to specific implementations for these algorithms."
-          },
-          "Complexities": {
-            "Time Complexity": "Depends on the algorithm used (e.g., O(E log V) for Prim's algorithm using a binary heap).",
-            "Space Complexity": "O(V+E) - As it stores the tree structure."
-          }
-        }
-      },
+      },                
       {
         "Topic": "Bellman-Ford Algorithm",
         "Info": {
