@@ -5,33 +5,75 @@ import { useIndex } from "./Context/Context";
 import axios from "axios";
 
 const Revision = () => {
+  // const { category } = useParams();
+  // const { indices } = useIndex();
+  // const initialIndex = indices[category] || 0; // Get initial index from context, default to 0
+  // const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  // const [currentProblem, setCurrentProblem] = useState(null);
+  // const [showFlowChart, setShowFlowChart] = useState(false);
+
+  // useEffect(() => {
+  //   const categoryData = dsa.find((cat) => cat.category === category);
+  //   if (!categoryData) {
+  //     console.error("Category not found");
+  //     return;
+  //   }
+  //   const problem = categoryData.Problems[currentIndex];
+  //   setCurrentProblem(problem);
+  // }, [category, currentIndex]);
+
+  // const handlePrev = () => {
+  //   setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0)); // Ensure index doesn't go below 0
+  // };
+
+  // const handleNext = () => {
+  //   const categoryData = dsa.find((cat) => cat.category === category);
+  //   setCurrentIndex((prevIndex) =>
+  //     Math.min(prevIndex + 1, categoryData.Problems.length - 1)
+  //   ); // Ensure index doesn't exceed max
+  // };
+
+
   const { category } = useParams();
-  const { indices } = useIndex();
-  const initialIndex = indices[category] || 0; // Get initial index from context, default to 0
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [currentProblem, setCurrentProblem] = useState(null);
   const [showFlowChart, setShowFlowChart] = useState(false);
 
+  // Fetch and update the problem based on the current index
   useEffect(() => {
+    const storedIndex = localStorage.getItem(category);
+    const initialIndex = storedIndex ? parseInt(storedIndex, 10) - 1 : 0;
+    setCurrentIndex(initialIndex);
+
+    // This part of the effect handles fetching the problem data
     const categoryData = dsa.find((cat) => cat.category === category);
-    if (!categoryData) {
-      console.error("Category not found");
-      return;
+    if (categoryData && categoryData.Problems.length > initialIndex) {
+      const problem = categoryData.Problems[initialIndex];
+      setCurrentProblem(problem);
+    } else {
+      console.error("Category not found or no problems available");
     }
-    const problem = categoryData.Problems[currentIndex];
-    setCurrentProblem(problem);
   }, [category, currentIndex]);
 
+  // Handle previous problem navigation
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0)); // Ensure index doesn't go below 0
+    setCurrentIndex((prevIndex) => {
+      const newIndex = Math.max(prevIndex - 1, 0);
+      localStorage.setItem(category, newIndex + 1);
+      return newIndex;
+    });
   };
 
+  // Handle next problem navigation
   const handleNext = () => {
-    const categoryData = dsa.find((cat) => cat.category === category);
-    setCurrentIndex((prevIndex) =>
-      Math.min(prevIndex + 1, categoryData.Problems.length - 1)
-    ); // Ensure index doesn't exceed max
+    setCurrentIndex((prevIndex) => {
+      const categoryData = dsa.find((cat) => cat.category === category);
+      const newIndex = Math.min(prevIndex + 1, categoryData.Problems.length - 1);
+      localStorage.setItem(category, newIndex + 1);
+      return newIndex;
+    });
   };
+
 
   useEffect(() => {
     if (currentProblem && showFlowChart) {

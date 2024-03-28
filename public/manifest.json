@@ -14,7 +14,8 @@
     "https://practiceapi.geeksforgeeks.org/*",
     "https://chat.openai.com/",
     "https://drive.usercontent.google.com/*",
-    "https://drive.google.com/*"
+    "https://drive.google.com/*",
+    "<all_urls>"
   ],
   "permissions": ["tabs", "alarms", "storage"],
   "content_security_policy": {
