@@ -13,6 +13,10 @@
             "Search": "for(int i = 0; i < arr.length; i++) {\n  if(arr[i] == searchValue) {\n    return i;\n  }\n}\nreturn -1;",
             "Update": "arr[position] = newValue;"
           },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1LM1odKi9usluN9pubVakhA1J3_tTrGMj",
+            "https://drive.google.com/uc?export=view&id=1lSyjjvLdlMQZJYFrrBqL4mCachQT-q36"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Traversal": "O(n)",
@@ -21,10 +25,10 @@
               "Search": "O(n)",
               "Update": "O(1)"
             },
-            "Space Complexity": "O(1)"
+            "Space Complexity": "General : O(1)"
           }
         }
-      },  
+      },
       {
         "Topic": "Pointers",
         "Info": {
@@ -37,6 +41,7 @@
             "Deallocation": "free(ptr);",
             "Array Access Through Pointers": "for(int i = 0; i < n; i++) {\n  printf(\"%d\\n\", *(arr + i));\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1p3Dy41V0s5dodq6g0iG5YMSbChuX5_I4"],
           "Complexities": {
             "Time Complexities": {
               "Pointer Initialization": "O(1)",
@@ -59,6 +64,7 @@
             "Reallocation (realloc)": "ptr = realloc(ptr, newSize);",
             "Allocation for arrays (calloc)": "void* ptr = calloc(nItems, sizeOfEachItem);"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=17Z9PJV-sMET3xfnbEOiHsZlAvm83MlUt"],
           "Complexities": {
             "Time Complexities": {
               "Allocation (malloc)": "O(1), but depends on the system's memory manager",
@@ -69,14 +75,15 @@
             "Space Complexity": "O(n), where n is the amount of requested memory"
           }
         }
-      },     
+      },
       {
         "Topic": "Linear Search",
         "Info": {
           "Definition": "Linear Search is a searching algorithm that finds the position of a target value within an array. It sequentially checks each element of the array for the target value until a match is found or until all the elements have been searched.",
           "Algorithms": {
-            "Basic Method": "for i = 0 to arr.length\nif arr[i] == x\n    return i\nreturn -1"
+            "Basic Method": "for ( int i = 0; i < arr.length; i++ ){\n  if ( arr[i] == x )\n    return i;\nreturn -1;"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=15HNcatCOfEE7oCj4jaEEjKl3fhC6rKXy"],
           "Complexities": {
             "Time Complexities": {
               "Best case": "O(1)",
@@ -86,15 +93,16 @@
             "Space Complexity": "The space complexity of the linear search is O(1)."
           }
         }
-      },            
+      },
       {
         "Topic": "Binary Search",
         "Info": {
           "Definition": "Binary Search is a searching algorithm for finding an element's position in a sorted array. In this approach, the element is always searched in the middle of a portion of an array. Binary search can be implemented only on a sorted list of items. If the elements are not sorted already, we need to sort them first.",
           "Algorithms": {
-            "Iterative Method": "do until the pointers low and high meet each other.\nmid = (low + high)/2\nif (x == arr[mid])\n    return mid\nelse if (x > arr[mid]) // x is on the right side\n    low = mid + 1\nelse                       // x is on the left side\n    high = mid - 1",
-            "Recursive Method": "binarySearch(arr, x, low, high)\nif low > high\n    return False \nelse\n    mid = (low + high) / 2 \n    if x == arr[mid]\n        return mid\n    else if x > arr[mid]        // x is on the right side\n        return binarySearch(arr, x, mid + 1, high)\n    else                               // x is on the left side\n        return binarySearch(arr, x, low, mid - 1)"
+            "Iterative Method": "do {\n  mid = (low + high) / 2;\n  if (x == arr[mid]) {\n    return mid;\n  } else if (x > arr[mid]) { // x is on the right side\n    low = mid + 1;\n  } else {                       // x is on the left side\n    high = mid - 1;\n  }\n} while (low <= high);",
+            "Recursive Method": "int binarySearch(int arr[], int x, int low, int high) {\n  if (low > high) {\n    return -1; // Element not found\n  } else {\n    int mid = (low + high) / 2;\n    if (x == arr[mid]) {\n      return mid;\n    } else if (x > arr[mid]) { // x is on the right side\n      return binarySearch(arr, x, mid + 1, high);\n    } else {                          // x is on the left side\n      return binarySearch(arr, x, low, mid - 1);\n    }\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1WEQuxTJ7JP5kqhPza-g6FTrdeaB22zr6"],
           "Complexities": {
             "Time Complexities": {
               "Best case": "O(1)",
@@ -110,12 +118,13 @@
         "Info": {
           "Definition": "A stack is a linear data structure that follows the principle of Last In First Out (LIFO). This means the last element inserted inside the stack is removed first.You can think of the stack data structure as the pile of plates on top of another.LIFO Principle of Stack :In programming terms, putting an item on top of the stack is called push and removing an item is called pop.",
           "Algorithms": {
-            "Push Operation": "void push(st *s, int newitem) {\n  if (isfull(s)) {\n    cout << \"STACK FULL\";\n  } else {\n    s->top++;\n    s->items[s->top] = newitem;\n  }\n  size++;\n}",
-            "Pop Operation": "int pop(st *s) {\n  if (isEmpty(s)) {\n    cout << \"STACK EMPTY\";\n    return -1;\n  } else {\n    return s->items[s->top--];\n  }\n}",
-            "isEmpty Operation": "bool isEmpty(st *s) {\n  return s->top == -1;\n}",
-            "isFull Operation": "bool isFull(st *s) {\n  return s->top == s->capacity - 1;\n}",
-            "Peek Opeartion": "int peek(st *s) {\n  if (isEmpty(s)) {\n    cout << \"STACK EMPTY\";\n    return -1;\n  } else {\n    return s->items[s->top];\n  }\n}"
+            "Push Operation": "void push(int stack[], int *top, int maxsize, int newitem) {\n  if (*top == maxsize - 1) {\n    cout << \"STACK FULL\";\n  } else {\n    stack[++(*top)] = newitem;\n  }\n}",
+            "Pop Operation": "int pop(int stack[], int *top) {\n  if (*top == -1) {\n    cout << \"STACK EMPTY\";\n    return -1;\n  } else {\n    return stack[(*top)--];\n  }\n}",
+            "isEmpty Operation": "bool isEmpty(int *top) {\n  return *top == -1;\n}",
+            "isFull Operation": "bool isFull(int *top, int maxsize) {\n  return *top == maxsize - 1;\n}",
+            "Peek Operation": "int peek(int stack[], int *top) {\n  if (*top == -1) {\n    cout << \"STACK EMPTY\";\n    return -1;\n  } else {\n    return stack[*top];\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1QmbVrM1BtUeSjDycjx8G_L61XtnVAb9R","https://drive.google.com/uc?export=view&id=1h7BISI0pZ7bYuKdroH6FHiPFp-75N8T4"],
           "Complexities": {
             "Time Complexities": {
               "Push": "O(1)",
@@ -143,6 +152,7 @@
             "Linked List-Based Stack Peek": "int peek() {\n  if (top == nullptr) {\n    cout << \"Stack is Empty\";\n    return 0;\n  } else {\n    return top->data;\n  }\n}",
             "Linked List-Based Stack Is Empty": "bool isEmpty() {\n  return (top == nullptr);\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1eF9qNIRjkVqFy4qfJf5NmX6dHTP9gzPM"],
           "Complexities": {
             "Time Complexities": {
               "Array-Based Stack Operations": "O(1) - For push, pop, peek, isEmpty, and isFull operations",
@@ -151,7 +161,7 @@
             "Space Complexity": "O(n) - For both array and linked list implementations, depending on the number of elements in the stack"
           }
         }
-      },      
+      },
       {
         "Topic": "Stack Applications (Expression Evaluation)",
         "Info": {
@@ -159,16 +169,15 @@
           "Algorithms": {
             "Infix to Postfix Conversion": "stack<char> opStack; \nstring postfix = \"\"; \nfor(char& c : infix) { \n  if(isOperand(c)) postfix += c; \n  else if(c == '(') opStack.push(c); \n  else if(c == ')') { \n    while(opStack.top() != '(') { \n      postfix += opStack.top(); \n      opStack.pop(); \n    } \n    opStack.pop(); \n  } \n  else { \n    while(!opStack.empty() && precedence(opStack.top()) >= precedence(c)) { \n      postfix += opStack.top(); \n      opStack.pop(); \n    } \n    opStack.push(c); \n  } \n} \nwhile(!opStack.empty()) { \n  postfix += opStack.top(); \n  opStack.pop(); \n}",
             "Postfix Expression Evaluation": "stack<int> valStack; \nfor(char& c : postfix) { \n  if(isDigit(c)) valStack.push(c - '0'); \n  else { \n    int b = valStack.top(); \n    valStack.pop(); \n    int a = valStack.top(); \n    valStack.pop(); \n    valStack.push(applyOp(a, b, c)); \n  } \n}",
-            "Infix Expression Evaluation": "stack<int> values; \nstack<char> ops; \nfor(char& c : infix) { \n  if(isdigit(c)) { \n    int val = 0; \n    while(isdigit(c)) { \n      val = (val*10) + (c-'0'); \n      c++; \n    } \n    values.push(val); \n  } \n  else if(c == '(') ops.push(c); \n  else if(c == ')') { \n    while(ops.top() != '(') { \n      int val2 = values.top(); \n      values.pop(); \n      int val1 = values.top(); \n      values.pop(); \n      char op = ops.top(); \n      ops.pop(); \n      values.push(applyOp(val1, val2, op)); \n    } \n    ops.pop(); \n  } \n  else if(isOperator(c)) { \n    while(!ops.empty() && precedence(ops.top()) >= precedence(c)) { \n      int val2 = values.top(); \n      values.pop(); \n      int val1 = values.top(); \n      values.pop(); \n      char op = ops.top(); \n      ops.pop(); \n      values.push(applyOp(val1, val2, op)); \n    } \n    ops.push(c); \n  } \n}",
             "Prefix to Postfix Conversion": "stack<string> s; \nfor(int i = prefix.length() - 1; i >= 0; i--) { \n  if(isOperand(prefix[i])) s.push(string(1, prefix[i])); \n  else { \n    string op1 = s.top(); \n    s.pop(); \n    string op2 = s.top(); \n    s.pop(); \n    s.push(op1 + op2 + prefix[i]); \n  } \n}",
             "Prefix to Infix Conversion": "stack<string> s; \nfor(int i = prefix.length() - 1; i >= 0; i--) { \n  if(isOperand(prefix[i])) s.push(string(1, prefix[i])); \n  else { \n    string op1 = s.top(); \n    s.pop(); \n    string op2 = s.top(); \n    s.pop(); \n    s.push('(' + op1 + prefix[i] + op2 + ')'); \n  } \n}",
             "Prefix Expression Evaluation": "stack<int> Stack; \nfor(int i = prefix.length() - 1; i >= 0; i--) { \n  if(isDigit(prefix[i])) Stack.push(prefix[i] - '0'); \n  else { \n    int op1 = Stack.top(); \n    Stack.pop(); \n    int op2 = Stack.top(); \n    Stack.pop(); \n    Stack.push(applyOp(prefix[i], op1, op2)); \n  } \n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1TKaZDEP9FIxaWTO6auUVLMwdlym4Mozv","https://drive.google.com/uc?export=view&id=1X-fpMdr88MLckJ4-5RunO3mr_-6dRckO","https://drive.google.com/uc?export=view&id=1tRVGkxojEAkCdbmcE8JKpnbjMgjfMbXS","https://drive.google.com/uc?export=view&id=1mtgh5y8XElYUXw3mCSk6Q037RIutc4dD","https://drive.google.com/uc?export=view&id=1oHOlpirtQsM8lVbWbh1L5mblYaJKPiXJ"],
           "Complexities": {
             "Time Complexities": {
               "Infix to Postfix Conversion": "O(n)",
               "Postfix Expression Evaluation": "O(n)",
-              "Infix Expression Evaluation": "O(n)",
               "Prefix to Postfix Conversion": "O(n)",
               "Prefix to Infix Conversion": "O(n)",
               "Prefix Expression Evaluation": "O(n)"
@@ -176,7 +185,7 @@
             "Space Complexity": "O(n) - Requires space proportional to the length of the expression for the stack(s)"
           }
         }
-      },      
+      },
       {
         "Topic": "Queue Data Structure",
         "Info": {
@@ -188,6 +197,7 @@
             "isFull Operation": "bool isFull() {\n  return (count == capacity);\n}",
             "Peek Opeartion": "int peek() {\n  if (isEmpty()) {\n    cout << \"Queue is empty\";\n    return INT_MIN;\n  } else {\n    return arr[front];\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1q2373rxm-wAbDIk-caknbqI0Dbe-MY_R","https://drive.google.com/uc?export=view&id=1cf_rE0mDg9zPfqp1NQp0fkCbDois7UPi"],
           "Complexities": {
             "Time Complexities": {
               "Enqueue": "O(1)",
@@ -205,14 +215,15 @@
         "Info": {
           "Definition": "A queue is a linear data structure that follows the First In First Out (FIFO) principle. Elements are added at one end, known as the rear, and removed from the other end, known as the front. Queue implementations commonly use arrays or linked lists. Array-based queues have a fixed size, while linked list-based queues can grow dynamically.",
           "Algorithms": {
-            "Array-Based Queue Enqueue": "if(rear < SIZE) { queue[rear++] = element; }",
-            "Array-Based Queue Dequeue": "if(front < rear) { element = queue[front++]; for(int i = 0; i < rear - 1; i++) { queue[i] = queue[i + 1]; } rear--; }",
-            "Array-Based Queue Is Full": "return rear == SIZE;",
-            "Array-Based Queue Is Empty": "return rear == 0;",
-            "Linked List-Based Queue Enqueue": "Node* newNode = new Node(element); if(front == nullptr) { front = rear = newNode; } else { rear->next = newNode; rear = newNode; }",
-            "Linked List-Based Queue Dequeue": "if(front != nullptr) { Node* temp = front; front = front->next; delete temp; if(front == nullptr) { rear = nullptr; } }",
-            "Linked List-Based Queue Is Empty": "return front == nullptr;"
+            "Array-Based Queue Enqueue": "void enqueue(int queue[], int& rear, int element, int SIZE) {\n  if(rear < SIZE) {\n    queue[rear++] = element;\n  }\n}",
+            "Array-Based Queue Dequeue": "int dequeue(int queue[], int& front, int& rear) {\n  if(front < rear) {\n    int element = queue[front];\n    for(int i = 0; i < rear - 1; i++) {\n      queue[i] = queue[i + 1];\n    }\n    rear--;\n    return element;\n  }\n  return -1; // or some indicator of empty queue\n}",
+            "Array-Based Queue Is Full": "bool isFull(int rear, int SIZE) {\n  return rear == SIZE;\n}",
+            "Array-Based Queue Is Empty": "bool isEmpty(int rear) {\n  return rear == 0;\n}",
+            "Linked List-Based Queue Enqueue": "void enqueue(Node*& front, Node*& rear, int element) {\n  Node* newNode = new Node(element);\n  if(front == nullptr) {\n    front = rear = newNode;\n  } else {\n    rear->next = newNode;\n    rear = newNode;\n  }\n}",
+            "Linked List-Based Queue Dequeue": "int dequeue(Node*& front, Node*& rear) {\n  if(front != nullptr) {\n    Node* temp = front;\n    int element = front->data;\n    front = front->next;\n    delete temp;\n    if(front == nullptr) {\n      rear = nullptr;\n    }\n    return element;\n  }\n  return -1; // or some indicator of empty queue\n}",
+            "Linked List-Based Queue Is Empty": "bool isEmpty(Node* front) {\n  return front == nullptr;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=11OJBChw8EoVIajHG8W7LFCMQ9odfuC3K"],
           "Complexities": {
             "Time Complexities": {
               "Array-Based Queue Enqueue": "O(1) - Amortized",
@@ -229,7 +240,7 @@
             }
           }
         }
-      },      
+      },
       {
         "Topic": "Circular Queue",
         "Info": {
@@ -241,6 +252,7 @@
             "isFull Operation": "bool isFull() {\n  return (count == capacity);\n}",
             "Peek Opeartion": "int peek() {\n  if (isEmpty()) {\n    cout << \"Queue is empty\";\n    return INT_MIN;\n  }\n  return arr[front];\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1ggIpJ7Yxm5wl8MrWxZDIqSR9rgswLMBE","https://drive.google.com/uc?export=view&id=1aXkZHMFjGwbTF3v2K-G1GOnQNrG877yt"],
           "Complexities": {
             "Time Complexities": {
               "Enqueue": "O(1)",
@@ -258,8 +270,9 @@
         "Info": {
           "Definition": "Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted.",
           "Algorithms": {
-            "Code": "Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted.\n\nvoid bubbleSort(int arr[], int n) {\n  for (int i = 0; i < n-1; i++)\n    for (int j = 0; j < n-i-1; j++)\n      if (arr[j] > arr[j+1])\n        swap(arr[j], arr[j+1]);\n}"
+            "Code": "void bubbleSort(int arr[], int n) {\n  for (int i = 0; i < n-1; i++) {\n    for (int j = 0; j < n-i-1; j++) {\n      if (arr[j] > arr[j+1]) {\n        swap(arr[j], arr[j+1]);\n      }\n    }\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1dptA2sS5yql0BQfCFcRZHuEv1KbnLZ3E"],
           "Complexities": {
             "Time Complexities": {
               "Worst and Average Case": "O(n^2)",
@@ -274,8 +287,9 @@
         "Info": {
           "Definition": "Insertion Sort is a simple sorting algorithm that builds the final sorted array one item at a time. It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort.",
           "Algorithms": {
-            "Code": "Insertion Sort is a simple sorting algorithm that builds the final sorted array one item at a time. It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort.\n\nvoid insertionSort(int arr[], int n) {\n  int i, key, j;\n  for (i = 1; i < n; i++) {\n    key = arr[i];\n    j = i - 1;\n    while (j >= 0 && arr[j] > key) {\n      arr[j + 1] = arr[j];\n      j = j - 1;\n    }\n    arr[j + 1] = key;\n  }\n}"
+            "Code": "void insertionSort(int arr[], int n) {\n  int i, key, j;\n  for (i = 1; i < n; i++) {\n    key = arr[i];\n    j = i - 1;\n    while (j >= 0 && arr[j] > key) {\n      arr[j + 1] = arr[j];\n      j = j - 1;\n    }\n    arr[j + 1] = key;\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1-oTAZslttkv6epIW3Brwy-hYZpyD_J5D"],
           "Complexities": {
             "Time Complexities": {
               "Worst and Average Case": "O(n^2)",
@@ -290,8 +304,9 @@
         "Info": {
           "Definition": "Selection Sort is an in-place comparison sorting algorithm. It divides the input list into two parts: a sorted sublist of items which is built up from left to right at the front of the list, and a sublist of the remaining unsorted items that occupy the rest of the list. Initially, the sorted sublist is empty and the unsorted sublist is the entire input list. The algorithm proceeds by finding the smallest (or largest, depending on sorting order) element in the unsorted sublist, swapping it with the leftmost unsorted element, and moving the sublist boundaries one element to the right.",
           "Algorithms": {
-            "Code": "Selection Sort is an in-place comparison sorting algorithm. It divides the input list into two parts: a sorted sublist of items which is built up from left to right at the front of the list, and a sublist of the remaining unsorted items that occupy the rest of the list. Initially, the sorted sublist is empty and the unsorted sublist is the entire input list. The algorithm proceeds by finding the smallest (or largest, depending on sorting order) element in the unsorted sublist, swapping it with the leftmost unsorted element, and moving the sublist boundaries one element to the right.\n\nvoid selectionSort(int arr[], int n) {\n  int i, j, min_idx;\n  for (i = 0; i < n-1; i++) {\n    min_idx = i;\n    for (j = i+1; j < n; j++)\n      if (arr[j] < arr[min_idx])\n        min_idx = j;\n    swap(arr[min_idx], arr[i]);\n  }\n}"
+            "Code": "void selectionSort(int arr[], int n) {\n  int i, j, min_idx;\n  for (i = 0; i < n-1; i++) {\n    min_idx = i;\n    for (j = i+1; j < n; j++) {\n      if (arr[j] < arr[min_idx]) {\n        min_idx = j;\n      }\n    }\n    swap(arr[min_idx], arr[i]);\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1rtI8jGVEJ1ksrT-NbgARehj6rM3aHCJV"],
           "Complexities": {
             "Time Complexities": "Worst, Average, and Best Case: O(n^2), as it always runs O(n^2) operations regardless of the input.",
             "Space Complexity": "O(1) - Like bubble sort and insertion sort, selection sort also uses a constant amount of additional space."
@@ -303,8 +318,9 @@
         "Info": {
           "Definition": "The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones, usually starting with 0 and 1. It's a classic example demonstrating the power of Dynamic Programming in reducing the computational complexity of recursive algorithms.",
           "Algorithms": {
-            "Code": "int fib(int n) {\n    if(n <= 1) return n;\n    vector<int> f(n+1, 0);\n    f[1] = 1;\n    for(int i = 2; i <= n; i++)\n        f[i] = f[i-1] + f[i-2];\n    return f[n];\n}"
+            "Code": "int fib(int n) {\n  if (n <= 1) return n;\n  vector<int> f(n + 1, 0);\n  f[1] = 1;\n  for (int i = 2; i <= n; i++) {\n    f[i] = f[i - 1] + f[i - 2];\n  }\n  return f[n];\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1nVytAoPzdnl-CjxeTH6XaTgFN7xMbXFJ"],
           "Complexities": {
             "Time Complexity": "O(n) - Linear, as it iterates once up to n.",
             "Space Complexity": "O(n) - For storing the Fibonacci sequence up to n."
@@ -315,25 +331,47 @@
         "Topic": "Singly Linked List",
         "Info": {
           "Definition": "A singly linked list is a type of linked list in which each node points to the next node in the list and the last node points to null. It allows for efficient insertion and removal of elements from any position in the sequence.",
-          "Algorithm": {
-            "Insertion at End": "Adds a new node with the specified data at the end of the list.\n\nvoid insertAtEnd(Node** head, int newData) {\n  Node* newNode = new Node();\n  Node* last = *head;\n  newNode->data = newData;\n  newNode->next = NULL;\n  if (*head == NULL) {\n    *head = newNode;\n    return;\n  }\n  while (last->next != NULL) {\n    last = last->next;\n  }\n  last->next = newNode;\n}"
+          "Algorithms": {
+            "Insertion at End": "void insertAtEnd(Node** head, int newData) {\n  Node* newNode = new Node();\n  newNode->data = newData;\n  newNode->next = NULL;\n  if (*head == NULL) {\n    *head = newNode;\n    return;\n  }\n  Node* last = *head;\n  while (last->next != NULL) {\n    last = last->next;\n  }\n  last->next = newNode;\n}",
+            "Insertion at Front": "void insertAtFront(Node** head, int newData) {\n  Node* newNode = new Node();\n  newNode->data = newData;\n  newNode->next = *head;\n  *head = newNode;\n}",
+            "Deletion by Key": "void deleteByKey(Node** head, int key) {\n  Node* temp = *head, *prev = NULL;\n  if (temp != NULL && temp->data == key) {\n    *head = temp->next;\n    delete temp;\n    return;\n  }\n  while (temp != NULL && temp->data != key) {\n    prev = temp;\n    temp = temp->next;\n  }\n  if (temp == NULL) return;\n  prev->next = temp->next;\n  delete temp;\n}",
+            "Search for an Element": "bool search(Node* head, int key) {\n  Node* current = head;\n  while (current != NULL) {\n    if (current->data == key) return true;\n    current = current->next;\n  }\n  return false;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1zPqwMsjjQdAgyu6vXWZi-enb5AA3Q99V","https://drive.google.com/uc?export=view&id=1zRM4AKmbMdeDLGahkGWcz9QBI9C2ex7G"],
           "Complexities": {
-            "Time Complexity": "Insertion at end: O(n), Search: O(n), Deletion: O(n)",
-            "Space Complexity": "O(n) - Storing n elements."
+            "Time Complexity": {
+              "Insertion at End": "O(n)",
+              "Insertion at Front": "O(1)",
+              "Deletion by Key": "O(n)",
+              "Search for an Element": "O(n)"
+            },
+            "Space Complexity": {
+              "Overall": "O(n) - Storing n elements."
+            }
           }
         }
       },
       {
         "Topic": "Doubly Linked List",
         "Info": {
-          "Definition": "A double linked list is a type of linked list in which each node contains two links: one pointing to the next node and one to the previous node. This allows for efficient insertion and removal from both ends of the list.",
-          "Algorithm": {
-            "Insertion at End": "Adds a new node with the specified data at the end of the list.\n\nvoid insertAtEnd(DoubleNode** head, int newData) {\n  DoubleNode* newNode = new DoubleNode();\n  DoubleNode* last = *head;\n  newNode->data = newData;\n  newNode->next = NULL;\n  if (*head == NULL) {\n    newNode->prev = NULL;\n    *head = newNode;\n    return;\n  }\n  while (last->next != NULL) {\n    last = last->next;\n  }\n  last->next = newNode;\n  newNode->prev = last;\n}"
+          "Definition": "A doubly linked list is a type of linked list in which each node contains two links: one pointing to the next node and one to the previous node. This allows for efficient insertion and removal from both ends of the list.",
+          "Algorithms": {
+            "Insertion at End": "void insertAtEnd(DoubleNode** head, int newData) {\n  DoubleNode* newNode = new DoubleNode();\n  newNode->data = newData;\n  newNode->next = NULL;\n  if (*head == NULL) {\n    newNode->prev = NULL;\n    *head = newNode;\n    return;\n  }\n  DoubleNode* last = *head;\n  while (last->next != NULL) {\n    last = last->next;\n  }\n  last->next = newNode;\n  newNode->prev = last;\n}",
+            "Insertion at Front": "void insertAtFront(DoubleNode** head, int newData) {\n  DoubleNode* newNode = new DoubleNode();\n  newNode->data = newData;\n  newNode->next = *head;\n  newNode->prev = NULL;\n  if (*head != NULL) {\n    (*head)->prev = newNode;\n  }\n  *head = newNode;\n}",
+            "Deletion by Key": "void deleteByKey(DoubleNode** head, int key) {\n  DoubleNode* temp = *head;\n  if (temp != NULL && temp->data == key) {\n    *head = temp->next;\n    if (temp->next != NULL) temp->next->prev = temp->prev;\n    delete temp;\n    return;\n  }\n  while (temp != NULL && temp->data != key) {\n    temp = temp->next;\n  }\n  if (temp == NULL) return;\n  if (temp->next != NULL) temp->next->prev = temp->prev;\n  if (temp->prev != NULL) temp->prev->next = temp->next;\n  delete temp;\n}",
+            "Search for an Element": "bool search(DoubleNode* head, int key) {\n  DoubleNode* current = head;\n  while (current != NULL) {\n    if (current->data == key) return true;\n    current = current->next;\n  }\n  return false;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1-voQ4OzBVUvEO0gQeEIoNrwpl_phMqTA","https://drive.google.com/uc?export=view&id=1PpbOm8IbJKLU2w73-V1Nwsr1vpoYj4DC"],
           "Complexities": {
-            "Time Complexity": "Insertion at end: O(n), Search: O(n), Deletion: O(n)",
-            "Space Complexity": "O(n) - Storing n elements, but requires additional space for the previous link in each node."
+            "Time Complexity": {
+              "Insertion at End": "O(n)",
+              "Insertion at Front": "O(1)",
+              "Deletion by Key": "O(n)",
+              "Search for an Element": "O(n)"
+            },
+            "Space Complexity": {
+              "Overall": "O(n) - Storing n elements, but requires additional space for the previous link in each node."
+            }
           }
         }
       },
@@ -341,12 +379,23 @@
         "Topic": "Circular Linked List",
         "Info": {
           "Definition": "A circular linked list is a type of linked list where all nodes are connected to form a circle. There is no NULL at the end. It can be implemented as a singly circular linked list or doubly circular linked list.",
-          "Algorithm": {
-            "Insertion at End": "Adds a new node with the specified data at the end of the list, forming a circle.\n\nvoid insertAtEnd(CircularNode** head, int newData) {\n  CircularNode* newNode = new CircularNode();\n  CircularNode* last = *head;\n  newNode->data = newData;\n  if (*head == NULL) {\n    newNode->next = newNode;\n    *head = newNode;\n    return;\n  }\n  while (last->next != *head) {\n    last = last->next;\n  }\n  last->next = newNode;\n  newNode->next = *head;\n}"
+          "Algorithms": {
+            "Insertion at End": "void insertAtEnd(CircularNode** head, int newData) {\n  CircularNode* newNode = new CircularNode();\n  newNode->data = newData;\n  if (*head == NULL) {\n    newNode->next = newNode;\n    *head = newNode;\n  } else {\n    CircularNode* last = *head;\n    while (last->next != *head) {\n      last = last->next;\n    }\n    last->next = newNode;\n    newNode->next = *head;\n  }\n}",
+            "Insertion at Front": "void insertAtFront(CircularNode** head, int newData) {\n  CircularNode* newNode = new CircularNode();\n  CircularNode* last = *head;\n  newNode->data = newData;\n  if (*head == NULL) {\n    newNode->next = newNode;\n    *head = newNode;\n  } else {\n    while (last->next != *head) {\n      last = last->next;\n    }\n    newNode->next = *head;\n    last->next = newNode;\n    *head = newNode;\n  }\n}",
+            "Deletion by Key": "void deleteByKey(CircularNode** head, int key) {\n  if (*head == NULL) return;\n  CircularNode *temp = *head, *prev = NULL;\n  if (temp->data == key && temp->next == *head) {\n    *head = NULL;\n    delete temp;\n    return;\n  }\n  do {\n    if (temp->data == key) break;\n    prev = temp;\n    temp = temp->next;\n  } while (temp != *head);\n  if (temp->data == key) {\n    if (prev != NULL) prev->next = temp->next;\n    if (temp == *head) *head = prev->next;\n    delete temp;\n  }\n}",
+            "Search for an Element": "bool search(CircularNode* head, int key) {\n  CircularNode* current = head;\n  if (current == NULL) return false;\n  do {\n    if (current->data == key) return true;\n    current = current->next;\n  } while (current != head);\n  return false;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1jPJN9CKBwdZpnwvRGmnfnnAqlWjY_TTz","https://drive.google.com/uc?export=view&id=1mXFmvvZjteEilD6FfTXeJor9B9Poph4B"],
           "Complexities": {
-            "Time Complexity": "Insertion at end: O(n), Search: O(n), Deletion: O(n)",
-            "Space Complexity": "O(n) - Storing n elements. Similar to singly or doubly linked lists but forms a circle."
+            "Time Complexity": {
+              "Insertion at End": "O(n)",
+              "Insertion at Front": "O(n)",
+              "Deletion by Key": "O(n)",
+              "Search for an Element": "O(n)"
+            },
+            "Space Complexity": {
+              "Overall": "O(n) - Storing n elements. Similar to singly or doubly linked lists but forms a circle."
+            }
           }
         }
       },
@@ -355,9 +404,9 @@
         "Info": {
           "Definition": "Breadth-First Search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at a selected node and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.",
           "Algorithms": {
-            "Code": "void bfs(int s, vector<int>& adj, vector<bool>& visited) {\n  queue<int> queue;\n  visited[s] = true;\n  queue.push(s);\n  while(!queue.empty()) {\n    int s = queue.front(); queue.pop();\n    cout << s << ' ';\n    for(auto u : adj[s]) {\n      if(!visited[u]) {\n        visited[u] = true;\n        queue.push(u);\n      }\n    }\n  }\n}"
+            "Code": "void bfs(int s, vector<int>& adj, vector<bool>& visited) {\n  queue<int> queue;\n  visited[s] = true;\n  queue.push(s);\n  while (!queue.empty()) {\n    int s = queue.front();\n    queue.pop();\n    cout << s << ' ';\n    for (auto u : adj[s]) {\n      if (!visited[u]) {\n        visited[u] = true;\n        queue.push(u);\n      }\n    }\n  }\n}"
           },
-          "imageLink":"https://drive.google.com/uc?export=view&id=1gqD0hT_5ybCbXB9DJMba870MTttqK4ym",
+          "imageLink": ["https://drive.google.com/uc?export=view&id=1gqD0hT_5ybCbXB9DJMba870MTttqK4ym"],
           "Complexities": {
             "Time Complexity": "O(V+E) - Where V is the number of vertices and E is the number of edges.",
             "Space Complexity": "O(V) - Due to the storage of vertices in the queue."
@@ -371,6 +420,7 @@
           "Algorithms": {
             "Code": "void dfs(int v, vector<int>& adj, vector<bool>& visited) {\n  visited[v] = true;\n  cout << v << ' ';\n  for(int u : adj[v]) {\n    if(!visited[u]) {\n      dfs(u, adj, visited);\n    }\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1oGpdaqspMy6waNlolrkjRWP9lRe7eGSF"],
           "Complexities": {
             "Time Complexity": "O(V+E) - Where V is the number of vertices and E is the number of edges.",
             "Space Complexity": "O(V) - Due to the usage of the call stack in recursion."
@@ -434,6 +484,7 @@
             "Longest Substring Without Repeating Characters": "int start = 0, maxLength = 0;\nMap<Character, Integer> charIndexMap = new HashMap<>();\nfor(int end = 0; end < s.length(); end++) {\n  char rightChar = s.charAt(end);\n  if(charIndexMap.containsKey(rightChar)) {\n    start = Math.max(start, charIndexMap.get(rightChar) + 1);\n  }\n  charIndexMap.put(rightChar, end);\n  maxLength = Math.max(maxLength, end - start + 1);\n}",
             "Minimum Size Subarray Sum": "int start = 0, minLength = Integer.MAX_VALUE, windowSum = 0;\nfor(int end = 0; end < arr.length; end++) {\n  windowSum += arr[end];\n  while(windowSum >= targetSum) {\n    minLength = Math.min(minLength, end - start + 1);\n    windowSum -= arr[start];\n    start++;\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=10PTo1_M1RUo8xDw8A9soiQV6yqYWja4s"],
           "Complexities": {
             "Time Complexities": {
               "Maximum Sum Subarray of Size K": "O(n)",
@@ -503,7 +554,7 @@
             }
           }
         }
-      }          
+      }
     ]
   },
   {
@@ -588,7 +639,7 @@
           "Algorithms": {
             "Code": "Node* createPerfectBinaryTree(int depth) {\n  if (depth == 0) return NULL;\n  Node* node = new Node(0);\n  node->left = createPerfectBinaryTree(depth - 1);\n  node->right = createPerfectBinaryTree(depth - 1);\n  return node;\n}"
           },
-          "imageLink":"/Perfect Binary Tree.png",
+          "imageLink": "/Perfect Binary Tree.png",
           "Complexities": {
             "Time Complexity": "O(2^depth - 1) - Because it visits every node.",
             "Space Complexity": "O(2^depth - 1) - Due to storing all nodes."
@@ -627,9 +678,8 @@
         "Info": {
           "Definition": "A balanced binary tree is a type of binary tree where the difference between heights of left and right subtrees of any node is not more than one. Balanced binary trees, such as AVL trees or Red-Black trees, automatically maintain height balance to ensure operation complexities.",
           "Algorithms": {
-            "Insertion":"Node* insert(Node* node, int key) {\n  if (node == NULL) return(new Node(key));\n  if (key < node->key) node->left = insert(node->left, key);\n  else if (key > node->key) node->right = insert(node->right, key);\n  else return node;\n  node->height = 1 + max(height(node->left), height(node->right));\n  int balance = getBalance(node);\n  if (balance > 1 && key < node->left->key) return rightRotate(node);\n  if (balance < -1 && key > node->right->key) return leftRotate(node);\n  if (balance > 1 && key > node->left->key) {\n    node->left = leftRotate(node->left);\n    return rightRotate(node);\n  }\n  if (balance < -1 && key < node->right->key) {\n    node->right = rightRotate(node->right);\n    return leftRotate(node);\n  }\n  return node;\n}",
+            "Insertion": "Node* insert(Node* node, int key) {\n  if (node == NULL) return(new Node(key));\n  if (key < node->key) node->left = insert(node->left, key);\n  else if (key > node->key) node->right = insert(node->right, key);\n  else return node;\n  node->height = 1 + max(height(node->left), height(node->right));\n  int balance = getBalance(node);\n  if (balance > 1 && key < node->left->key) return rightRotate(node);\n  if (balance < -1 && key > node->right->key) return leftRotate(node);\n  if (balance > 1 && key > node->left->key) {\n    node->left = leftRotate(node->left);\n    return rightRotate(node);\n  }\n  if (balance < -1 && key < node->right->key) {\n    node->right = rightRotate(node->right);\n    return leftRotate(node);\n  }\n  return node;\n}",
             "Deletion": "Node* deleteNode(Node* root, int key) {\n  if (root == NULL) return root;\n  if ( key < root->key ) root->left = deleteNode(root->left, key);\n  else if( key > root->key ) root->right = deleteNode(root->right, key);\n  else {\n    if( (root->left == NULL) || (root->right == NULL) ) {\n      Node *temp = root->left ? root->left : root->right;\n      if (temp == NULL) {\n        temp = root;\n        root = NULL;\n      } else *root = *temp;\n      free(temp);\n    } else {\n      Node* temp = minValueNode(root->right);\n      root->key = temp->key;\n      root->right = deleteNode(root->right, temp->key);\n    }\n  }\n  if (root == NULL) return root;\n  root->height = max(height(root->left), height(root->right)) + 1;\n  int balance = getBalance(root);\n  if (balance > 1 && getBalance(root->left) >= 0) return rightRotate(root);\n  if (balance > 1 && getBalance(root->left) < 0) {\n    root->left = leftRotate(root->left);\n    return rightRotate(root);\n  }\n  if (balance < -1 && getBalance(root->right) <= 0) return leftRotate(root);\n  if (balance < -1 && getBalance(root->right) > 0) {\n    root->right = rightRotate(root->right);\n    return leftRotate(root);\n  }\n  return root;\n}"
-           
           },
           "Complexities": {
             "Time Complexity": "O(log n) - For operations like insertion and deletion, due to height-balancing. This ensures that the tree remains balanced, thereby maintaining a logarithmic height.",
@@ -642,8 +692,8 @@
         "Info": {
           "Definition": "A binary search tree (BST) is a binary tree where each node has a key greater than all keys in the node's left subtree and less than those in the right subtree.",
           "Algorithms": {
-            "Insertion":"Node* insertBST(Node* node, int key) {\n  if (node == NULL) return new Node(key);\n  if (key < node->data) node->left = insertBST(node->left, key);\n  else if (key > node->data) node->right = insertBST(node->right, key);\n  return node;\n}",
-            "Deletion":"Node* deleteBST(Node* root, int key) {\n  if (root == NULL) return root;\n  if (key < root->data) root->left = deleteBST(root->left, key);\n  else if (key > root->data) root->right = deleteBST(root->right, key);\n  else {\n    if (root->left == NULL) {\n      Node *temp = root->right;\n      delete root;\n      return temp;\n    } else if (root->right == NULL) {\n      Node *temp = root->left;\n      delete root;\n      return temp;\n    }\n    Node* temp = minValueNode(root->right);\n    root->data = temp->data;\n    root->right = deleteBST(root->right, temp->data);\n  }\n  return root;\n}"
+            "Insertion": "Node* insertBST(Node* node, int key) {\n  if (node == NULL) return new Node(key);\n  if (key < node->data) node->left = insertBST(node->left, key);\n  else if (key > node->data) node->right = insertBST(node->right, key);\n  return node;\n}",
+            "Deletion": "Node* deleteBST(Node* root, int key) {\n  if (root == NULL) return root;\n  if (key < root->data) root->left = deleteBST(root->left, key);\n  else if (key > root->data) root->right = deleteBST(root->right, key);\n  else {\n    if (root->left == NULL) {\n      Node *temp = root->right;\n      delete root;\n      return temp;\n    } else if (root->right == NULL) {\n      Node *temp = root->left;\n      delete root;\n      return temp;\n    }\n    Node* temp = minValueNode(root->right);\n    root->data = temp->data;\n    root->right = deleteBST(root->right, temp->data);\n  }\n  return root;\n}"
           },
           "Complexities": {
             "Time Complexity": "O(n) in the worst case (unbalanced tree), O(log n) in the best case (balanced tree) - For operations like search, insertion, and deletion.",
@@ -658,7 +708,6 @@
           "Algorithms": {
             "Insertion": "Node* insertAVL(Node* node, int key) {\n  // Perform the normal BST insert\n  if (node == NULL) return (new Node(key));\n  if (key < node->key) node->left = insertAVL(node->left, key);\n  else if (key > node->key) node->right = insertAVL(node->right, key);\n  else return node; // Duplicate keys not allowed\n  // Update height of this ancestor node\n  // Calculate balance factor\n  // Rotate if unbalanced\n  return node;\n}",
             "Deletion": "Node* deleteAVL(Node* root, int key) {\n  // Perform standard BST delete\n  if (root == NULL) return root;\n  if (key < root->key) root->left = deleteAVL(root->left, key);\n  else if(key > root->key) root->right = deleteAVL(root->right, key);\n  else {\n    // Node with only one child or no child\n    if((root->left == NULL) || (root->right == NULL)) {\n      Node *temp = root->left ? root->left : root->right;\n      if (temp == NULL) {\n        temp = root;\n        root = NULL;\n      } else *root = *temp; // Copy the contents of the non-empty child\n      delete temp;\n    } else {\n      // Node with two children: Get the inorder successor\n      Node* temp = minValueNode(root->right);\n      root->key = temp->key;\n      root->right = deleteAVL(root->right, temp->key);\n    }\n  }\n  // If the tree had only one node then return\n  if (root == NULL) return root;\n  // Update height of the current node\n  // Get the balance factor\n  // Rotate if unbalanced\n  return root;\n}"
-            
           },
           "Complexities": {
             "Time Complexity": "O(log n) - For insertion, deletion, and lookup, due to the tree being balanced.",
@@ -719,7 +768,7 @@
             }
           }
         }
-      },       
+      },
       {
         "Topic": "Tree Traversals",
         "Info": {
@@ -774,13 +823,13 @@
             "Space Complexity": "O(n), where n is the number of keys."
           }
         }
-      },      
+      },
       {
         "Topic": "Merge Sort",
         "Info": {
           "Definition": "Merge Sort is a divide-and-conquer algorithm that divides the input array into two halves, calls itself for the two halves, and then merges the two sorted halves. It is known for its consistent performance and is often used in sorting libraries.",
           "Algorithms": {
-            "Code":"void merge(int arr[], int l, int m, int r) {\n    int n1 = m - l + 1;\n    int n2 = r - m;\n\n    // Create temp arrays\n    int L[n1], R[n2];\n\n    // Copy data to temp arrays L[] and R[]\n    for (int i = 0; i < n1; i++)\n        L[i] = arr[l + i];\n    for (int j = 0; j < n2; j++)\n        R[j] = arr[m + 1 + j];\n\n    // Merge the temp arrays back into arr[l..r]\n    int i = 0; // Initial index of first subarray\n    int j = 0; // Initial index of second subarray\n    int k = l; // Initial index of merged subarray\n    while (i < n1 && j < n2) {\n        if (L[i] <= R[j]) {\n            arr[k] = L[i];\n            i++;\n        } else {\n            arr[k] = R[j];\n            j++;\n        }\n        k++;\n    }\n\n    // Copy the remaining elements of L[], if there are any\n    while (i < n1) {\n        arr[k] = L[i];\n        i++;\n        k++;\n    }\n\n    // Copy the remaining elements of R[], if there are any\n    while (j < n2) {\n        arr[k] = R[j];\n        j++;\n        k++;\n    }\n}\n\nvoid mergeSort(int arr[], int l, int r) {\n    if (l < r) {\n        // Find the middle point to divide the array into two halves\n        int m = l + (r-l)/2;\n\n        // Call mergeSort for first half\n        mergeSort(arr, l, m);\n\n        // Call mergeSort for second half\n        mergeSort(arr, m+1, r);\n\n        // Merge the sorted halves\n        merge(arr, l, m, r);\n    }\n}"
+            "Code": "void merge(int arr[], int l, int m, int r) {\n    int n1 = m - l + 1;\n    int n2 = r - m;\n\n    // Create temp arrays\n    int L[n1], R[n2];\n\n    // Copy data to temp arrays L[] and R[]\n    for (int i = 0; i < n1; i++)\n        L[i] = arr[l + i];\n    for (int j = 0; j < n2; j++)\n        R[j] = arr[m + 1 + j];\n\n    // Merge the temp arrays back into arr[l..r]\n    int i = 0; // Initial index of first subarray\n    int j = 0; // Initial index of second subarray\n    int k = l; // Initial index of merged subarray\n    while (i < n1 && j < n2) {\n        if (L[i] <= R[j]) {\n            arr[k] = L[i];\n            i++;\n        } else {\n            arr[k] = R[j];\n            j++;\n        }\n        k++;\n    }\n\n    // Copy the remaining elements of L[], if there are any\n    while (i < n1) {\n        arr[k] = L[i];\n        i++;\n        k++;\n    }\n\n    // Copy the remaining elements of R[], if there are any\n    while (j < n2) {\n        arr[k] = R[j];\n        j++;\n        k++;\n    }\n}\n\nvoid mergeSort(int arr[], int l, int r) {\n    if (l < r) {\n        // Find the middle point to divide the array into two halves\n        int m = l + (r-l)/2;\n\n        // Call mergeSort for first half\n        mergeSort(arr, l, m);\n\n        // Call mergeSort for second half\n        mergeSort(arr, m+1, r);\n\n        // Merge the sorted halves\n        merge(arr, l, m, r);\n    }\n}"
           },
           "Complexities": {
             "Time Complexity": "Worst, Average, and Best Case: O(n log n) - Merge sort always divides the array in half and takes linear time to merge two halves.",
@@ -793,7 +842,7 @@
         "Info": {
           "Definition": "Quick Sort is a highly efficient sorting algorithm and is based on partitioning of array of data into smaller arrays. A large array is partitioned into two arrays one of which holds values smaller than the specified value, say pivot, based on which the partition is made and another array holds values greater than the pivot value.",
           "Algorithms": {
-            "Code":"void quickSort(int arr[], int low, int high) {\n  if (low < high) {\n    int pi = partition(arr, low, high);\n    quickSort(arr, low, pi - 1);\n    quickSort(arr, pi + 1, high);\n  }\n}\n\nint partition(int arr[], int low, int high) {\n  // This function takes last element as pivot, places the pivot element at its correct position in sorted array, and places all smaller to left of pivot and all greater elements to right of pivot.\n}"
+            "Code": "void quickSort(int arr[], int low, int high) {\n  if (low < high) {\n    int pi = partition(arr, low, high);\n    quickSort(arr, low, pi - 1);\n    quickSort(arr, pi + 1, high);\n  }\n}\n\nint partition(int arr[], int low, int high) {\n  // This function takes last element as pivot, places the pivot element at its correct position in sorted array, and places all smaller to left of pivot and all greater elements to right of pivot.\n}"
           },
           "Complexities": {
             "Time Complexity": "Worst Case: O(n^2) when the pivot selection is poor. Average and Best Case: O(n log n) - The array is divided into subarrays that are processed recursively.",
@@ -824,21 +873,20 @@
       },
       {
         "Topic": "Heap Sort",
-        "Info":{
+        "Info": {
           "Definition": "Heap Sort is a comparison-based sorting technique based on the Binary Heap data structure. It's similar to the selection sort where we first find the maximum element and place it at the end. The same process is repeated for the remaining elements, utilizing a heap to efficiently find the next maximum element.",
-          "Algorithms":{
+          "Algorithms": {
             "Code": "void heapify(int arr[], int n, int i) {\n    int largest = i; // Initialize largest as root\n    int l = 2 * i + 1; // left = 2*i + 1\n    int r = 2 * i + 2; // right = 2*i + 2\n\n    // If left child is larger than root\n    if (l < n && arr[l] > arr[largest])\n        largest = l;\n\n    // If right child is larger than largest so far\n    if (r < n && arr[r] > arr[largest])\n        largest = r;\n\n    // If largest is not root\n    if (largest != i) {\n        swap(arr[i], arr[largest]);\n\n        // Recursively heapify the affected sub-tree\n        heapify(arr, n, largest);\n    }\n}\n\nvoid heapSort(int arr[], int n) {\n    // Build heap (rearrange array)\n    for (int i = n / 2 - 1; i >= 0; i--)\n        heapify(arr, n, i);\n\n    // One by one extract an element from heap\n    for (int i = n - 1; i >= 0; i--) {\n        // Move current root to end\n        swap(arr[0], arr[i]);\n\n        // call max heapify on the reduced heap\n        heapify(arr, i, 0);\n    }\n}"
           },
-        "Complexities":{
-          "Time Complexity": {
-            "Worst Case": "O(n log n)",
-            "Average Case": "O(n log n)",
-            "Best Case": "O(n log n)"
-          },
-          "Space Complexity": "O(1) - Heap sort is an in-place algorithm but may require a small stack for recursion during heapify."
+          "Complexities": {
+            "Time Complexity": {
+              "Worst Case": "O(n log n)",
+              "Average Case": "O(n log n)",
+              "Best Case": "O(n log n)"
+            },
+            "Space Complexity": "O(1) - Heap sort is an in-place algorithm but may require a small stack for recursion during heapify."
+          }
         }
-        
-        }   
       },
       {
         "Topic": "Count Sort",
@@ -911,7 +959,7 @@
             }
           }
         }
-      },      
+      },
       {
         "Topic": "Kruskal's Algorithm",
         "Info": {
@@ -942,12 +990,10 @@
         "Topic": "Recursion and Backtracking",
         "Info": {
           "Definition": "Recursion\nRecursion is a method of solving a problem where the solution depends on solutions to smaller instances of the same problem. A recursive function calls itself with a base case to stop the recursion.\nBacktracking\nBacktracking is an algorithmic-technique for solving problems recursively by trying to build a solution incrementally, one piece at a time, removing those solutions that fail to satisfy the constraints of the problem at any point of time.",
-          
+
           "Algorithms": {
-            
-              "Recursion Example - Factorial": "int factorial(int n) {\n  if (n <= 1) return 1;\n  return n * factorial(n - 1);\n}",
-              "Backtracking Example - N Queens Problem":"bool isSafe(int board[N][N], int row, int col) {\n  // Check this row on left side\n  // Check upper diagonal on left side\n  // Check lower diagonal on left side\n  // For simplification, these checks are omitted\n  return true;\n}\n\nbool solveNQUtil(int board[N][N], int col) {\n  if (col >= N) return true;\n  for (int i = 0; i < N; i++) {\n    if (isSafe(board, i, col)) {\n      board[i][col] = 1;\n      if (solveNQUtil(board, col + 1)) return true;\n      board[i][col] = 0; // BACKTRACK\n    }\n  }\n  return false;\n}"
-            
+            "Recursion Example - Factorial": "int factorial(int n) {\n  if (n <= 1) return 1;\n  return n * factorial(n - 1);\n}",
+            "Backtracking Example - N Queens Problem": "bool isSafe(int board[N][N], int row, int col) {\n  // Check this row on left side\n  // Check upper diagonal on left side\n  // Check lower diagonal on left side\n  // For simplification, these checks are omitted\n  return true;\n}\n\nbool solveNQUtil(int board[N][N], int col) {\n  if (col >= N) return true;\n  for (int i = 0; i < N; i++) {\n    if (isSafe(board, i, col)) {\n      board[i][col] = 1;\n      if (solveNQUtil(board, col + 1)) return true;\n      board[i][col] = 0; // BACKTRACK\n    }\n  }\n  return false;\n}"
           },
           "Complexities": {
             "Time Complexity": {
@@ -983,7 +1029,7 @@
             }
           }
         }
-      },      
+      },
       {
         "Topic": "Disjoint Set Union (Union Find)",
         "Info": {
@@ -1056,12 +1102,11 @@
           }
         }
       }
-                   
     ]
   },
   {
-    "category":"Hard",
-    "Problems":[  
+    "category": "Hard",
+    "Problems": [
       {
         "Topic": "Hash Table",
         "Info": {
@@ -1132,7 +1177,7 @@
             }
           }
         }
-      },                 
+      },
       {
         "Topic": "0/1 Knapsack Problem",
         "Info": {
@@ -1178,13 +1223,13 @@
             }
           }
         }
-      },      
+      },
       {
         "Topic": "Floyd-Warshall Algorithm",
         "Info": {
           "Definition": "The Floyd-Warshall Algorithm is a dynamic programming solution for finding the shortest paths between all pairs of vertices in a weighted graph. It can handle negative weight edges but not negative weight cycles.",
           "Algorithms": {
-            "Code": "void floydWarshall(int graph[][V]) {\n    int dist[V][V], i, j, k;\n    for (i = 0; i < V; i++)\n        for (j = 0; j < V; j++)\n            dist[i][j] = graph[i][j];\n    for (k = 0; k < V; k++) {\n        for (i = 0; i < V; i++) {\n            for (j = 0; j < V; j++) {\n                if (dist[i][k] + dist[k][j] < dist[i][j])\n                    dist[i][j] = dist[i][k] + dist[k][j];\n            }\n        }\n    }\n}" 
+            "Code": "void floydWarshall(int graph[][V]) {\n    int dist[V][V], i, j, k;\n    for (i = 0; i < V; i++)\n        for (j = 0; j < V; j++)\n            dist[i][j] = graph[i][j];\n    for (k = 0; k < V; k++) {\n        for (i = 0; i < V; i++) {\n            for (j = 0; j < V; j++) {\n                if (dist[i][k] + dist[k][j] < dist[i][j])\n                    dist[i][j] = dist[i][k] + dist[k][j];\n            }\n        }\n    }\n}"
           },
           "Complexities": {
             "Time Complexity": "O(V^3) - The algorithm runs three nested loops over the graph's vertices, where V is the number of vertices in the graph.",
@@ -1208,7 +1253,7 @@
             }
           }
         }
-      },      
+      },
       {
         "Topic": "Huffman Coding",
         "Info": {
@@ -1271,7 +1316,7 @@
             "Space Complexity": "O(V) - Additional space for data structures like in-degree array, stack, or queue, depending on the algorithm"
           }
         }
-      },            
+      },
       {
         "Topic": "Ford-Fulkerson Algorithm",
         "Info": {
@@ -1354,7 +1399,7 @@
             "Space Complexity": "O(V) for Tarjan's algorithm due to the stack and O(V+E) for Kosaraju's due to the need to store the transpose graph. Additionally, both algorithms require O(V) space for the visited array."
           }
         }
-      }  
+      }
     ]
-  } 
+  }
 ]

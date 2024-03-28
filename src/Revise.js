@@ -33,7 +33,6 @@ const Revision = () => {
   //   ); // Ensure index doesn't exceed max
   // };
 
-
   const { category } = useParams();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentProblem, setCurrentProblem] = useState(null);
@@ -68,12 +67,14 @@ const Revision = () => {
   const handleNext = () => {
     setCurrentIndex((prevIndex) => {
       const categoryData = dsa.find((cat) => cat.category === category);
-      const newIndex = Math.min(prevIndex + 1, categoryData.Problems.length - 1);
+      const newIndex = Math.min(
+        prevIndex + 1,
+        categoryData.Problems.length - 1
+      );
       localStorage.setItem(category, newIndex + 1);
       return newIndex;
     });
   };
-
 
   useEffect(() => {
     if (currentProblem && showFlowChart) {
@@ -81,17 +82,35 @@ const Revision = () => {
     }
   }, [currentProblem, showFlowChart]);
 
-  const fetchFlowchartImage = async (imageLink) => {
+  // const fetchFlowchartImage = async (imageLink) => {
+  //   try {
+  //     const response = await axios.get(imageLink, { responseType: "blob" });
+  //     const imageUrl = URL.createObjectURL(response.data);
+  //     const imgElement = document.createElement("img");
+  //     imgElement.src = imageUrl;
+  //     imgElement.alt = "Flowchart";
+  //     imgElement.className = "w-full h-auto mt-4";
+  //     const flowChartDiv = document.getElementById("flowchart-div");
+  //     flowChartDiv.innerHTML = "";
+  //     flowChartDiv.appendChild(imgElement);
+  //   } catch (error) {
+  //     console.error("Failed to fetch image:", error);
+  //   }
+  // };
+  const fetchFlowchartImage = async (imageLinks) => {
     try {
-      const response = await axios.get(imageLink, { responseType: "blob" });
-      const imageUrl = URL.createObjectURL(response.data);
-      const imgElement = document.createElement("img");
-      imgElement.src = imageUrl;
-      imgElement.alt = "Flowchart";
-      imgElement.className = "w-full h-auto mt-4";
       const flowChartDiv = document.getElementById("flowchart-div");
       flowChartDiv.innerHTML = "";
-      flowChartDiv.appendChild(imgElement);
+  
+      for (let i = 0; i < imageLinks.length; i++) {
+        const response = await axios.get(imageLinks[i], { responseType: "blob" });
+        const imageUrl = URL.createObjectURL(response.data);
+        const imgElement = document.createElement("img");
+        imgElement.src = imageUrl;
+        imgElement.alt = "Flowchart";
+        imgElement.className = "w-full h-auto mt-4";
+        flowChartDiv.appendChild(imgElement);
+      }
     } catch (error) {
       console.error("Failed to fetch image:", error);
     }
@@ -113,10 +132,13 @@ const Revision = () => {
     <div className="flex flex-col items-center justify-center w-full h-screen p-4">
       <h1 className="text-3xl font-bold mb-10">DSA Revision Buddy</h1>
       <div className="flex flex-col items-start justify-start w-full max-w-4xl h-full overflow-auto p-4 bg-white rounded shadow">
-        <h2 className="text-2xl font-bold mb-4 text-center">
+        <div className="text-2xl font-bold mb-4 text-center">
           {currentProblem.Topic}
-        </h2>
-        <p className="mb-6 text-center" style={{ whiteSpace: "pre-wrap" }}>
+        </div>
+        <p
+          className="mb-6 text-left text-base font-medium"
+          style={{ whiteSpace: "pre-wrap" }}
+        >
           {currentProblem.Info.Definition}
         </p>
         <button
@@ -126,12 +148,10 @@ const Revision = () => {
           Click here to view the flowchart
         </button>
         {showFlowChart && (
-          <div
-            className="fixed top-0 right-0 w-1/2 h-full bg-white p-4 shadow-xl z-10 overflow-y-auto"
-          >
+          <div className="fixed top-0 right-0 w-5/6 h-full bg-white p-4 shadow-xl z-10 overflow-y-auto">
             <button
               onClick={() => setShowFlowChart(false)}
-              className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-700"
+              className="px-4 py-2 text-white bg-red-500 rounded-xl hover:bg-red-700"
             >
               Close
             </button>
@@ -143,40 +163,40 @@ const Revision = () => {
           ([key, value], index) => (
             <div key={index} className="mb-4 items-center w-full">
               <h3 className="text-xl font-semibold mb-2 text-center">{key}</h3>
-              <pre className="bg-gray-100 rounded px-10 py-3 whitespace-pre-wrap text-left">
+              <pre className="bg-gray-100 rounded pl-4 py-3 whitespace-pre-wrap text-left text-lg font-medium">
                 {value}
               </pre>
             </div>
           )
-        )}
-        <div className="w-full text-center">
-          <h3 className="text-2xl font-bold">Complexities</h3>
+        )}       
+        <div className="w-full  ">
+        <div className="text-2xl text-center font-bold m-1 ">Complexities</div>
           {Object.entries(currentProblem.Info.Complexities || {}).map(
             ([key, values], index) => (
-              <div key={index} className="mt-2">
-                <h4 className="font-bold text-lg">{key}</h4>
+              <div key={index} className="mt-2 ml-10">
+                <h4 className="font-bold text-left mb-2 text-xl">{key}</h4>
                 {typeof values === "object" ? (
                   <ul className="list-disc list-inside">
                     {Object.entries(values).map(
                       ([subKey, subValue], subIndex) => (
                         <li
                           key={subIndex}
-                          className="text-md"
+                          className="text-base text-left mb-1"
                         >{`${subKey}: ${subValue}`}</li>
                       )
                     )}
                   </ul>
                 ) : (
-                  <p>{values}</p>
+                  <div className=" text-base text-left mb-1">{values}</div>
                 )}
               </div>
             )
           )}
         </div>
-        <div className="flex justify-between mt-5">
+        <div className="flex justify-start mt-5">
           <button
             onClick={handlePrev}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded focus:outline-none focus:shadow-outline"
           >
             Prev
           </button>
