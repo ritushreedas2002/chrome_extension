@@ -101,7 +101,7 @@ const Revision = () => {
           ([key, value], index) => (
             <div key={index} className="mb-4 items-center w-full">
               <h3 className="text-xl font-semibold mb-2 text-center">{key}</h3>
-              <pre className="bg-gray-100 rounded p-2 whitespace-pre-wrap text-center">
+              <pre className="bg-gray-100 rounded px-10 py-3 whitespace-pre-wrap text-left">
                 {value}
               </pre>
             </div>
