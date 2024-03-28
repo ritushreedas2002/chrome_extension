@@ -14,10 +14,13 @@
     "https://practiceapi.geeksforgeeks.org/*",
     "https://chat.openai.com/",
     "https://drive.usercontent.google.com/*",
-    "https://drive.google.com/*"
+    "https://drive.google.com/*",
+    "<all_urls>"
   ],
   "permissions": ["tabs", "alarms", "storage"],
-  "content_security_policy": "img-src 'self' https://drive.google.com; object-src 'self'",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; img-src 'self' https://drive.google.com https://drive.usercontent.google.com data:;"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
