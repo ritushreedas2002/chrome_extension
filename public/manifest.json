@@ -10,12 +10,18 @@
   "background": {
     "service_worker": "background.js"
   },
-  "host_permissions": ["https://practiceapi.geeksforgeeks.org/*","https://chat.openai.com/"],
+  "host_permissions": [
+    "https://practiceapi.geeksforgeeks.org/*",
+    "https://chat.openai.com/",
+    "https://drive.usercontent.google.com/*",
+    "https://drive.google.com/*"
+  ],
   "permissions": ["tabs", "alarms", "storage"],
+  "content_security_policy": "img-src 'self' https://drive.google.com; object-src 'self'",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["chatScript.js","contentScript.js"]
+      "js": ["chatScript.js", "contentScript.js"]
     }
   ]
 }

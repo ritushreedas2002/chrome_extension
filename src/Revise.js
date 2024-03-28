@@ -7,7 +7,7 @@ import { useIndex } from './Context/Context'; // Adjust this path as necessary
 const Revision = () => {
   const { category } = useParams();
   const { indices } = useIndex();
-  console.log(indices);
+  // console.log(indices);
   const initialIndex = indices[category] || 0; // Get initial index from context, default to 0
   const [currentIndex, setCurrentIndex] = useState(initialIndex); 
   const [currentProblem, setCurrentProblem] = useState(null);

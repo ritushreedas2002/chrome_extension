@@ -357,6 +357,7 @@
           "Algorithms": {
             "Code": "void bfs(int s, vector<int>& adj, vector<bool>& visited) {\n  queue<int> queue;\n  visited[s] = true;\n  queue.push(s);\n  while(!queue.empty()) {\n    int s = queue.front(); queue.pop();\n    cout << s << ' ';\n    for(auto u : adj[s]) {\n      if(!visited[u]) {\n        visited[u] = true;\n        queue.push(u);\n      }\n    }\n  }\n}"
           },
+          "imageLink":"https://drive.google.com/uc?export=view&id=1gqD0hT_5ybCbXB9DJMba870MTttqK4ym",
           "Complexities": {
             "Time Complexity": "O(V+E) - Where V is the number of vertices and E is the number of edges.",
             "Space Complexity": "O(V) - Due to the storage of vertices in the queue."
@@ -502,8 +503,7 @@
             }
           }
         }
-      }     
-           
+      }          
     ]
   },
   {
@@ -650,8 +650,7 @@
             "Space Complexity": "O(n) - Space needed to store all nodes in the tree."
           }
         }
-      }
-      ,
+      },
       {
         "Topic": "AVL Tree",
         "Info": {
@@ -666,8 +665,7 @@
             "Space Complexity": "O(n) - Space needed to store all nodes in the tree."
           }
         }
-      }
-      ,
+      },
       {
         "Topic": "Red-Black Tree",
         "Info": {
@@ -698,7 +696,30 @@
             "Space Complexity": "O(V+E) - As it stores the tree structure."
           }
         }
-      }, 
+      },
+      {
+        "Topic": "Segment Trees",
+        "Info": {
+          "Definition": "A segment tree is a tree data structure used for storing information about intervals, or segments. It allows querying which of the stored segments contain a given point. Essentially, it is a binary tree used for storing the intervals or segments of an array. Segment trees support operations like finding the minimum, maximum, sum, and greatest common divisor of intervals with update and query times logarithmic to the number of intervals.",
+          "Algorithms": {
+            "Build Tree": "void buildTree(int* arr, int* segTree, int start, int end, int treeNode) {\n  if(start == end) {\n    segTree[treeNode] = arr[start];\n    return;\n  }\n  int mid = (start + end) / 2;\n  buildTree(arr, segTree, start, mid, 2*treeNode);\n  buildTree(arr, segTree, mid+1, end, 2*treeNode+1);\n  segTree[treeNode] = min(segTree[2*treeNode], segTree[2*treeNode+1]);\n}",
+            "Update Tree": "void updateTree(int* arr, int* segTree, int start, int end, int treeNode, int idx, int value) {\n  if(start == end) {\n    arr[idx] = value;\n    segTree[treeNode] = value;\n    return;\n  }\n  int mid = (start + end) / 2;\n  if(idx > mid) {\n    updateTree(arr, segTree, mid+1, end, 2*treeNode+1, idx, value);\n  } else {\n    updateTree(arr, segTree, start, mid, 2*treeNode, idx, value);\n  }\n  segTree[treeNode] = min(segTree[2*treeNode], segTree[2*treeNode+1]);\n}",
+            "Query Tree": "int queryTree(int* segTree, int start, int end, int treeNode, int left, int right) {\n  if(start > right || end < left) {\n    return INT_MAX;\n  }\n  if(start >= left && end <= right) {\n    return segTree[treeNode];\n  }\n  int mid = (start + end) / 2;\n  int ans1 = queryTree(segTree, start, mid, 2*treeNode, left, right);\n  int ans2 = queryTree(segTree, mid+1, end, 2*treeNode+1, left, right);\n  return min(ans1, ans2);\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Build Tree": "O(n), where n is the number of elements in the array",
+              "Update Tree": "O(log n), where n is the number of elements in the array",
+              "Query Tree": "O(log n), for querying a range of elements"
+            },
+            "Space Complexity": {
+              "Build Tree": "O(4*n), due to the storage of 4 times the number of elements in the segment tree array",
+              "Update Tree": "O(4*n), does not change the overall space requirement of the segment tree",
+              "Query Tree": "O(log n), for the recursion stack, not counting the space for the segment tree itself"
+            }
+          }
+        }
+      },       
       {
         "Topic": "Tree Traversals",
         "Info": {
@@ -872,6 +893,26 @@
         }
       },
       {
+        "Topic": "Minimal Spanning Tree",
+        "Info": {
+          "Definition": "A Minimal Spanning Tree (MST) of a connected, undirected graph is a tree formed from graph edges that connects all the vertices together, without any cycles and with the minimum possible total edge weight. Finding a MST is a key problem in network design, such as designing the least expensive network, road, electrical grid, or in any application where a problem can be represented as a weighted graph. The two most famous algorithms for finding a MST are Kruskal's algorithm and Prim's algorithm.",
+          "Algorithms": {
+            "Kruskal's Algorithm Implementation": "struct Edge { int src, dest, weight; };\nvector<int> parent, rank;\nint find(int i) {\n  if (parent[i] != i)\n    parent[i] = find(parent[i]);\n  return parent[i];\n}\nvoid unionSet(int x, int y) {\n  x = find(x);\n  y = find(y);\n  if (rank[x] > rank[y])\n    parent[y] = x;\n  else\n    parent[x] = y;\n  if (rank[x] == rank[y])\n    rank[y]++;\n}\nvoid KruskalMST(vector<Edge>& edges, int V) {\n  sort(edges.begin(), edges.end(), [](Edge a, Edge b) { return a.weight < b.weight; });\n  parent.resize(V);\n  rank.resize(V, 0);\n  for (int i = 0; i < V; i++)\n    parent[i] = i;\n  vector<Edge> mst;\n  for (Edge e : edges) {\n    if (find(e.src) != find(e.dest)) {\n      unionSet(e.src, e.dest);\n      mst.push_back(e);\n    }\n  }\n}",
+            "Prim's Algorithm Implementation": "int minKey(vector<int>& key, vector<bool>& mstSet, int V) {\n  int min = INT_MAX, min_index;\n  for (int v = 0; v < V; v++)\n    if (mstSet[v] == false && key[v] < min)\n      min = key[v], min_index = v;\n  return min_index;\n}\nvoid primMST(vector<vector<int>>& graph, int V) {\n  vector<int> parent(V);\n  vector<int> key(V, INT_MAX);\n  vector<bool> mstSet(V, false);\n  key[0] = 0;\n  parent[0] = -1;\n  for (int count = 0; count < V-1; count++) {\n    int u = minKey(key, mstSet, V);\n    mstSet[u] = true;\n    for (int v = 0; v < V; v++)\n      if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v])\n        parent[v] = u, key[v] = graph[u][v];\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Kruskal's Algorithm": "O(E log E) or O(E log V), where E is the number of edges and V is the number of vertices.",
+              "Prim's Algorithm": "O(E log V) using a binary heap and adjacency list, where E is the number of edges and V is the number of vertices."
+            },
+            "Space Complexity": {
+              "Kruskal's Algorithm": "O(E + V), for storing the edge list and the disjoint set data structure.",
+              "Prim's Algorithm": "O(V), for storing the keys, parents, and priority queue or heap."
+            }
+          }
+        }
+      },      
+      {
         "Topic": "Kruskal's Algorithm",
         "Info": {
           "Definition": "Kruskal's Algorithm finds a minimum spanning tree for a connected, undirected graph by adding increasing cost edges at each step, avoiding any cycles.",
@@ -919,7 +960,103 @@
             }
           }
         }
-      }   
+      },
+      {
+        "Topic": "Backtracking Applications",
+        "Info": {
+          "Definition": "Backtracking is an algorithmic technique for solving problems recursively by trying to build a solution incrementally, one piece at a time, and removing those solutions that fail to satisfy the constraints of the problem at any point of time. It is particularly useful for traversal problems, constraint satisfaction problems like Sudoku solver, N queens problem, and graph coloring.",
+          "Algorithms": {
+            "Sudoku Solver": "void solveSudoku(vector<vector<int>>& board) {\n  if(solve(board)) {\n    print(board);\n  }\n}\nbool solve(vector<vector<int>>& board) {\n  for(int i = 0; i < board.size(); i++) {\n    for(int j = 0; j < board[0].size(); j++) {\n      if(board[i][j] == 0) {\n        for(int c = 1; c <= 9; c++) {\n          if(isValid(board, i, j, c)) {\n            board[i][j] = c;\n            if(solve(board))\n              return true;\n            else\n              board[i][j] = 0;\n          }\n        }\n        return false;\n      }\n    }\n  }\n  return true;\n}",
+            "N Queens Problem": "bool solveNQ(vector<vector<int>>& board, int col) {\n  if(col >= N) return true;\n  for(int i = 0; i < N; i++) {\n    if(isSafe(board, i, col)) {\n      board[i][col] = 1;\n      if(solveNQ(board, col + 1)) return true;\n      board[i][col] = 0; // backtrack\n    }\n  }\n  return false;\n}",
+            "Graph Coloring": "bool graphColoring(vector<int> graph[], int m, int V) {\n  vector<int> color(V, 0);\n  if(!graphColoringUtil(graph, m, color, 0, V)) {\n    return false;\n  }\n  return true;\n}\nbool graphColoringUtil(vector<int> graph[], int m, vector<int>& color, int v, int V) {\n  if(v == V) return true;\n  for(int c = 1; c <= m; c++) {\n    if(isSafe(v, graph, color, c, V)) {\n      color[v] = c;\n      if(graphColoringUtil(graph, m, color, v+1, V)) return true;\n      color[v] = 0; // backtrack\n    }\n  }\n  return false;\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Sudoku Solver": "O(9^(n^2)), where n is the number of rows/columns of the board (typically 9)",
+              "N Queens Problem": "O(N!), where N is the number of queens",
+              "Graph Coloring": "O(m^V), where m is the number of colors and V is the number of vertices"
+            },
+            "Space Complexity": {
+              "Sudoku Solver": "O(n^2), for storing the board",
+              "N Queens Problem": "O(N), for the recursion call stack",
+              "Graph Coloring": "O(V), for storing colors assigned to vertices"
+            }
+          }
+        }
+      },      
+      {
+        "Topic": "Disjoint Set Union (Union Find)",
+        "Info": {
+          "Definition": "Disjoint Set Union (DSU), also known as Union Find, is a data structure that keeps track of a set of elements partitioned into a number of disjoint (non-overlapping) subsets. It supports two key operations: 'find', which identifies the subset to which an element belongs; and 'union', which merges two subsets. It's particularly useful for graph-based algorithms, such as finding cycles and building minimum spanning trees.",
+          "Algorithms": {
+            "Union Find Implementation": "class UnionFind {\nprivate:\n  vector<int> parent, rank;\npublic:\n  UnionFind(int N) {\n    parent.resize(N);\n    rank.resize(N, 0);\n    for(int i = 0; i < N; ++i) parent[i] = i;\n  }\n  int find(int x) {\n    if (parent[x] != x) {\n      parent[x] = find(parent[x]); // Path compression\n    }\n    return parent[x];\n  }\n  void unionSet(int x, int y) {\n    int xRoot = find(x), yRoot = find(y);\n    if (xRoot != yRoot) {\n      if (rank[xRoot] < rank[yRoot]) {\n        parent[xRoot] = yRoot;\n      } else if (rank[xRoot] > rank[yRoot]) {\n        parent[yRoot] = xRoot;\n      } else {\n        parent[yRoot] = xRoot;\n        rank[xRoot] = rank[xRoot] + 1;\n      }\n    }\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Find": "Amortized O(α(n)), where α(n) is the inverse Ackermann function. Practically, it's almost constant.",
+              "Union": "Amortized O(α(n)), as it includes the cost of two find operations plus the cost of the union."
+            },
+            "Space Complexity": {
+              "Union Find": "O(n), where n is the number of elements, for storing the parent and rank arrays."
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Fractional Knapsack",
+        "Info": {
+          "Definition": "The Fractional Knapsack problem is a problem in combinatorial optimization. Given a set of items, each with a weight and a value, determine the amount of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible. Unlike the 0/1 Knapsack problem, items may be broken into smaller pieces, hence 'fractional'. The solution is found using a greedy approach.",
+          "Algorithms": {
+            "Fractional Knapsack Algorithm": "struct Item {\n  int value, weight;\n};\nbool cmp(Item a, Item b) {\n  double r1 = (double)a.value / a.weight;\n  double r2 = (double)b.value / b.weight;\n  return r1 > r2;\n}\ndouble fractionalKnapsack(int W, Item arr[], int n) {\n  sort(arr, arr + n, cmp);\n  int curWeight = 0;\n  double finalvalue = 0.0;\n  for (int i = 0; i < n; i++) {\n    if (curWeight + arr[i].weight <= W) {\n      curWeight += arr[i].weight;\n      finalvalue += arr[i].value;\n    } else {\n      int remain = W - curWeight;\n      finalvalue += arr[i].value * ((double) remain / arr[i].weight);\n      break;\n    }\n  }\n  return finalvalue;\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Fractional Knapsack Algorithm": "O(n log n) for sorting the items based on their value/weight ratio, followed by O(n) for computing the final value."
+            },
+            "Space Complexity": {
+              "Fractional Knapsack Algorithm": "O(1), not including the input space, as no additional space is needed beyond variables for calculation."
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Job Scheduling in Greedy Algorithm",
+        "Info": {
+          "Definition": "Job scheduling is a common problem in computer science, where jobs with different deadlines and profits need to be scheduled in a way that maximizes total profit. The greedy approach to this problem involves sorting the jobs based on a specific criterion, such as profit or deadline, and then scheduling the jobs in a way that maximizes profit while meeting deadlines.",
+          "Algorithms": {
+            "Job Scheduling Algorithm": "struct Job {\n  char id;\n  int deadline, profit;\n};\nbool comparison(Job a, Job b) {\n  return (a.profit > b.profit);\n}\nvoid printJobScheduling(vector<Job> arr, int n) {\n  sort(arr.begin(), arr.end(), comparison);\n  vector<int> result(n, -1);\n  vector<bool> slot(n, false);\n  for (int i = 0; i < n; i++) {\n    for (int j = min(n, arr[i].deadline) - 1; j >= 0; j--) {\n      if (slot[j] == false) {\n        result[j] = i;\n        slot[j] = true;\n        break;\n      }\n    }\n  }\n  for (int i = 0; i < n; i++)\n    if (slot[i])\n      cout << arr[result[i]].id << ' ';\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Job Scheduling Algorithm": "O(n log n) for sorting the jobs by profit, followed by O(n^2) for scheduling jobs where n is the number of jobs."
+            },
+            "Space Complexity": {
+              "Job Scheduling Algorithm": "O(n) for storing the result and slot arrays."
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Memoization & Tabulation in Dynamic Programming",
+        "Info": {
+          "Definition": "Memoization and Tabulation are optimization techniques used in dynamic programming to reduce the computation time of recursive algorithms by storing results of expensive function calls. Memoization is a top-down approach, where results are stored in a table as they are computed from the recursive calls. Tabulation is a bottom-up approach, where the table is filled in order systematically, ensuring that all sub-problems are solved before solving the larger problem.",
+          "Algorithms": {
+            "Memoization Example (Fibonacci)": "int fib(int n, vector<int>& memo) {\n  if (n <= 1) return n;\n  if (memo[n] != -1) return memo[n];\n  memo[n] = fib(n-1, memo) + fib(n-2, memo);\n  return memo[n];\n}",
+            "Tabulation Example (Fibonacci)": "int fib(int n) {\n  vector<int> table(n+1, 0);\n  table[1] = 1;\n  for(int i = 2; i <= n; i++) {\n    table[i] = table[i-1] + table[i-2];\n  }\n  return table[n];\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Memoization Example": "O(n), as it ensures that each problem is solved only once",
+              "Tabulation Example": "O(n), similar efficiency but fills in a table from the bottom up"
+            },
+            "Space Complexity": {
+              "Memoization Example": "O(n), for storing the memoization table plus the recursion call stack",
+              "Tabulation Example": "O(n), for storing the tabulation table without additional space for recursion"
+            }
+          }
+        }
+      }
+                   
     ]
   },
   {
@@ -940,7 +1077,62 @@
             "Space Complexity": "O(n) - Where n is the number of keys stored in the hash table."
           }
         }
-      },     
+      },
+      {
+        "Topic": "Hashing Techniques",
+        "Info": {
+          "Definition": "Hashing techniques are methods used to store and retrieve data efficiently by converting the key into a unique hash index where the value is stored. This process allows for fast data access. Common hashing techniques include Chaining and Open Addressing, which address collisions - when two keys hash to the same index - in different ways.",
+          "Algorithms": {
+            "Chaining": "Chaining involves using an array of linked lists. The hash function assigns an index to each key, and the key-value pair is then added to the linked list at that index. This allows multiple values to exist at the same index, effectively handling collisions.",
+            "Open Addressing": "Open Addressing resolves collisions by finding another empty slot or bucket within the array for the key-value pair. Common methods include Linear Probing, where the next empty slot is found in a linear sequence; Quadratic Probing, which searches for an empty slot based on a quadratic formula; and Double Hashing, which uses a second hash function to find an empty slot.",
+            "Linear Probing": "void insert(key, value) { int index = hashFunction(key); while(array[index] is not empty) { index = (index + 1) % array_size; } array[index] = value; }",
+            "Quadratic Probing": "void insert(key, value) { int index = hashFunction(key); int i = 0; while(array[(index + i*i) % array_size] is not empty) { i++; } array[(index + i*i) % array_size] = value; }",
+            "Double Hashing": "void insert(key, value) { int index1 = hashFunction1(key); int index2 = hashFunction2(key); int i = 0; while(array[(index1 + i*index2) % array_size] is not empty) { i++; } array[(index1 + i*index2) % array_size] = value; }"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Chaining": "Average: O(1), Worst: O(n), where n is the number of keys",
+              "Open Addressing": "Average: O(1), Worst: O(n), although performance degrades with increased loading factor",
+              "Linear Probing": "Average: O(1), Worst: O(n)",
+              "Quadratic Probing": "Average: O(1), Worst: O(n)",
+              "Double Hashing": "Average: O(1), Worst: O(n)"
+            },
+            "Space Complexity": {
+              "Chaining": "O(n), where n is the number of keys, potentially more due to linked list overhead",
+              "Open Addressing": "O(n), where n is the size of the array. Typically requires a larger array size than chaining to maintain performance",
+              "Linear Probing": "O(n), where n is the size of the array",
+              "Quadratic Probing": "O(n), where n is the size of the array",
+              "Double Hashing": "O(n), where n is the size of the array"
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Trie Data Structure",
+        "Info": {
+          "Definition": "A trie, also known as a prefix tree or digital tree, is a type of search tree used to store a dynamic set or associative array where the keys are usually strings. Unlike a binary search tree, no node in the trie stores the key associated with that node; instead, its position in the tree defines the key with which it is associated. All the descendants of a node have a common prefix of the string associated with that node, and the root is associated with the empty string.",
+          "Algorithms": {
+            "Insertion": "void insert(string key) {\n  TrieNode* node = root;\n  for (char ch : key) {\n    if (!node->children[ch - 'a'])\n      node->children[ch - 'a'] = new TrieNode();\n    node = node->children[ch - 'a'];\n  }\n  node->isEndOfWord = true;\n}",
+            "Search": "bool search(string key) {\n  TrieNode* node = root;\n  for (char ch : key) {\n    if (!node->children[ch - 'a'])\n      return false;\n    node = node->children[ch - 'a'];\n  }\n  return node != nullptr && node->isEndOfWord;\n}",
+            "StartsWith": "bool startsWith(string prefix) {\n  TrieNode* node = root;\n  for (char ch : prefix) {\n    if (!node->children[ch - 'a'])\n      return false;\n    node = node->children[ch - 'a'];\n  }\n  return true;\n}",
+            "Deletion": "bool deleteWord(TrieNode* node, string key, int depth = 0) {\n  if (node) {\n    if (depth == key.size()) {\n      if (node->isEndOfWord) {\n        node->isEndOfWord = false;\n        return isEmpty(node);\n      }\n    } else {\n      int index = key[depth] - 'a';\n      if (deleteWord(node->children[index], key, depth + 1) && !node->isEndOfWord) {\n        delete node->children[index];\n        node->children[index] = nullptr;\n        return isEmpty(node);\n      }\n    }\n  }\n  return false;\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Insertion": "O(m), where m is the key length",
+              "Search": "O(m), where m is the key length",
+              "StartsWith": "O(m), where m is the prefix length",
+              "Deletion": "O(m), where m is the key length"
+            },
+            "Space Complexity": {
+              "Insertion": "O(m), for inserting a key of length m",
+              "Search": "O(1), does not require additional space",
+              "StartsWith": "O(1), does not require additional space",
+              "Deletion": "O(m), in the worst case, for deleting a key of length m"
+            }
+          }
+        }
+      },                 
       {
         "Topic": "0/1 Knapsack Problem",
         "Info": {
@@ -968,18 +1160,55 @@
         }
       },
       {
+        "Topic": "Matrix Chain Multiplication",
+        "Info": {
+          "Definition": "Matrix Chain Multiplication is a dynamic programming problem that aims to determine the most efficient way to multiply a given sequence of matrices together. The goal is to find the optimal parenthesization of the matrices such that the number of scalar multiplications is minimized. The problem does not involve actually multiplying the matrices, but rather determining the order in which to perform the multiplications.",
+          "Algorithms": {
+            "Recursive Solution": "int MatrixChainOrder(int p[], int i, int j) {\n  if(i == j)\n    return 0;\n  int min = INT_MAX;\n  for (int k = i; k < j; k++) {\n    int count = MatrixChainOrder(p, i, k) +\n                MatrixChainOrder(p, k+1, j) +\n                p[i-1]*p[k]*p[j];\n    if (count < min)\n      min = count;\n  }\n  return min;\n}",
+            "Dynamic Programming Solution": "int MatrixChainOrder(int p[], int n) {\n  int m[n][n];\n  for (int i=1; i<n; i++)\n    m[i][i] = 0;\n  for (int L=2; L<n; L++) {\n    for (int i=1; i<n-L+1; i++) {\n      int j = i+L-1;\n      m[i][j] = INT_MAX;\n      for (int k=i; k<=j-1; k++) {\n        int q = m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j];\n        if (q < m[i][j])\n          m[i][j] = q;\n      }\n    }\n  }\n  return m[1][n-1];\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Recursive Solution": "O(2^n), where n is the number of matrices. This approach has exponential time complexity due to the recomputation of subproblems.",
+              "Dynamic Programming Solution": "O(n^3), where n is the number of matrices. This approach optimizes the recursive solution by solving each subproblem only once."
+            },
+            "Space Complexity": {
+              "Recursive Solution": "O(n), for the recursion call stack, where n is the depth of the recursion tree.",
+              "Dynamic Programming Solution": "O(n^2), for storing the results of subproblems in a 2D array."
+            }
+          }
+        }
+      },      
+      {
         "Topic": "Floyd-Warshall Algorithm",
         "Info": {
           "Definition": "The Floyd-Warshall Algorithm is a dynamic programming solution for finding the shortest paths between all pairs of vertices in a weighted graph. It can handle negative weight edges but not negative weight cycles.",
           "Algorithms": {
-            "Code": "void floydWarshall(int graph[][V]) {\n    int dist[V][V], i, j, k;\n    for (i = 0; i < V; i++)\n        for (j = 0; j < V; j++)\n            dist[i][j] = graph[i][j];\n    for (k = 0; k < V; k++) {\n        for (i = 0; i < V; i++) {\n            for (j = 0; j < V; j++) {\n                if (dist[i][k] + dist[k][j] < dist[i][j])\n                    dist[i][j] = dist[i][k] + dist[k][j];\n            }\n        }\n    }\n}",
-            "Complexities": {
-              "Time Complexity": "O(V^3) - The algorithm runs three nested loops over the graph's vertices, where V is the number of vertices in the graph.",
-              "Space Complexity": "O(V^2) - Space needed to store the distance matrix."
-            }
+            "Code": "void floydWarshall(int graph[][V]) {\n    int dist[V][V], i, j, k;\n    for (i = 0; i < V; i++)\n        for (j = 0; j < V; j++)\n            dist[i][j] = graph[i][j];\n    for (k = 0; k < V; k++) {\n        for (i = 0; i < V; i++) {\n            for (j = 0; j < V; j++) {\n                if (dist[i][k] + dist[k][j] < dist[i][j])\n                    dist[i][j] = dist[i][k] + dist[k][j];\n            }\n        }\n    }\n}" 
+          },
+          "Complexities": {
+            "Time Complexity": "O(V^3) - The algorithm runs three nested loops over the graph's vertices, where V is the number of vertices in the graph.",
+            "Space Complexity": "O(V^2) - Space needed to store the distance matrix."
           }
         }
       },
+      {
+        "Topic": "Transitive Closure",
+        "Info": {
+          "Definition": "The transitive closure of a graph is a measure of which vertices are reachable from other vertices through a path in the graph. In more formal terms, if there exists a path from vertex u to vertex v, then v is considered reachable from u. The transitive closure of a graph can be represented as a matrix, where the element at the ith row and jth column is 1 if there is a path from vertex i to vertex j, and 0 otherwise. The Floyd-Warshall algorithm is a common method used to compute the transitive closure of a graph.",
+          "Algorithms": {
+            "Floyd-Warshall Algorithm for Transitive Closure": "void transitiveClosure(vector<vector<int>>& graph) {\n  int V = graph.size();\n  vector<vector<int>> tc(V, vector<int>(V));\n  for (int i = 0; i < V; i++)\n    for (int j = 0; j < V; j++)\n      tc[i][j] = graph[i][j];\n  for (int k = 0; k < V; k++) {\n    for (int i = 0; i < V; i++) {\n      for (int j = 0; j < V; j++) {\n        if (tc[i][k] + tc[k][j] < tc[i][j])\n          tc[i][j] = tc[i][k] + tc[k][j];\n      }\n    }\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Floyd-Warshall Algorithm": "O(V^3), where V is the number of vertices in the graph."
+            },
+            "Space Complexity": {
+              "Floyd-Warshall Algorithm": "O(V^2), for storing the transitive closure matrix."
+            }
+          }
+        }
+      },      
       {
         "Topic": "Huffman Coding",
         "Info": {
@@ -1006,6 +1235,43 @@
           }
         }
       },
+      {
+        "Topic": "Graph Cycle Detection (in Directed and Undirected Graphs)",
+        "Info": {
+          "Definition": "Cycle detection in graphs is a fundamental algorithmic problem that involves finding whether a graph contains a cycle. A cycle occurs when a path exists in the graph that starts and ends at the same vertex. The approach to cycle detection varies between directed and undirected graphs due to the nature of the edges.",
+          "Algorithms": {
+            "DFS for Undirected Graphs": "bool isCyclicUtil(int v, bool visited[], int parent, vector<int> adj[]) {\n  visited[v] = true;\n  for (auto i = adj[v].begin(); i != adj[v].end(); ++i) {\n    if (!visited[*i]) {\n      if (isCyclicUtil(*i, visited, v, adj))\n        return true;\n    } else if (*i != parent)\n      return true;\n  }\n  return false;\n}",
+            "DFS for Directed Graphs": "bool isCyclicUtil(int v, bool visited[], bool *recStack, vector<int> adj[]) {\n  if(visited[v] == false) {\n    visited[v] = true;\n    recStack[v] = true;\n    for(auto i = adj[v].begin(); i != adj[v].end(); ++i) {\n      if (!visited[*i] && isCyclicUtil(*i, visited, recStack, adj))\n        return true;\n      else if (recStack[*i])\n        return true;\n    }\n  }\n  recStack[v] = false;\n  return false;\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "DFS for Undirected Graphs": "O(V+E), where V is the number of vertices and E is the number of edges",
+              "DFS for Directed Graphs": "O(V+E), similar to undirected graphs but takes into account the direction of edges"
+            },
+            "Space Complexity": {
+              "DFS for Undirected Graphs": "O(V), for storing visited information and recursion stack",
+              "DFS for Directed Graphs": "O(V), additionally requires space for the recursion stack and to maintain the recursive call stack for directed graphs"
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Topological sorting in DAG",
+        "Info": {
+          "Definition": "Topological sorting of a Directed Acyclic Graph (DAG) is a linear ordering of vertices such that for every directed edge uv, vertex u comes before v in the ordering. Topological Sorting for a graph is not possible if the graph is not a DAG. This sorting is useful for scheduling tasks, resolving symbol dependencies in compilers, and more.",
+          "Algorithms": {
+            "Kahn's Algorithm": "vector<int> in_degree(V, 0);\nfor (int u = 0; u < V; u++) {\n  for (int v : adj[u])\n    in_degree[v]++;\n}\nqueue<int> q;\nfor (int i = 0; i < V; i++)\n  if (in_degree[i] == 0)\n    q.push(i);\nint cnt = 0;\nvector<int> top_order;\nwhile (!q.empty()) {\n  int u = q.front();\n  q.pop();\n  top_order.push_back(u);\n  for (int v : adj[u])\n    if (--in_degree[v] == 0)\n      q.push(v);\n  cnt++;\n}\nif (cnt != V) {\n  cout << \"There exists a cycle in the graph\\n\";\n  return;\n}",
+            "DFS Based Algorithm": "void dfs(int v, vector<bool> &visited, stack<int> &Stack, vector<int> adj[]) {\n  visited[v] = true;\n  for (int i : adj[v])\n    if (!visited[i])\n      dfs(i, visited, Stack, adj);\n  Stack.push(v);\n}\nvoid topologicalSort(vector<int> adj[], int V) {\n  stack<int> Stack;\n  vector<bool> visited(V, false);\n  for (int i = 0; i < V; i++)\n    if (!visited[i])\n      dfs(i, visited, Stack, adj);\n  while (!Stack.empty()) {\n    cout << Stack.top() << \" \";\n    Stack.pop();\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexities": {
+              "Kahn's Algorithm": "O(V+E) - Where V is the number of vertices and E is the number of edges in the graph",
+              "DFS Based Algorithm": "O(V+E) - Similar as above, considering the graph traversal for all vertices and their adjacent vertices"
+            },
+            "Space Complexity": "O(V) - Additional space for data structures like in-degree array, stack, or queue, depending on the algorithm"
+          }
+        }
+      },            
       {
         "Topic": "Ford-Fulkerson Algorithm",
         "Info": {
@@ -1064,39 +1330,6 @@
         }
       },
       {
-        "Topic": "Red-Black Tree",
-        "Info": {
-          "Definition": "A Red-Black Tree is a kind of self-balancing binary search tree where each node has an extra bit for denoting the color of the node, either red or black. A Red-Black Tree ensures that the tree remains balanced, and operations like insertion, deletion, and search can be performed in logarithmic time complexity.",
-          "Algorithms": {
-            "Insertion Code": "void insert(Node *&root, int data) {\n    // Perform normal BST insert\n    // Color the new node as RED\n    // Fix Red Black Tree violations\n}",
-            "Deletion Code": "void deleteNode(Node *&root, int data) {\n    // Perform standard BST delete\n    // Fix Red Black Tree violations\n}"
-          },
-          "Complexities": {
-            "Time Complexity": {
-              "Search": "O(log n)",
-              "Insert": "O(log n)",
-              "Delete": "O(log n)"
-            },
-            "Space Complexity": "O(n), where n is the number of nodes in the tree."
-          }
-        }
-      },
-      
-      
-      {
-        "Topic": "Spanning Tree",
-        "Info": {
-          "Definition": "A spanning tree of an undirected graph is a subgraph that includes all the vertices of the graph and is a tree. A single graph can have many different spanning trees.",
-          "Algorithms": {
-            "Code": "class Graph {\npublic:\n    int V; // Number of vertices\n    list<pair<int, int>> *adj; // Adjacency list, pair<vertex, weight>\n\n    Graph(int V) {\n        this->V = V;\n        adj = new list<pair<int, int>>[V];\n    }\n\n    void addEdge(int u, int v, int w) {\n        adj[u].push_back(make_pair(v, w));\n        adj[v].push_back(make_pair(u, w));\n    }\n\n    void primMST(); // Method to compute MST using Prim's algorithm\n};\n\nvoid Graph::primMST() {\n    priority_queue< pair<int, int>, vector <pair<int, int>> , greater<pair<int, int>> > pq;\n\n    int src = 0; // Taking vertex 0 as source\n\n    vector<int> key(V, INT_MAX);\n    vector<int> parent(V, -1);\n    vector<bool> inMST(V, false);\n\n    pq.push(make_pair(0, src));\n    key[src] = 0;\n\n    while (!pq.empty()) {\n        int u = pq.top().second;\n        pq.pop();\n\n        inMST[u] = true;  // Include vertex in MST\n\n        list< pair<int, int> >::iterator i;\n        for (i = adj[u].begin(); i != adj[u].end(); ++i) {\n            int v = (*i).first;\n            int weight = (*i).second;\n\n            if (inMST[v] == false && key[v] > weight) {\n                key[v] = weight;\n                pq.push(make_pair(key[v], v));\n                parent[v] = u;\n            }\n        }\n    }\n    // Printing constructed MST (The parent array stores the MST)\n}"
-          },
-          "Complexities": {
-            "Time Complexity": "O(E log V) - For Prim's algorithm using a binary heap.",
-            "Space Complexity": "O(V+E) - Space needed to store the tree structure."
-          }
-        }
-      },
-      {
         "Topic": "Bellman-Ford Algorithm",
         "Info": {
           "Definition": "The Bellman-Ford algorithm computes shortest paths from a single source vertex to all of the other vertices in a weighted graph. It is capable of handling graphs in which some of the edge weights are negative.",
@@ -1121,8 +1354,7 @@
             "Space Complexity": "O(V) for Tarjan's algorithm due to the stack and O(V+E) for Kosaraju's due to the need to store the transpose graph. Additionally, both algorithms require O(V) space for the visited array."
           }
         }
-      }
-       
+      }  
     ]
   } 
 ]
