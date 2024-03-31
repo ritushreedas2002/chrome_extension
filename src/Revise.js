@@ -63,7 +63,7 @@ const Revision = () => {
     
     const prompt = `Explain the following pieces of code:\n\n${codeText}`;
 
-    const data = `I have a code writtern in c++ but the writtern format in json .the structure u will get is {"topic":code ,"topic":code}  so taking each individual topic explain what is the code writtern. The above json file given as:\n\n${codeText}\n\n`;
+    //const data = `I have a code writtern in c++ but the writtern format in json .the structure u will get is {"topic":code ,"topic":code}  so taking each individual topic explain what is the code writtern. The above json file given as:\n\n${codeText}\n\n`;
 
     try {
       const gptResults = await openai.chat.completions.create({
