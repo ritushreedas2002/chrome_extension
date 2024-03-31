@@ -41,7 +41,9 @@
             "Deallocation": "free(ptr);",
             "Array Access Through Pointers": "for(int i = 0; i < n; i++) {\n  printf(\"%d\\n\", *(arr + i));\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1p3Dy41V0s5dodq6g0iG5YMSbChuX5_I4"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1p3Dy41V0s5dodq6g0iG5YMSbChuX5_I4"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Pointer Initialization": "O(1)",
@@ -64,7 +66,9 @@
             "Reallocation (realloc)": "ptr = realloc(ptr, newSize);",
             "Allocation for arrays (calloc)": "void* ptr = calloc(nItems, sizeOfEachItem);"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=17Z9PJV-sMET3xfnbEOiHsZlAvm83MlUt"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=17Z9PJV-sMET3xfnbEOiHsZlAvm83MlUt"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Allocation (malloc)": "O(1), but depends on the system's memory manager",
@@ -83,7 +87,9 @@
           "Algorithms": {
             "Basic Method": "for ( int i = 0; i < arr.length; i++ ){\n  if ( arr[i] == x )\n    return i;\nreturn -1;"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=15HNcatCOfEE7oCj4jaEEjKl3fhC6rKXy"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=15HNcatCOfEE7oCj4jaEEjKl3fhC6rKXy"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Best case": "O(1)",
@@ -102,7 +108,9 @@
             "Iterative Method": "do {\n  mid = (low + high) / 2;\n  if (x == arr[mid]) {\n    return mid;\n  } else if (x > arr[mid]) { // x is on the right side\n    low = mid + 1;\n  } else {                       // x is on the left side\n    high = mid - 1;\n  }\n} while (low <= high);",
             "Recursive Method": "int binarySearch(int arr[], int x, int low, int high) {\n  if (low > high) {\n    return -1; // Element not found\n  } else {\n    int mid = (low + high) / 2;\n    if (x == arr[mid]) {\n      return mid;\n    } else if (x > arr[mid]) { // x is on the right side\n      return binarySearch(arr, x, mid + 1, high);\n    } else {                          // x is on the left side\n      return binarySearch(arr, x, low, mid - 1);\n    }\n  }\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1WEQuxTJ7JP5kqhPza-g6FTrdeaB22zr6"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1WEQuxTJ7JP5kqhPza-g6FTrdeaB22zr6"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Best case": "O(1)",
@@ -124,7 +132,10 @@
             "isFull Operation": "bool isFull(int *top, int maxsize) {\n  return *top == maxsize - 1;\n}",
             "Peek Operation": "int peek(int stack[], int *top) {\n  if (*top == -1) {\n    cout << \"STACK EMPTY\";\n    return -1;\n  } else {\n    return stack[*top];\n  }\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1QmbVrM1BtUeSjDycjx8G_L61XtnVAb9R","https://drive.google.com/uc?export=view&id=1h7BISI0pZ7bYuKdroH6FHiPFp-75N8T4"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1QmbVrM1BtUeSjDycjx8G_L61XtnVAb9R",
+            "https://drive.google.com/uc?export=view&id=1h7BISI0pZ7bYuKdroH6FHiPFp-75N8T4"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Push": "O(1)",
@@ -152,13 +163,31 @@
             "Linked List-Based Stack Peek": "int peek() {\n  if (top == nullptr) {\n    cout << \"Stack is Empty\";\n    return 0;\n  } else {\n    return top->data;\n  }\n}",
             "Linked List-Based Stack Is Empty": "bool isEmpty() {\n  return (top == nullptr);\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1eF9qNIRjkVqFy4qfJf5NmX6dHTP9gzPM"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1eF9qNIRjkVqFy4qfJf5NmX6dHTP9gzPM"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Array-Based Stack Operations": "O(1) - For push, pop, peek, isEmpty, and isFull operations",
               "Linked List-Based Stack Operations": "O(1) - For push, pop, peek, and isEmpty operations"
             },
             "Space Complexity": "O(n) - For both array and linked list implementations, depending on the number of elements in the stack"
+          }
+        }
+      },
+      {
+        "Topic": "Balanced Parentheses",
+        "Info": {
+          "Definition": "The problem of balanced parentheses involves determining whether a string of parentheses (which can include characters '(', ')', '{', '}', '[' and ']') is balanced. A string is considered balanced if each type of bracket is closed in the correct order and matches with the corresponding opening bracket.",
+          "Algorithms": {
+            "Using Stack": "bool isBalanced(string s) {\n  stack<char> stk;\n  for (char c : s) {\n    if (c == '(' || c == '{' || c == '[') {\n      stk.push(c);\n    } else {\n      if (stk.empty()) return false;\n      if (c == ')' && stk.top() != '(') return false;\n      if (c == '}' && stk.top() != '{') return false;\n      if (c == ']' && stk.top() != '[') return false;\n      stk.pop();\n    }\n  }\n  return stk.empty();\n}"
+          },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1MjH_FyrFbq6tdXBEH6srnDfUQi1uKwBW"
+          ],
+          "Complexities": {
+            "Time Complexity": "O(n), where n is the length of the input string. Each character in the string is processed once.",
+            "Space Complexity": "O(n), in the worst case, all characters are opening brackets and will be pushed onto the stack."
           }
         }
       },
@@ -173,7 +202,13 @@
             "Prefix to Infix Conversion": "stack<string> s; \nfor(int i = prefix.length() - 1; i >= 0; i--) { \n  if(isOperand(prefix[i])) s.push(string(1, prefix[i])); \n  else { \n    string op1 = s.top(); \n    s.pop(); \n    string op2 = s.top(); \n    s.pop(); \n    s.push('(' + op1 + prefix[i] + op2 + ')'); \n  } \n}",
             "Prefix Expression Evaluation": "stack<int> Stack; \nfor(int i = prefix.length() - 1; i >= 0; i--) { \n  if(isDigit(prefix[i])) Stack.push(prefix[i] - '0'); \n  else { \n    int op1 = Stack.top(); \n    Stack.pop(); \n    int op2 = Stack.top(); \n    Stack.pop(); \n    Stack.push(applyOp(prefix[i], op1, op2)); \n  } \n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1TKaZDEP9FIxaWTO6auUVLMwdlym4Mozv","https://drive.google.com/uc?export=view&id=1X-fpMdr88MLckJ4-5RunO3mr_-6dRckO","https://drive.google.com/uc?export=view&id=1tRVGkxojEAkCdbmcE8JKpnbjMgjfMbXS","https://drive.google.com/uc?export=view&id=1mtgh5y8XElYUXw3mCSk6Q037RIutc4dD","https://drive.google.com/uc?export=view&id=1oHOlpirtQsM8lVbWbh1L5mblYaJKPiXJ"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1TKaZDEP9FIxaWTO6auUVLMwdlym4Mozv",
+            "https://drive.google.com/uc?export=view&id=1X-fpMdr88MLckJ4-5RunO3mr_-6dRckO",
+            "https://drive.google.com/uc?export=view&id=1tRVGkxojEAkCdbmcE8JKpnbjMgjfMbXS",
+            "https://drive.google.com/uc?export=view&id=1mtgh5y8XElYUXw3mCSk6Q037RIutc4dD",
+            "https://drive.google.com/uc?export=view&id=1oHOlpirtQsM8lVbWbh1L5mblYaJKPiXJ"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Infix to Postfix Conversion": "O(n)",
@@ -197,7 +232,10 @@
             "isFull Operation": "bool isFull() {\n  return (count == capacity);\n}",
             "Peek Opeartion": "int peek() {\n  if (isEmpty()) {\n    cout << \"Queue is empty\";\n    return INT_MIN;\n  } else {\n    return arr[front];\n  }\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1q2373rxm-wAbDIk-caknbqI0Dbe-MY_R","https://drive.google.com/uc?export=view&id=1cf_rE0mDg9zPfqp1NQp0fkCbDois7UPi"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1q2373rxm-wAbDIk-caknbqI0Dbe-MY_R",
+            "https://drive.google.com/uc?export=view&id=1cf_rE0mDg9zPfqp1NQp0fkCbDois7UPi"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Enqueue": "O(1)",
@@ -223,7 +261,9 @@
             "Linked List-Based Queue Dequeue": "int dequeue(Node*& front, Node*& rear) {\n  if(front != nullptr) {\n    Node* temp = front;\n    int element = front->data;\n    front = front->next;\n    delete temp;\n    if(front == nullptr) {\n      rear = nullptr;\n    }\n    return element;\n  }\n  return -1; // or some indicator of empty queue\n}",
             "Linked List-Based Queue Is Empty": "bool isEmpty(Node* front) {\n  return front == nullptr;\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=11OJBChw8EoVIajHG8W7LFCMQ9odfuC3K"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=11OJBChw8EoVIajHG8W7LFCMQ9odfuC3K"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Array-Based Queue Enqueue": "O(1) - Amortized",
@@ -252,7 +292,10 @@
             "isFull Operation": "bool isFull() {\n  return (count == capacity);\n}",
             "Peek Opeartion": "int peek() {\n  if (isEmpty()) {\n    cout << \"Queue is empty\";\n    return INT_MIN;\n  }\n  return arr[front];\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1ggIpJ7Yxm5wl8MrWxZDIqSR9rgswLMBE","https://drive.google.com/uc?export=view&id=1aXkZHMFjGwbTF3v2K-G1GOnQNrG877yt"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1ggIpJ7Yxm5wl8MrWxZDIqSR9rgswLMBE",
+            "https://drive.google.com/uc?export=view&id=1aXkZHMFjGwbTF3v2K-G1GOnQNrG877yt"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Enqueue": "O(1)",
@@ -272,7 +315,9 @@
           "Algorithms": {
             "Code": "void bubbleSort(int arr[], int n) {\n  for (int i = 0; i < n-1; i++) {\n    for (int j = 0; j < n-i-1; j++) {\n      if (arr[j] > arr[j+1]) {\n        swap(arr[j], arr[j+1]);\n      }\n    }\n  }\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1dptA2sS5yql0BQfCFcRZHuEv1KbnLZ3E"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1dptA2sS5yql0BQfCFcRZHuEv1KbnLZ3E"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Worst and Average Case": "O(n^2)",
@@ -289,7 +334,9 @@
           "Algorithms": {
             "Code": "void insertionSort(int arr[], int n) {\n  int i, key, j;\n  for (i = 1; i < n; i++) {\n    key = arr[i];\n    j = i - 1;\n    while (j >= 0 && arr[j] > key) {\n      arr[j + 1] = arr[j];\n      j = j - 1;\n    }\n    arr[j + 1] = key;\n  }\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1-oTAZslttkv6epIW3Brwy-hYZpyD_J5D"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1-oTAZslttkv6epIW3Brwy-hYZpyD_J5D"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Worst and Average Case": "O(n^2)",
@@ -306,7 +353,9 @@
           "Algorithms": {
             "Code": "void selectionSort(int arr[], int n) {\n  int i, j, min_idx;\n  for (i = 0; i < n-1; i++) {\n    min_idx = i;\n    for (j = i+1; j < n; j++) {\n      if (arr[j] < arr[min_idx]) {\n        min_idx = j;\n      }\n    }\n    swap(arr[min_idx], arr[i]);\n  }\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1rtI8jGVEJ1ksrT-NbgARehj6rM3aHCJV"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1rtI8jGVEJ1ksrT-NbgARehj6rM3aHCJV"
+          ],
           "Complexities": {
             "Time Complexities": "Worst, Average, and Best Case: O(n^2), as it always runs O(n^2) operations regardless of the input.",
             "Space Complexity": "O(1) - Like bubble sort and insertion sort, selection sort also uses a constant amount of additional space."
@@ -320,7 +369,9 @@
           "Algorithms": {
             "Code": "int fib(int n) {\n  if (n <= 1) return n;\n  vector<int> f(n + 1, 0);\n  f[1] = 1;\n  for (int i = 2; i <= n; i++) {\n    f[i] = f[i - 1] + f[i - 2];\n  }\n  return f[n];\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1nVytAoPzdnl-CjxeTH6XaTgFN7xMbXFJ"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1nVytAoPzdnl-CjxeTH6XaTgFN7xMbXFJ"
+          ],
           "Complexities": {
             "Time Complexity": "O(n) - Linear, as it iterates once up to n.",
             "Space Complexity": "O(n) - For storing the Fibonacci sequence up to n."
@@ -337,7 +388,10 @@
             "Deletion by Key": "void deleteByKey(Node** head, int key) {\n  Node* temp = *head, *prev = NULL;\n  if (temp != NULL && temp->data == key) {\n    *head = temp->next;\n    delete temp;\n    return;\n  }\n  while (temp != NULL && temp->data != key) {\n    prev = temp;\n    temp = temp->next;\n  }\n  if (temp == NULL) return;\n  prev->next = temp->next;\n  delete temp;\n}",
             "Search for an Element": "bool search(Node* head, int key) {\n  Node* current = head;\n  while (current != NULL) {\n    if (current->data == key) return true;\n    current = current->next;\n  }\n  return false;\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1zPqwMsjjQdAgyu6vXWZi-enb5AA3Q99V","https://drive.google.com/uc?export=view&id=1zRM4AKmbMdeDLGahkGWcz9QBI9C2ex7G"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1zPqwMsjjQdAgyu6vXWZi-enb5AA3Q99V",
+            "https://drive.google.com/uc?export=view&id=1zRM4AKmbMdeDLGahkGWcz9QBI9C2ex7G"
+          ],
           "Complexities": {
             "Time Complexity": {
               "Insertion at End": "O(n)",
@@ -361,7 +415,10 @@
             "Deletion by Key": "void deleteByKey(DoubleNode** head, int key) {\n  DoubleNode* temp = *head;\n  if (temp != NULL && temp->data == key) {\n    *head = temp->next;\n    if (temp->next != NULL) temp->next->prev = temp->prev;\n    delete temp;\n    return;\n  }\n  while (temp != NULL && temp->data != key) {\n    temp = temp->next;\n  }\n  if (temp == NULL) return;\n  if (temp->next != NULL) temp->next->prev = temp->prev;\n  if (temp->prev != NULL) temp->prev->next = temp->next;\n  delete temp;\n}",
             "Search for an Element": "bool search(DoubleNode* head, int key) {\n  DoubleNode* current = head;\n  while (current != NULL) {\n    if (current->data == key) return true;\n    current = current->next;\n  }\n  return false;\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1-voQ4OzBVUvEO0gQeEIoNrwpl_phMqTA","https://drive.google.com/uc?export=view&id=1PpbOm8IbJKLU2w73-V1Nwsr1vpoYj4DC"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1-voQ4OzBVUvEO0gQeEIoNrwpl_phMqTA",
+            "https://drive.google.com/uc?export=view&id=1PpbOm8IbJKLU2w73-V1Nwsr1vpoYj4DC"
+          ],
           "Complexities": {
             "Time Complexity": {
               "Insertion at End": "O(n)",
@@ -385,7 +442,10 @@
             "Deletion by Key": "void deleteByKey(CircularNode** head, int key) {\n  if (*head == NULL) return;\n  CircularNode *temp = *head, *prev = NULL;\n  if (temp->data == key && temp->next == *head) {\n    *head = NULL;\n    delete temp;\n    return;\n  }\n  do {\n    if (temp->data == key) break;\n    prev = temp;\n    temp = temp->next;\n  } while (temp != *head);\n  if (temp->data == key) {\n    if (prev != NULL) prev->next = temp->next;\n    if (temp == *head) *head = prev->next;\n    delete temp;\n  }\n}",
             "Search for an Element": "bool search(CircularNode* head, int key) {\n  CircularNode* current = head;\n  if (current == NULL) return false;\n  do {\n    if (current->data == key) return true;\n    current = current->next;\n  } while (current != head);\n  return false;\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1jPJN9CKBwdZpnwvRGmnfnnAqlWjY_TTz","https://drive.google.com/uc?export=view&id=1mXFmvvZjteEilD6FfTXeJor9B9Poph4B"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1jPJN9CKBwdZpnwvRGmnfnnAqlWjY_TTz",
+            "https://drive.google.com/uc?export=view&id=1mXFmvvZjteEilD6FfTXeJor9B9Poph4B"
+          ],
           "Complexities": {
             "Time Complexity": {
               "Insertion at End": "O(n)",
@@ -406,7 +466,9 @@
           "Algorithms": {
             "Code": "void bfs(int s, vector<int>& adj, vector<bool>& visited) {\n  queue<int> queue;\n  visited[s] = true;\n  queue.push(s);\n  while (!queue.empty()) {\n    int s = queue.front();\n    queue.pop();\n    cout << s << ' ';\n    for (auto u : adj[s]) {\n      if (!visited[u]) {\n        visited[u] = true;\n        queue.push(u);\n      }\n    }\n  }\n}"
           },
-          "imageLink": ["https://drive.google.com/uc?export=view&id=1gqD0hT_5ybCbXB9DJMba870MTttqK4ym"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1gqD0hT_5ybCbXB9DJMba870MTttqK4ym"
+          ],
           "Complexities": {
             "Time Complexity": "O(V+E) - Where V is the number of vertices and E is the number of edges.",
             "Space Complexity": "O(V) - Due to the storage of vertices in the queue."
@@ -420,7 +482,9 @@
           "Algorithms": {
             "Code": "void dfs(int v, vector<int>& adj, vector<bool>& visited) {\n  visited[v] = true;\n  cout << v << ' ';\n  for(int u : adj[v]) {\n    if(!visited[u]) {\n      dfs(u, adj, visited);\n    }\n  }\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=1oGpdaqspMy6waNlolrkjRWP9lRe7eGSF"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1oGpdaqspMy6waNlolrkjRWP9lRe7eGSF"
+          ],
           "Complexities": {
             "Time Complexity": "O(V+E) - Where V is the number of vertices and E is the number of edges.",
             "Space Complexity": "O(V) - Due to the usage of the call stack in recursion."
@@ -440,6 +504,15 @@
             "Find the Rightmost Set Bit": "int rsb = n & -n;",
             "Turn Off the Rightmost Set Bit": "n = n & (n - 1);"
           },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1D2E8yWAk7dHNPpwajBNBLz6xJJHqKI7k",
+            "https://drive.google.com/uc?export=view&id=1sXlYzhY02nTh5UbOFJsPdSj2bsltGjGs",
+            "https://drive.google.com/uc?export=view&id=1Ssr_IZGuwYt2ofWxWkpgooge3idnE8tl",
+            "https://drive.google.com/uc?export=view&id=1U7ejo7kplqRGU-tl_lgGGLGsN2XWzQto",
+            "https://drive.google.com/uc?export=view&id=1fiCv9Pjvebqpb4c3utq3f2erdUAOpgOE",
+            "https://drive.google.com/uc?export=view&id=1ij4dDjSOG1wfDZIAppUDxBCMx8rkpbrq",
+            "https://drive.google.com/uc?export=view&id=1Q9ziaGHiLu0i_P4KUQnpTxeu2EuM3_vM"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Set a Bit": "O(1)",
@@ -464,6 +537,12 @@
             "Remove Duplicates from Sorted Array": "int i = 0;\nfor (int j = 1; j < n; j++) {\n  if (arr[j] != arr[i]) {\n    i++;\n    arr[i] = arr[j];\n  }\n}\nreturn i + 1;",
             "Reverse Array": "int start = 0, end = n - 1;\nwhile(start < end) {\n  int temp = arr[start];\n  arr[start] = arr[end];\n  arr[end] = temp;\n  start++;\n  end--;\n}"
           },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1LR4zAnSUfOmT8XzjOMPsikXIe3bouOfs",
+            "https://drive.google.com/uc?export=view&id=12ww6QY5HUu0UOu_aFJSsjut778OP80Of",
+            "https://drive.google.com/uc?export=view&id=15rGjHvt34SLSA5HQ4U-QdTv4xHFpRBgN",
+            "https://drive.google.com/uc?export=view&id=1weZBfafEh5BSYrH1Oh7XytkC_Qq7wAYr"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Find a Pair with a Given Sum": "O(n)",
@@ -484,7 +563,9 @@
             "Longest Substring Without Repeating Characters": "int start = 0, maxLength = 0;\nMap<Character, Integer> charIndexMap = new HashMap<>();\nfor(int end = 0; end < s.length(); end++) {\n  char rightChar = s.charAt(end);\n  if(charIndexMap.containsKey(rightChar)) {\n    start = Math.max(start, charIndexMap.get(rightChar) + 1);\n  }\n  charIndexMap.put(rightChar, end);\n  maxLength = Math.max(maxLength, end - start + 1);\n}",
             "Minimum Size Subarray Sum": "int start = 0, minLength = Integer.MAX_VALUE, windowSum = 0;\nfor(int end = 0; end < arr.length; end++) {\n  windowSum += arr[end];\n  while(windowSum >= targetSum) {\n    minLength = Math.min(minLength, end - start + 1);\n    windowSum -= arr[start];\n    start++;\n  }\n}"
           },
-          "imageLink":["https://drive.google.com/uc?export=view&id=10PTo1_M1RUo8xDw8A9soiQV6yqYWja4s"],
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=10PTo1_M1RUo8xDw8A9soiQV6yqYWja4s"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Maximum Sum Subarray of Size K": "O(n)",
@@ -500,36 +581,6 @@
         }
       },
       {
-        "Topic": "String Manipulation",
-        "Info": {
-          "Definition": "String manipulation involves altering, parsing, or analyzing strings, which are sequences of characters. In C++, common operations include concatenation, comparison, searching for substrings, converting between uppercase and lowercase, trimming whitespace, and splitting strings into arrays of substrings. Efficient string manipulation is key in areas like data parsing, user input processing, and software development.",
-          "Algorithms": {
-            "Concatenation": "string result = string1 + string2;",
-            "Find Substring": "size_t index = string.find(substring);",
-            "Convert to Uppercase": "std::transform(string.begin(), string.end(), string.begin(), ::toupper);",
-            "Convert to Lowercase": "std::transform(string.begin(), string.end(), string.begin(), ::tolower);",
-            "Trim Whitespace": "string.erase(0, string.find_first_not_of(' '));\nstring.erase(string.find_last_not_of(' ') + 1);",
-            "Split String": "vector<std::string> tokens;\nstringstream check1(string);\nstring intermediate;\nwhile(getline(check1, intermediate, ' ')) {\n  tokens.push_back(intermediate);\n}",
-            "Replace Characters": "replace( string.begin(), string.end(), oldChar, newChar);",
-            "Reverse String": "reverse(string.begin(), string.end());"
-          },
-          "Complexities": {
-            "Time Complexities": {
-              "Concatenation": "O(n) - Depends on the length of the strings",
-              "Find Substring": "O(n*m) - n is string length, m is substring length",
-              "Convert to Uppercase/Lowercase": "O(n) - n is the length of the string",
-              "Trim Whitespace": "O(n) - n is the length of the string",
-              "Split String": "O(n) - n is the length of the string, assuming fixed delimiter length",
-              "Replace Characters": "O(n) - n is the length of the string",
-              "Reverse String": "O(n) - n is the length of the string"
-            },
-            "Space Complexity": {
-              "General": "O(n) - Additional space may be needed depending on the operation"
-            }
-          }
-        }
-      },
-      {
         "Topic": "Matrix Operations",
         "Info": {
           "Definition": "Matrix operations include a variety of arithmetic and algebraic operations performed on matrices, which are rectangular arrays of numbers, symbols, or expressions arranged in rows and columns. Common operations include addition, subtraction, multiplication, transposition, and finding the determinant and inverse of a matrix. These operations are fundamental in linear algebra and are widely applied in scientific computing, engineering, and computer graphics.",
@@ -537,20 +588,115 @@
             "Matrix Addition": "for(int i = 0; i < rows; i++) {\n  for(int j = 0; j < cols; j++) {\n    result[i][j] = matA[i][j] + matB[i][j];\n  }\n}",
             "Matrix Subtraction": "for(int i = 0; i < rows; i++) {\n  for(int j = 0; j < cols; j++) {\n    result[i][j] = matA[i][j] - matB[i][j];\n  }\n}",
             "Matrix Multiplication": "for(int i = 0; i < rowsA; i++) {\n  for(int j = 0; j < colsB; j++) {\n    for(int k = 0; k < colsA; k++) {\n      result[i][j] += matA[i][k] * matB[k][j];\n    }\n  }\n}",
-            "Matrix Transpose": "for(int i = 0; i < rows; i++) {\n  for(int j = 0; j < cols; j++) {\n    transpose[j][i] = matrix[i][j];\n  }\n}",
-            "Determinant of a Matrix": "float determinant(float matrix[][], int n) {\n  // Implementation depends on the matrix size and method chosen, such as Laplace's formula or LU decomposition.\n}",
-            "Inverse of a Matrix": "void inverse(float matrix[][], int n) {\n  // Implementation can vary widely; often involves finding the adjoint and determinant.\n}"
+            "Matrix Transpose": "for(int i = 0; i < rows; i++) {\n  for(int j = 0; j < cols; j++) {\n    transpose[j][i] = matrix[i][j];\n  }\n}"
           },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=15RF6OjLNKSVp3J3i6fonI53TA6VPqM2R",
+            "https://drive.google.com/uc?export=view&id=1mFvJeSgkBqQOaOwV7RNo1-f36oaYEHQv",
+            "https://drive.google.com/uc?export=view&id=1NUrkPwdydz4k1047nV1u3utofPxSrXjT",
+            "https://drive.google.com/uc?export=view&id=1JAzPLvwlYM-RCusn5-aSHCnhCA4DQkrH"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Matrix Addition/Subtraction": "O(n*m) - where n and m are the dimensions of the matrices",
               "Matrix Multiplication": "O(n^3) using the standard algorithm, but can be reduced with more advanced algorithms like Strassen's algorithm",
-              "Matrix Transpose": "O(n*m) - where n and m are the dimensions of the matrix",
-              "Determinant of a Matrix": "O(n!) for a naive approach, but more efficient methods exist",
-              "Inverse of a Matrix": "O(n^3) - typically involves Gaussian elimination or other methods"
+              "Matrix Transpose": "O(n*m) - where n and m are the dimensions of the matrix"
             },
             "Space Complexity": {
               "General": "O(n*m) - Additional space needed for the resulting matrix, where n and m are the dimensions of the input matrices"
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Determinant of a Matrix",
+        "Info": {
+          "Definition": "The determinant of a matrix is a scalar value that can be computed from the elements of a square matrix and encapsulates certain properties of the matrix. It is often used in linear algebra, system of equations, geometry, and analysis to determine the scaling factor of linear transformations, solve systems of linear equations, and in criteria for invertibility of matrices.",
+          "Algorithms": {
+            "Recursive Determinant Calculation": "float determinant(float** matrix, int n) {\n  float det = 0;\n  if (n == 1) return matrix[0][0];\n  float** subMatrix = new float*[n-1];\n  for (int i = 0; i < n-1; i++) subMatrix[i] = new float[n-1];\n  int sign = 1;\n  for (int f = 0; f < n; f++) {\n    int subi = 0;\n    for (int i = 1; i < n; i++) {\n      int subj = 0;\n      for (int j = 0; j < n; j++) {\n        if (j == f) continue;\n        subMatrix[subi][subj] = matrix[i][j];\n        subj++;\n      }\n      subi++;\n    }\n    det += sign * matrix[0][f] * determinant(subMatrix, n - 1);\n    sign = -sign;\n  }\n  for (int i = 0; i < n-1; i++) delete[] subMatrix[i];\n  delete[] subMatrix;\n  return det;\n}",
+            "Laplace's Expansion": "float laplaceDeterminant(float** matrix, int n) {\n  if (n == 1) return matrix[0][0];\n  float det = 0;\n  float** subMatrix = new float*[n-1];\n  // Initialize submatrix\n  for (int i = 0; i < n-1; i++) subMatrix[i] = new float[n-1];\n  for (int x = 0; x < n; x++) {\n    int subi = 0;\n    for (int i = 1; i < n; i++) {\n      int subj = 0;\n      for (int j = 0; j < n; j++) {\n        if (j == x) continue;\n        subMatrix[subi][subj++] = matrix[i][j];\n      }\n      subi++;\n    }\n    det += (x % 2 == 0 ? 1 : -1) * matrix[0][x] * laplaceDeterminant(subMatrix, n-1);\n  }\n  // Free submatrix memory\n  return det;\n}",
+            "LU Decomposition Algorithm": "void LUdecomposition(float** matrix, int n, float& det) {\n  float** L = new float*[n];\n  float** U = new float*[n];\n  for (int i = 0; i < n; i++) {\n    L[i] = new float[n];\n    U[i] = new float[n];\n  }\n\n  // Initialize L and U\n  for (int i = 0; i < n; i++) {\n    for (int j = 0; j < n; j++) {\n      if (j < i) L[j][i] = 0;\n      else {\n        L[j][i] = matrix[j][i];\n        for (int k = 0; k < i; k++) {\n          L[j][i] -= L[j][k] * U[k][i];\n        }\n      }\n      if (j < i) U[i][j] = 0;\n      else if (j == i) U[i][j] = 1;\n      else {\n        U[i][j] = matrix[i][j] / L[i][i];\n        for (int k = 0; k < i; k++) {\n          U[i][j] -= ((L[i][k] * U[k][j]) / L[i][i]);\n        }\n      }\n    }\n  }\n\n  det = 1;\n  for (int i = 0; i < n; i++) {\n    det *= U[i][i];\n  }\n\n  // Clean up\n}\n\nThis pseudo-code sketch omits many details necessary for a complete implementation, including pivot selection (Partial or Full Pivoting) for numerical stability. The actual determinant calculation post-decomposition is straightforward, multiplying the diagonal elements of U."
+          },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1BWfokg9lKcRBEk286hGyIhBDJudF1CvL",
+            "https://drive.google.com/uc?export=view&id=1djRtE6ZvBbt3p0pCfA8GVRWsR9RI-4lG",
+            "https://drive.google.com/uc?export=view&id=1rkqeHYkcyBbfb-Z62uEncS-VPFdmCjns"
+          ],
+          "Complexities": {
+            "Time Complexity": {
+              "Recursive Calculation": "O(n!), where n is the matrix size.",
+              "Laplace's Expansion": "O(n!), improved by optimizations in practical implementations but still exponential for large n.",
+              "LU Decomposition": "O(n^3), primarily due to the three nested loops required to compute the elements of L and U."
+            },
+            "Space Complexity": {
+              "Recursive Calculation": "O(n^2), for the storage of the submatrices created during the recursive calls. The actual space used also includes the stack space due to recursion, which can be significant for large n.",
+              "Laplace's Expansion": "O(n^3), due to recursive storage requirements for submatrices.",
+              "LU Decomposition": "O(n^2), needed for storing the L and U matrices in addition to the original matrix."
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Inverse of a Matrix",
+        "Info": {
+          "Definition": "The inverse of a matrix A is the matrix that, when multiplied by A, produces the identity matrix. Computing the inverse is crucial for many applications in linear algebra, including solving systems of linear equations.",
+          "Algorithms": {
+            "Gaussian Elimination": "void inverseMatrixUsingGaussian(float** matrix, int n, float** inverse) {\n  // Initialize inverse matrix as identity\n  for(int i = 0; i < n; i++) {\n    for(int j = 0; j < n; j++) {\n      inverse[i][j] = (i == j) ? 1.0 : 0.0;\n    }\n  }\n  // Apply Gaussian Elimination\n  for(int i = 0; i < n; i++) {\n    float pivotValue = matrix[i][i];\n    for(int j = 0; j < n; j++) {\n      matrix[i][j] /= pivotValue;\n      inverse[i][j] /= pivotValue;\n    }\n    for(int k = 0; k < n; k++) {\n      if(k != i) {\n        float factor = matrix[k][i];\n        for(int j = 0; j < n; j++) {\n          matrix[k][j] -= factor * matrix[i][j];\n          inverse[k][j] -= factor * inverse[i][j];\n        }\n      }\n    }\n  }\n}",
+            "Adjunct and Determinant Method": "void inverseMatrixUsingAdjunct(float** matrix, int n, float** inverse) {\n  // Assuming determinant() and adjugate() functions are defined elsewhere\n  float det = determinant(matrix, n);\n  if(det == 0) return; // Non-invertible matrix\n  float** cofactorMatrix = adjugate(matrix, n);\n  for(int i = 0; i < n; i++) {\n    for(int j = 0; j < n; j++) {\n      inverse[i][j] = cofactorMatrix[i][j] / det;\n    }\n  }\n  // Clean up cofactorMatrix\n}"
+          },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1RoLxZb7qgL27p2gS-3tO1DVs_-oe7Epk",
+            "https://drive.google.com/uc?export=view&id=1Byfs3Gn-yDArZXQVwET8I5dpr6r8YtxB"
+          ],
+          "Complexities": {
+            "Time Complexity": {
+              "Gaussian Elimination": "O(n^3), due to the row reduction and normalization steps required.",
+              "Adjunct and Determinant Method": "O(n^4), mainly because of the determinant and adjugate matrix computation."
+            },
+            "Space Complexity": {
+              "Gaussian Elimination": "O(n^2), for storing the augmented matrix and the inverse.",
+              "Adjunct and Determinant Method": "O(n^2), required for the cofactor matrix and the inverse matrix."
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Sparse Matrix",
+        "Info": {
+          "Definition": "A Sparse Matrix is a matrix in which most of the elements are zero. Storing only non-zero elements significantly reduces memory usage and computation time for operations on sparse matrices. Efficient storage and processing of sparse matrices are crucial in fields like scientific computing, graph theory, and engineering.",
+          "Algorithms": {
+            "Compressed Sparse Row (CSR) Storage": "void convertToCSR(int** matrix, int rows, int cols, vector<int>& values, vector<int>& rowPtr, vector<int>& colInd) {\n  int nnz = 0;\n  rowPtr.push_back(0);\n  for (int i = 0; i < rows; i++) {\n    for (int j = 0; j < cols; j++) {\n      if (matrix[i][j] != 0) {\n        values.push_back(matrix[i][j]);\n        colInd.push_back(j);\n        nnz++;\n      }\n    }\n    rowPtr.push_back(nnz);\n  }\n}\n\n This code creates three vectors: 'values' for storing the non-zero elements, 'colInd' for the column indices of these elements, and 'rowPtr' to indicate the start of each row in the values array. It's efficient for row-wise traversal and for arithmetic operations and transformations.",
+            "Coordinate List (COO) Storage": "void convertToCOO(int** matrix, int rows, int cols, vector<int>& rowInd, vector<int>& colInd, vector<int>& values) {\n  for (int i = 0; i < rows; i++) {\n    for (int j = 0; j < cols; j++) {\n      if (matrix[i][j] != 0) {\n        rowInd.push_back(i);\n        colInd.push_back(j);\n        values.push_back(matrix[i][j]);\n      }\n    }\n  }\n}\n\nSimilar to CSR but stores the row indices explicitly in 'rowInd', making it suitable for incremental construction and random access."
+          },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=12-0jMzEdYIWOEn81EzKrjxOioy09m2R8",
+            "https://drive.google.com/uc?export=view&id=1tdWLhdqwv4xZ-7jtNPHNJzDySsRAwYux"
+          ],
+          "Complexities": {
+            "Space Complexity": {
+              "CSR": "O(2n + m), where n is the number of non-zero elements and m is the number of rows. Ideal for large sparse matrices.",
+              "COO": "O(3n), where n is the number of non-zero elements. Efficient for incrementally constructed matrices."
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Euclid's Algorithm",
+        "Info": {
+          "Definition": "Euclid's algorithm is an efficient method for computing the greatest common divisor (GCD) of two numbers, the largest number that divides both of them without leaving a remainder. The algorithm is based on the principle that the GCD of two numbers also divides their difference. Starting with two integers, it repeatedly replaces the larger number by its difference with the smaller number until one of them becomes zero. The non-zero number at this point is the GCD of the original two numbers.",
+          "Algorithms": {
+            "Iterative Version": "int gcd(int a, int b) {\n  while (b != 0) {\n    int temp = b;\n    b = a % b;\n    a = temp;\n  }\n  return a;\n}",
+            "Recursive Version": "int gcd(int a, int b) {\n  if (b == 0)\n    return a;\n  return gcd(b, a % b);\n}"
+          },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1O5dDL3yzsveibr5aIpI7yAiqxAfkhHW1",
+            "https://drive.google.com/uc?export=view&id=1hvEzMKRvm97FttrdkwUczO7qnPlLtdXZ"
+          ],
+          "Complexities": {
+            "Time Complexity": "O(log(min(a, b))), where a and b are the two numbers whose GCD is to be computed. This complexity arises from the number of divisions performed, which is effectively the length of the sequence of remainders.",
+            "Space Complexity": {
+              "Iterative Version": "O(1), as it uses a fixed amount of space.",
+              "Recursive Version": "O(log(min(a, b))) due to the recursion stack."
             }
           }
         }
@@ -561,28 +707,139 @@
     "category": "Medium",
     "Problems": [
       {
-        "Topic": "Adjacency Matrix Representation",
+        "Topic": "Adjacency Matrix",
         "Info": {
-          "Definition": "An adjacency matrix is a square matrix used to represent a finite graph. The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph.",
+          "Definition": "An adjacency matrix is a square matrix used to represent a finite graph. The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph. For a graph with N vertices, the matrix will be of size NxN, where the value of the element at the ith row and jth column indicates the presence of an edge between the ith and jth vertices.",
           "Algorithms": {
-            "Code": "int graph[V][V]; // V is the number of vertices\n// Initialize your matrix to 0\nfor(int i = 0; i < V; i++)\n  for(int j = 0; j < V; j++)\n    graph[i][j] = 0;\n// For every edge (u, v), set the value to 1 or the weight of the edge\ngraph[u][v] = 1; // For unweighted graph\ngraph[u][v] = w; // For weighted graph, where w is the weight"
+            "Creating an Adjacency Matrix": "void createAdjacencyMatrix(int** matrix, int numVertices, vector<pair<int, int>>& edges) {\n  for(int i = 0; i < numVertices; i++) {\n    for(int j = 0; j < numVertices; j++) {\n      matrix[i][j] = 0;\n    }\n  }\n  for(auto& edge : edges) {\n    int u = edge.first, v = edge.second;\n    matrix[u][v] = 1;\n    matrix[v][u] = 1; // For undirected graph\n  }\n}",
+            "Adding an Edge": "void addEdge(int** matrix, int u, int v) {\n  matrix[u][v] = 1;\n  matrix[v][u] = 1; // For undirected graph\n}",
+            "Removing an Edge": "void removeEdge(int** matrix, int u, int v) {\n  matrix[u][v] = 0;\n  matrix[v][u] = 0; // For undirected graph\n}",
+            "Checking if Two Vertices are Adjacent": "bool isAdjacent(int** matrix, int u, int v) {\n  return matrix[u][v] == 1;\n}"
           },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1dxMeY7m1v3y7tgflrMF4al5inA4ok2LB"
+          ],
           "Complexities": {
-            "Time Complexity": "O(1) for adding or checking the existence of an edge. O(V^2) for initializing the graph.",
-            "Space Complexity": "O(V^2) - As it needs to store information for every possible edge."
+            "Time Complexity": {
+              "Creating an Adjacency Matrix": "O(V^2), where V is the number of vertices, due to initializing the matrix and setting edges.",
+              "Adding/Removing an Edge": "O(1), as it involves updating a single element in the matrix.",
+              "Checking Adjacency": "O(1), involves a direct access operation."
+            },
+            "Space Complexity": {
+              "Overall": "O(V^2), for storing the adjacency matrix, regardless of the number of edges in the graph."
+            }
           }
         }
       },
       {
-        "Topic": "Adjacency List Representation",
+        "Topic": "Adjacency List",
         "Info": {
-          "Definition": "An adjacency list represents a graph as an array of linked lists. The index of the array represents a vertex and each element in its linked list represents the other vertices that form an edge with the vertex.",
+          "Definition": "An adjacency list is a collection of lists or arrays used to represent a finite graph. Each list corresponds to a vertex in the graph and contains the list of its adjacent vertices or edges. This representation is preferred for sparse graphs where the number of edges is much less than the square of the number of vertices, as it saves space compared to an adjacency matrix.",
           "Algorithms": {
-            "Code": "vector<int> adj[V]; // V is the number of vertices\n// For every edge (u, v), add v to the adjacency list of u\nadj[u].push_back(v); // For directed graph\nadj[v].push_back(u); // For undirected graph, do this as well"
+            "Creating an Adjacency List": "void createAdjacencyList(vector<vector<int>>& adjList, int numVertices, vector<pair<int, int>>& edges) {\n  adjList.resize(numVertices);\n  for(auto& edge : edges) {\n    int u = edge.first, v = edge.second;\n    adjList[u].push_back(v);\n    adjList[v].push_back(u); // For undirected graph\n  }\n}",
+            "Adding an Edge": "void addEdge(vector<vector<int>>& adjList, int u, int v) {\n  adjList[u].push_back(v);\n  adjList[v].push_back(u); // For undirected graph\n}",
+            "Removing an Edge": "void removeEdge(vector<vector<int>>& adjList, int u, int v) {\n  // Removing edge involves finding the vertex in the list and erasing it\n  adjList[u].erase(remove(adjList[u].begin(), adjList[u].end(), v), adjList[u].end());\n  adjList[v].erase(remove(adjList[v].begin(), adjList[v].end(), u), adjList[v].end());\n}",
+            "Checking if Two Vertices are Adjacent": "bool isAdjacent(const vector<vector<int>>& adjList, int u, int v) {\n  return find(adjList[u].begin(), adjList[u].end(), v) != adjList[u].end();\n}"
+          },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1kh87M8ROtCqXZJ4GgiokoYSzTDcUyODu"
+          ],
+          "Complexities": {
+            "Time Complexity": {
+              "Creating an Adjacency List": "O(E), where E is the number of edges, for inserting each edge into the list.",
+              "Adding an Edge": "O(1), as it involves appending to a list.",
+              "Removing an Edge": "O(V), where V is the number of vertices, in the worst case when all vertices are adjacent.",
+              "Checking Adjacency": "O(V), in the worst case, requires traversing the list of adjacent vertices."
+            },
+            "Space Complexity": {
+              "Overall": "O(V+E), where V is the number of vertices and E is the number of edges, efficiently representing sparse graphs."
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Boyer Moore Majority Vote Algorithm",
+        "Info": {
+          "Definition": "The Boyer-Moore Majority Vote Algorithm is an efficient algorithm to find the majority element in an array, which appears more than n/2 times. The algorithm operates by maintaining a count for a potential majority element and updating this count based on the examination of each element in the array. If the count becomes zero, the algorithm picks another candidate for the majority element and continues until it processes the entire array.",
+          "Algorithms": {
+            "Code": "int majorityElement(vector<int>& nums) {\n  int count = 0;\n  int candidate = 0;\n  for (int num : nums) {\n    if (count == 0) {\n      candidate = num;\n    }\n    count += (num == candidate) ? 1 : -1;\n  }\n  return candidate;\n}"
+          },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1lJ-xyHWFWmSuYzKUirNGaXFzOTO6aWKs"
+          ],
+          "Complexities": {
+            "Time Complexity": "O(n), where n is the number of elements in the array.",
+            "Space Complexity": "O(1), as it uses a fixed amount of extra space."
+          }
+        }
+      },
+      {
+        "Topic": "Quickselect Algorithm",
+        "Info": {
+          "Definition": "The Quickselect algorithm is a selection algorithm to find the kth smallest element in an unordered list. It is related to the QuickSort sorting algorithm. Like QuickSort, Quickselect was developed by Tony Hoare, and it works by choosing a 'pivot' element from the array and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot. The partitioning continues until the pivot is in its final position of kth smallest element.",
+          "Algorithms": {
+            "Code": "int quickSelect(vector<int>& nums, int left, int right, int k) {\n  if (left == right) return nums[left];\n  int pivotIndex = partition(nums, left, right);\n  if (k == pivotIndex) return nums[k];\n  else if (k < pivotIndex) return quickSelect(nums, left, pivotIndex - 1, k);\n  else return quickSelect(nums, pivotIndex + 1, right, k);\n}",
+            "Partition Function": "int partition(vector<int>& nums, int left, int right) {\n  int pivot = nums[right];\n  int i = left;\n  for (int j = left; j <= right - 1; j++) {\n    if (nums[j] < pivot) {\n      swap(nums[i], nums[j]);\n      i++;\n    }\n  }\n  swap(nums[i], nums[right]);\n  return i;\n}"
+          },
+          "imageLink": ["https://drive.google.com/uc?export=view&id=1QhY0Olm_SlT10iCRCcSGOeEUjp8tVewJ"],
+          "Complexities": {
+            "Time Complexity": "Average case: O(n), where n is the number of elements in the array. Worst case: O(n^2), but with good pivot selection, the average case is expected.",
+            "Space Complexity": "O(1), the algorithm operates in-place."
+          }
+        }
+      },
+      {
+        "Topic": "KMP Algorithm",
+        "Info": {
+          "Definition": "The Knuth-Morris-Pratt (KMP) Algorithm is used for substring search, which efficiently finds all occurrences of a word within a text, doing so in linear time. The key to KMP's performance is the construction of a 'partial match' table (also known as the 'failure function') that allows the algorithm to skip ahead at specific points where a mismatch occurs, avoiding unnecessary comparisons.",
+          "Algorithms": {
+            "Code": "void KMPSearch(string pat, string txt) {\n  int M = pat.length();\n  int N = txt.length();\n  vector<int> lps(M, 0);\n  computeLPSArray(pat, M, lps);\n  int i = 0; // index for txt[]\n  int j = 0; // index for pat[]\n  while (i < N) {\n    if (pat[j] == txt[i]) {\n      j++;\n      i++;\n    }\n    if (j == M) {\n      cout << \"Found pattern at index \" << i - j;\n      j = lps[j - 1];\n    }\n    else if (i < N && pat[j] != txt[i]) {\n      if (j != 0) j = lps[j - 1];\n      else i = i + 1;\n    }\n  }\n}",
+            "computeLPSArray": "void computeLPSArray(string pat, int M, vector<int>& lps) {\n  int len = 0;\n  lps[0] = 0; // lps[0] is always 0\n  int i = 1;\n  while (i < M) {\n    if (pat[i] == pat[len]) {\n      len++;\n      lps[i] = len;\n      i++;\n    } else {\n      if (len != 0) {\n        len = lps[len - 1];\n      } else {\n        lps[i] = 0;\n        i++;\n      }\n    }\n  }\n}"
           },
           "Complexities": {
-            "Time Complexity": "O(V+E) for initializing the graph. O(deg(v)) for querying all adjacent vertices of a vertex v.",
-            "Space Complexity": "O(V+E) - As it needs to store information for every vertex and edge."
+            "Time Complexity": "O(N+M), where N is the length of the text and M is the length of the pattern.",
+            "Space Complexity": "O(M), for the LPS (Longest Prefix Suffix) array."
+          }
+        }
+      },
+      {
+        "Topic": "Flood Fill Algorithm",
+        "Info": {
+          "Definition": "The Flood Fill algorithm is used to fill a connected region of a specific color with another color. It is similar to the 'bucket fill' tool in paint programs. The algorithm starts at a target pixel and changes the color of that pixel and all adjacent pixels of the same color. The process repeats recursively for each of the adjacent pixels, effectively 'flooding' the region with the new color.",
+          "Algorithms": {
+            "Code": "void floodFillUtil(vector<vector<int>>& screen, int x, int y, int prevC, int newC) {\n  // Base cases\n  if (x < 0 || x >= screen.size() || y < 0 || y >= screen[0].size()) return;\n  if (screen[x][y] != prevC) return;\n  if (screen[x][y] == newC) return;\n  // Replace the color at (x, y)\n  screen[x][y] = newC;\n  // Recur for north, east, south and west\n  floodFillUtil(screen, x+1, y, prevC, newC);\n  floodFillUtil(screen, x-1, y, prevC, newC);\n  floodFillUtil(screen, x, y+1, prevC, newC);\n  floodFillUtil(screen, x, y-1, prevC, newC);\n}",
+            "Flood Fill": "void floodFill(vector<vector<int>>& screen, int x, int y, int newC) {\n  int prevC = screen[x][y];\n  if (prevC == newC) return;\n  floodFillUtil(screen, x, y, prevC, newC);\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(n), where n is the number of pixels in the screen. In the worst case, all pixels will need to be visited.",
+            "Space Complexity": "O(n), in the worst case, due to the recursion stack if all pixels need to be visited."
+          }
+        }
+      },
+      {
+        "Topic": "Lee Algorithm",
+        "Info": {
+          "Definition": "Lee algorithm is a breadth-first search (BFS) based algorithm used for finding the shortest path in a maze or a grid, from a starting point to a target point, while avoiding obstacles. It explores all possible directions one step at a time, expanding outwards from the starting point until it reaches the target, effectively finding the shortest path.",
+          "Algorithms": {
+            "Code": "void leeAlgorithm(int grid[][], int startX, int startY, int endX, int endY) {\n  queue<pair<int, int>> q;\n  q.push({startX, startY});\n  grid[startX][startY] = 0; // Starting point\n  while (!q.empty()) {\n    pair<int, int> p = q.front();\n    q.pop();\n    int x = p.first, y = p.second;\n    // Check all 4 directions\n    for (int i = 0; i < 4; i++) {\n      int adjX = x + dx[i], adjY = y + dy[i];\n      // Check if valid move\n      if (isValid(adjX, adjY) && grid[adjX][adjY] == 1) {\n        grid[adjX][adjY] = grid[x][y] + 1;\n        q.push({adjX, adjY});\n        if (adjX == endX && adjY == endY) // Reached destination\n          return;\n      }\n    }\n  }\n}",
+            "Note": "This pseudocode assumes 'grid' is a 2D array where 0 represents obstacles, 1 represents possible paths, and distances are marked as the algorithm progresses. 'dx' and 'dy' arrays define movement directions (up, down, left, right), and 'isValid' checks for valid moves within the grid boundaries and obstacle avoidance."
+          },
+          "Complexities": {
+            "Time Complexity": "O(n*m), where n and m are the dimensions of the grid, since each cell is visited at most once.",
+            "Space Complexity": "O(n*m), due to the queue potentially holding all cells in the worst case."
+          }
+        }
+      },
+      {
+        "Topic": "Kadane's Algorithm",
+        "Info": {
+          "Definition": "Kadane's algorithm is used to find the maximum sum subarray from a given array of integers. This includes both the case where the array contains all negative numbers and the case of mixed positive and negative numbers. The algorithm scans the entire array by keeping track of the maximum sum subarray found so far and the current sum of elements from the start of the array.",
+          "Algorithms": {
+            "Code": "int maxSubArray(vector<int>& nums) {\n  int maxSoFar = nums[0], currentMax = nums[0];\n  for(int i = 1; i < nums.size(); i++) {\n    currentMax = max(nums[i], currentMax + nums[i]);\n    maxSoFar = max(maxSoFar, currentMax);\n  }\n  return maxSoFar;\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(n), where n is the number of elements in the array.",
+            "Space Complexity": "O(1), as it requires a constant space regardless of the input size."
           }
         }
       },
@@ -594,18 +851,22 @@
             "Insert Operation": "void insert(int priority, int data) {\n  if (isFull()) {\n    cout << \"Priority Queue is full\";\n    return;\n  }\n  Node* newNode = new Node(priority, data);\n  if (isEmpty() || priority > front->priority) {\n    newNode->next = front;\n    front = newNode;\n  } else {\n    Node* temp = front;\n    while (temp->next != NULL && temp->next->priority >= priority) {\n      temp = temp->next;\n    }\n    newNode->next = temp->next;\n    temp->next = newNode;\n  }\n  size++;\n}",
             "Delete Operation": "void delete() {\n  if (isEmpty()) {\n    cout << \"Priority Queue is empty\";\n    return;\n  }\n  Node* temp = front;\n  front = front->next;\n  delete temp;\n  size--;\n}",
             "isEmpty Operation": "bool isEmpty() {\n  return (front == NULL);\n}",
-            "isFull Operation": "bool isFull() {\n  // This implementation might vary based on underlying data structure. For a linked list, it might be system memory dependent.\n}",
+            "isFull Operation": "bool isFull() {\n  void* temp = malloc(sizeof(Node));\n  if (temp == NULL) {\n    return true; // System cannot allocate more memory\n  }\n  free(temp); // Free the allocated memory\n  return false;\n}",
             "Peek Opeartion": "int peek() {\n  if (isEmpty()) {\n    cout << \"Priority Queue is empty\";\n    return INT_MIN;\n  }\n  return front->data;\n}"
           },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1aOHkH5UGM8Jh-hy71l3ed-ARz8xjcUbM",
+            "https://drive.google.com/uc?export=view&id=1B9a0Glo1YagaCubDw2d70PvsjG0hB7IX"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Insert": "O(n) - In the worst case, we traverse the entire list.",
               "Delete": "O(1) - Deletion always occurs at the front.",
               "Peek": "O(1) - Peeking only looks at the front element.",
               "isEmpty": "O(1)",
-              "isFull": "Varies - For linked list implementations, it might depend on available system memory."
+              "isFull": "Depends on system memory availability. The check itself is O(1), but actual conditions may vary."
             },
-            "Space Complexity": "O(n)"
+            "Space Complexity": "O(n) - Storage grows with the number of elements."
           }
         }
       },
@@ -617,18 +878,22 @@
             "Insert Operation": "void insert(int priority, int data) {\n  if (isFull()) {\n    cout << \"Priority Queue is full\";\n    return;\n  }\n  Node* newNode = new Node(priority, data);\n  if (isEmpty() || priority > front->priority) {\n    newNode->next = front;\n    front = newNode;\n  } else {\n    Node* temp = front;\n    while (temp->next != NULL && temp->next->priority >= priority) {\n      temp = temp->next;\n    }\n    newNode->next = temp->next;\n    temp->next = newNode;\n  }\n  size++;\n}",
             "Delete Operation": "void delete() {\n  if (isEmpty()) {\n    cout << \"Priority Queue is empty\";\n    return;\n  }\n  Node* temp = front;\n  front = front->next;\n  delete temp;\n  size--;\n}",
             "isEmpty Operation": "bool isEmpty() {\n  return (front == NULL);\n}",
-            "isFull Operation": "bool isFull() {\n  // This implementation might vary based on underlying data structure. For a linked list, it might be system memory dependent.\n}",
+            "isFull Operation": "bool isFull() {\n  Node* temp = new (nothrow) Node;\n  if (temp == nullptr) {\n    return true; // System cannot allocate more memory\n  }\n  delete temp;\n  return false;\n}",
             "Peek Opeartion": "int peek() {\n  if (isEmpty()) {\n    cout << \"Priority Queue is empty\";\n    return INT_MIN;\n  }\n  return front->data;\n}"
           },
+          "imageLink": [
+            "https://drive.google.com/uc?export=view&id=1RhYqy9AhzJu9bhDC2kvy_NfDXMcGkPo_",
+            "https://drive.google.com/uc?export=view&id=1Rj14RvQSTNuVg1UJPS1EflhiFqM38FqK"
+          ],
           "Complexities": {
             "Time Complexities": {
               "Insert": "O(n) - In the worst case, we traverse the entire list.",
               "Delete": "O(1) - Deletion always occurs at the front.",
               "Peek": "O(1) - Peeking only looks at the front element.",
               "isEmpty": "O(1)",
-              "isFull": "Varies - For linked list implementations, it might depend on available system memory."
+              "isFull": "Varies - Typically, it might depend on available system memory for dynamic data structures."
             },
-            "Space Complexity": "O(n)"
+            "Space Complexity": "O(n) - Space complexity grows linearly with the number of elements in the deque."
           }
         }
       },
@@ -688,6 +953,26 @@
         }
       },
       {
+        "Topic": "Invert/Flip Binary Tree",
+        "Info": {
+          "Definition": "Inverting or flipping a binary tree involves swapping the left and right child of all nodes in the tree. This operation transforms the tree into its mirror image. It's a common problem in binary tree data structures, showcasing the use of recursion or iterative approaches to traverse and modify trees.",
+          "Algorithms": {
+            "Recursive Solution": "TreeNode* invertTree(TreeNode* root) {\n  if (root == NULL) return NULL;\n  TreeNode* temp = root->left;\n  root->left = invertTree(root->right);\n  root->right = invertTree(temp);\n  return root;\n}",
+            "Iterative Solution": "TreeNode* invertTreeIterative(TreeNode* root) {\n  if (root == NULL) return NULL;\n  queue<TreeNode*> q;\n  q.push(root);\n  while (!q.empty()) {\n    TreeNode* current = q.front(); q.pop();\n    swap(current->left, current->right);\n    if (current->left) q.push(current->left);\n    if (current->right) q.push(current->right);\n  }\n  return root;\n}"
+          },
+          "Complexities": {
+            "Time Complexity": {
+              "Recursive Solution": "O(n), where n is the number of nodes in the binary tree. Each node is visited once.",
+              "Iterative Solution": "O(n), similar to the recursive solution since each node in the tree is visited once."
+            },
+            "Space Complexity": {
+              "Recursive Solution": "O(h), where h is the height of the tree. This space is used by the recursion stack.",
+              "Iterative Solution": "O(n), in the worst case, due to the storage of nodes in the queue."
+            }
+          }
+        }
+      },
+      {
         "Topic": "Binary Search Tree",
         "Info": {
           "Definition": "A binary search tree (BST) is a binary tree where each node has a key greater than all keys in the node's left subtree and less than those in the right subtree.",
@@ -712,6 +997,28 @@
           "Complexities": {
             "Time Complexity": "O(log n) - For insertion, deletion, and lookup, due to the tree being balanced.",
             "Space Complexity": "O(n) - Space needed to store all nodes in the tree."
+          }
+        }
+      },
+      {
+        "Topic": "AVL Tree Rotations",
+        "Info": {
+          "Definition": "An AVL tree is a self-balancing binary search tree where the difference between heights of left and right subtrees cannot be more than one for all nodes. This ensures O(log n) complexity for search, insert, and delete operations. AVL trees maintain balance using four types of rotations.",
+          "Algorithms": {
+            "Right Rotation": "Node* rightRotate(Node* y) {\n  Node* x = y->left;\n  Node* T2 = x->right;\n  // Perform rotation\n  x->right = y;\n  y->left = T2;\n  // Update heights\n  y->height = max(height(y->left), height(y->right)) + 1;\n  x->height = max(height(x->left), height(x->right)) + 1;\n  // Return new root\n  return x;\n}",
+            "Left Rotation": "Node* leftRotate(Node* x) {\n  Node* y = x->right;\n  Node* T2 = y->left;\n  // Perform rotation\n  y->left = x;\n  x->right = T2;\n  // Update heights\n  x->height = max(height(x->left), height(x->right)) + 1;\n  y->height = max(height(y->left), height(y->right)) + 1;\n  // Return new root\n  return y;\n}",
+            "Left Right Rotation": "Node* leftRightRotate(Node* node) {\n  node->left = leftRotate(node->left);\n  return rightRotate(node);\n}",
+            "Right Left Rotation": "Node* rightLeftRotate(Node* node) {\n  node->right = rightRotate(node->right);\n  return leftRotate(node);\n}"
+          },
+          "Complexities": {
+            "Time Complexity": {
+              "Insertion": "O(log n), where n is the number of nodes in the AVL tree.",
+              "Deletion": "O(log n), due to the need to potentially rebalance the tree after removal.",
+              "Search": "O(log n), as the height of the tree is kept in balance."
+            },
+            "Space Complexity": {
+              "Overall": "O(n), where n is the number of nodes in the AVL tree, for storing the nodes themselves."
+            }
           }
         }
       },
@@ -785,6 +1092,40 @@
               "Postorder": "O(n)"
             },
             "Space Complexity": "O(h) - where h is the height of the tree. This space complexity accounts for the call stack during recursive calls."
+          }
+        }
+      },
+      {
+        "Topic": "Splay Tree",
+        "Info": {
+          "Definition": "A Splay Tree is a self-adjusting binary search tree with the additional property that recently accessed elements are quick to access again. It performs basic operations such as insertion, look-up, and deletion in O(log n) amortized time. Operations on the tree involve a series of splay operations, moving an element to the root of the tree through a combination of tree rotations.",
+          "Algorithms": {
+            "Splay Operation": "void splay(Node*& root, int key) {\n  if (root == NULL || root->key == key) return;\n\n  // Node to be splayed is in the left subtree\n  if (root->key > key) {\n    if (root->left == NULL) return;\n    // Zig-Zig (Left Left)\n    if (root->left->key > key) {\n      splay(root->left->left, key);\n      root = rightRotate(root);\n    } else if (root->left->key < key) { // Zig-Zag (Left Right)\n      splay(root->left->right, key);\n      if (root->left->right != NULL)\n        root->left = leftRotate(root->left);\n    }\n    root = (root->left == NULL) ? root : rightRotate(root);\n  } else { // Node to be splayed is in the right subtree\n    if (root->right == NULL) return;\n    // Zag-Zig (Right Left)\n    if (root->right->key > key) {\n      splay(root->right->left, key);\n      if (root->right->left != NULL)\n        root->right = rightRotate(root->right);\n    } else if (root->right->key < key) { // Zag-Zag (Right Right)\n      splay(root->right->right, key);\n      root = leftRotate(root);\n    }\n    root = (root->right == NULL) ? root : leftRotate(root);\n  }\n}",
+            "Right Rotate": "Node* rightRotate(Node* x) {\n  Node* y = x->left;\n  x->left = y->right;\n  y->right = x;\n  return y;\n}",
+            "Left Rotate": "Node* leftRotate(Node* x) {\n  Node* y = x->right;\n  x->right = y->left;\n  y->left = x;\n  return y;\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(log n) amortized for operations like search, insert, and delete, considering the tree remains balanced.",
+            "Space Complexity": "O(n), for storing the tree elements."
+          }
+        }
+      },
+      {
+        "Topic": "Fenwick Tree",
+        "Info": {
+          "Definition": "A Fenwick Tree, also known as a Binary Indexed Tree (BIT), is a data structure that provides efficient methods for calculating prefix sums in an array of numbers. It allows for the calculation of the sum of the elements in a given range as well as updating the value of an element in logarithmic time. The Fenwick Tree is widely used in scenarios where there are frequent updates and queries on an array.",
+          "Algorithms": {
+            "Update Function": "void updateBIT(int BITree[], int n, int index, int val) {\n  index = index + 1;\n  while (index <= n) {\n    BITree[index] += val;\n    index += index & (-index);\n  }\n}",
+            "Get Sum Function": "int getSum(int BITree[], int index) {\n  int sum = 0;\n  index = index + 1;\n  while (index > 0) {\n    sum += BITree[index];\n    index -= index & (-index);\n  }\n  return sum;\n}",
+            "Construction": "void constructBITree(int arr[], int **BITree, int n) {\n  *BITree = new int[n+1];\n  for (int i = 1; i <= n; i++)\n    (*BITree)[i] = 0;\n  for (int i = 0; i < n; i++)\n    updateBIT(*BITree, n, i, arr[i]);\n}"
+          },
+          "Complexities": {
+            "Time Complexity": {
+              "Update Function": "O(log n), for updating a value in the array.",
+              "Get Sum Function": "O(log n), for calculating the prefix sum up to a given index.",
+              "Construction": "O(n log n), for constructing the Fenwick Tree from an array of n elements."
+            },
+            "Space Complexity": "O(n), for storing the Fenwick Tree."
           }
         }
       },
@@ -924,6 +1265,45 @@
           "Complexities": {
             "Time Complexity": "Average Case: O(n + n^2/k + k), and Worst Case: O(n^2). Here, n is the number of elements, and k is the number of buckets.",
             "Space Complexity": "O(n*k) - For the buckets used during sorting."
+          }
+        }
+      },
+      {
+        "Topic": "Cycle Sort Algorithm",
+        "Info": {
+          "Definition": "Cycle Sort is an in-place, unstable sorting algorithm ideal for distinct elements, noted for its ability to minimize the number of writes to the memory, which makes it suitable for situations where write operations are costly. It works by considering the array as a collection of cycles, where it moves each element to its correct position within its cycle through a series of rotations, achieving sorting with the minimum number of memory writes.",
+          "Algorithms": {
+            "Code": "void cycleSort(int arr[], int n) {\n  for (int cycle_start = 0; cycle_start <= n - 2; cycle_start++) {\n    int item = arr[cycle_start];\n    int pos = cycle_start;\n    for (int i = cycle_start + 1; i < n; i++)\n      if (arr[i] < item)\n        pos++;\n    if (pos == cycle_start)\n      continue;\n    while (item == arr[pos])\n      pos += 1;\n    if (pos != cycle_start) {\n      swap(item, arr[pos]);\n    }\n    while (pos != cycle_start) {\n      pos = cycle_start;\n      for (int i = cycle_start + 1; i < n; i++)\n        if (arr[i] < item)\n          pos += 1;\n      while (item == arr[pos])\n        pos += 1;\n      if (item != arr[pos]) {\n        swap(item, arr[pos]);\n      }\n    }\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(n^2), where n is the number of elements in the array. Despite its quadratic time complexity, it has the theoretical minimum number of writes.",
+            "Space Complexity": "O(1), as it is an in-place sorting algorithm."
+          }
+        }
+      },
+      {
+        "Topic": "Pigeonhole Sort Algorithm",
+        "Info": {
+          "Definition": "Pigeonhole sorting is a sorting algorithm that is suitable for sorting lists of elements where the number of elements (n) and the length of the range of possible key values (N) are approximately the same. It works by assigning each value to a 'pigeonhole' based on its key value and then going through the pigeonholes in order and putting the elements back into the original array in sorted order.",
+          "Algorithms": {
+            "Code": "void pigeonholeSort(int arr[], int n) {\n  int min = *min_element(arr, arr + n);\n  int max = *max_element(arr, arr + n);\n  int range = max - min + 1;\n  vector<int> holes[range];\n  for (int i = 0; i < n; i++)\n    holes[arr[i] - min].push_back(arr[i]);\n  int index = 0;\n  for (int i = 0; i < range; i++) {\n    for (int j = 0; j < holes[i].size(); j++) {\n      arr[index++] = holes[i][j];\n    }\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(n + N), where n is the number of elements in the array and N is the range of the input.",
+            "Space Complexity": "O(n + N), for the pigeonholes used to sort the elements."
+          }
+        }
+      },
+      {
+        "Topic": "Comb Sort Algorithm",
+        "Info": {
+          "Definition": "Comb sort is an improvement on the Bubble Sort algorithm. Like Bubble Sort, Comb Sort also involves comparing and swapping adjacent elements but tries to eliminate turtles or small values near the end of the list, as these are what slow down the sorting process. It achieves this by using a gap that is larger than 1, allowing swaps of elements far apart. The gap size is reduced at each step until it becomes 1, making the algorithm essentially Bubble Sort, but by this time, most turtles have been dealt with, making the final sorting phase efficient.",
+          "Algorithms": {
+            "Code": "void combSort(int arr[], int n) {\n  int gap = n;\n  bool swapped = true;\n  while (gap != 1 || swapped == true) {\n    gap = (gap * 10) / 13;\n    if (gap < 1)\n      gap = 1;\n    swapped = false;\n    for (int i = 0; i < n - gap; i++) {\n      if (arr[i] > arr[i + gap]) {\n        swap(arr[i], arr[i + gap]);\n        swapped = true;\n      }\n    }\n  }\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "Average case: O(n^2/2^p), where p is the number of increments. The worst-case time complexity is O(n^2), but in practical scenarios, it tends to be closer to O(n log n) for partially sorted sequences.",
+            "Space Complexity": "O(1), as it only requires a constant amount of extra space."
           }
         }
       },
@@ -1098,6 +1478,46 @@
             "Space Complexity": {
               "Memoization Example": "O(n), for storing the memoization table plus the recursion call stack",
               "Tabulation Example": "O(n), for storing the tabulation table without additional space for recursion"
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Traveling Salesman Problem",
+        "Info": {
+          "Definition": "The Traveling Salesman Problem (TSP) is a classic algorithmic problem in the field of computer science and operations research. It asks for the shortest possible route that visits a set of cities, each exactly once, and returns to the origin city. It is an NP-hard problem in combinatorial optimization, important in theoretical computer science and optimization.",
+          "Algorithms": {
+            "Brute Force Solution": "int tsp(vector<vector<int>>& graph, vector<bool>& v, int currPos, int n, int count, int cost, int ans) {\n  if (count == n && graph[currPos][0]) {\n    ans = min(ans, cost + graph[currPos][0]);\n    return ans;\n  }\n  for (int i = 0; i < n; i++) {\n    if (!v[i] && graph[currPos][i]) {\n      v[i] = true;\n      ans = tsp(graph, v, i, n, count + 1, cost + graph[currPos][i], ans);\n      v[i] = false;\n    }\n  }\n  return ans;\n}",
+            "Dynamic Programming Solution (Held-Karp Algorithm)": "int tspDP(vector<vector<int>>& distance) {\n  int n = distance.size();\n  vector<vector<int>> dp(1 << n, vector<int>(n, INT_MAX));\n  dp[1][0] = 0;\n  for (int mask = 1; mask < (1 << n); mask += 2) {\n    for (int i = 1; i < n; i++) {\n      if ((mask & (1 << i)) != 0) {\n        for (int j = 0; j < n; j++) {\n          if ((mask & (1 << j)) != 0) {\n            dp[mask][i] = min(dp[mask][i], dp[mask ^ (1 << i)][j] + distance[j][i]);\n          }\n        }\n      }\n    }\n  }\n  int ans = INT_MAX;\n  for (int i = 1; i < n; i++) {\n    ans = min(ans, dp[(1 << n) - 1][i] + distance[i][0]);\n  }\n  return ans;\n}"
+          },
+          "Complexities": {
+            "Time Complexity": {
+              "Brute Force Solution": "O(n!), where n is the number of cities. This approach examines every possible tour.",
+              "Dynamic Programming Solution": "O(n^2 * 2^n), significantly more efficient than brute force for small to medium-sized sets of cities."
+            },
+            "Space Complexity": {
+              "Brute Force Solution": "O(n), due to the recursion stack.",
+              "Dynamic Programming Solution": "O(n * 2^n), for storing the dynamic programming table."
+            }
+          }
+        }
+      },
+      {
+        "Topic": "Subset Sum Problem",
+        "Info": {
+          "Definition": "The Subset Sum Problem is a classic problem in computer science and combinatorial optimization. Given a set of integers and a target sum, the problem is to determine if there exists a subset of the given set whose sum is equal to the given target sum. It is a particular case of the Knapsack Problem and is known to be NP-complete.",
+          "Algorithms": {
+            "Recursive Solution": "bool isSubsetSum(vector<int>& set, int n, int sum) {\n  if (sum == 0) return true;\n  if (n == 0) return false;\n  if (set[n-1] > sum) return isSubsetSum(set, n-1, sum);\n  return isSubsetSum(set, n-1, sum) || isSubsetSum(set, n-1, sum-set[n-1]);\n}",
+            "Dynamic Programming Solution": "bool isSubsetSumDP(vector<int>& set, int sum) {\n  int n = set.size();\n  vector<vector<bool>> dp(n+1, vector<bool>(sum+1, false));\n  for (int i = 0; i <= n; i++) dp[i][0] = true;\n  for (int i = 1; i <= n; i++) {\n    for (int j = 1; j <= sum; j++) {\n      if (set[i-1] <= j) dp[i][j] = dp[i-1][j] || dp[i-1][j-set[i-1]];\n      else dp[i][j] = dp[i-1][j];\n    }\n  }\n  return dp[n][sum];\n}"
+          },
+          "Complexities": {
+            "Time Complexity": {
+              "Recursive Solution": "O(2^n), where n is the number of elements in the set. This is due to the generation of all subsets.",
+              "Dynamic Programming Solution": "O(n*sum), where n is the number of elements and sum is the target sum, due to the use of a 2D array."
+            },
+            "Space Complexity": {
+              "Recursive Solution": "O(n), for the recursion stack.",
+              "Dynamic Programming Solution": "O(n*sum), for storing the DP table."
             }
           }
         }
@@ -1297,6 +1717,65 @@
               "DFS for Undirected Graphs": "O(V), for storing visited information and recursion stack",
               "DFS for Directed Graphs": "O(V), additionally requires space for the recursion stack and to maintain the recursive call stack for directed graphs"
             }
+          }
+        }
+      },
+      {
+        "Topic": "Check for Bipartite Graph",
+        "Info": {
+          "Definition": "A bipartite graph is a graph whose vertices can be divided into two disjoint sets such that every edge connects a vertex in one set to a vertex in the other set. Graphs containing odd-length cycles are not bipartite.",
+          "Algorithms": {
+            "Using DFS": "bool isBipartiteDFS(vector<vector<int>>& graph) {\n  vector<int> colors(graph.size(), -1);\n  for (int i = 0; i < graph.size(); i++) {\n    if (colors[i] == -1) {\n      if (!dfsCheck(graph, i, colors, 0)) return false;\n    }\n  }\n  return true;\n}\nbool dfsCheck(const vector<vector<int>>& graph, int node, vector<int>& colors, int color) {\n  if (colors[node] != -1) return colors[node] == color;\n  colors[node] = color;\n  for (int next : graph[node]) {\n    if (!dfsCheck(graph, next, colors, 1 - color)) return false;\n  }\n  return true;\n}",
+            "Using BFS": "bool isBipartiteBFS(vector<vector<int>>& graph) {\n  vector<int> colors(graph.size(), -1);\n  for (int i = 0; i < graph.size(); i++) {\n    if (colors[i] == -1) {\n      queue<int> q;\n      q.push(i);\n      colors[i] = 0;\n      while (!q.empty()) {\n        int node = q.front(); q.pop();\n        for (int next : graph[node]) {\n          if (colors[next] == -1) {\n            colors[next] = 1 - colors[node];\n            q.push(next);\n          } else if (colors[next] == colors[node]) return false;\n        }\n      }\n    }\n  }\n  return true;\n}"
+          },
+          "Complexities": {
+            "Time Complexity": {
+              "Using DFS": "O(V+E), where V is the number of vertices and E is the number of edges in the graph. This reflects the need to visit each vertex and traverse each edge.",
+              "Using BFS": "O(V+E), similar to DFS, due to the need to examine each vertex and edge in the graph."
+            },
+            "Space Complexity": "O(V), for both algorithms, to store the color of each vertex. The DFS uses a recursion stack, and BFS uses a queue, both of which could, in the worst case, contain all V vertices in the graph."
+          }
+        }
+      },
+      {
+        "Topic": "Bridges in a Graph",
+        "Info": {
+          "Definition": "In graph theory, a bridge (also known as a cut-edge) is an edge of a graph whose removal increases the graph's number of connected components. Identifying bridges in a graph is crucial in understanding its structure, such as in network connectivity and topology analysis. Bridges indicate points of vulnerability in a network and are important for designing robust networks.",
+          "Algorithms": {
+            "Finding Bridges Algorithm": "void findBridges(vector<vector<int>>& graph) {\n  vector<int> disc(graph.size(), -1), low(graph.size(), -1);\n  int time = 0;\n  vector<pair<int, int>> bridges;\n  function<void(int, int)> dfs = [&](int u, int parent) {\n    disc[u] = low[u] = time++;\n    for (int v : graph[u]) {\n      if (v == parent) continue;\n      if (disc[v] == -1) { // If v is not visited\n        dfs(v, u);\n        low[u] = min(low[u], low[v]);\n        if (low[v] > disc[u]) {\n          bridges.push_back({u, v});\n        }\n      } else { // Update low value\n        low[u] = min(low[u], disc[v]);\n      }\n    }\n  };\n  for (int i = 0; i < graph.size(); i++) {\n    if (disc[i] == -1) {\n      dfs(i, -1);\n    }\n  }\n  // bridges vector contains all the bridges in the graph\n}",
+            "Note": "This algorithm uses Depth-First Search (DFS) to find bridges. The disc and low arrays keep track of discovery times of vertices and the earliest visited vertex reachable from the subtree rooted with the vertex respectively."
+          },
+          "Complexities": {
+            "Time Complexity": "O(V+E), where V is the number of vertices and E is the number of edges in the graph. This complexity arises from the DFS traversal of the graph.",
+            "Space Complexity": "O(V), for the storage of disc and low arrays, along with the recursion stack space."
+          }
+        }
+      },
+      {
+        "Topic": "Vertex Cover Problem",
+        "Info": {
+          "Definition": "The Vertex Cover Problem is a fundamental problem in graph theory and computer science, where it involves finding a minimum set of vertices in a graph such that each edge of the graph is incident to at least one vertex in the set. The problem is NP-complete, indicating that there is no known polynomial-time solution for finding the minimum vertex cover in a general graph.",
+          "Algorithms": {
+            "Approximation Algorithm": "vector<int> approximateVertexCover(vector<vector<int>>& graph) {\n  vector<int> vertexCover;\n  vector<bool> visited(graph.size(), false);\n  for (int u = 0; u < graph.size(); u++) {\n    if (!visited[u]) {\n      for (auto v : graph[u]) {\n        if (!visited[v]) {\n          // Add both vertices of the edge to the vertex cover\n          vertexCover.push_back(u);\n          vertexCover.push_back(v);\n          visited[u] = true;\n          visited[v] = true;\n          break; // Move to the next vertex\n        }\n      }\n    }\n  }\n  return vertexCover;\n}",
+            "Note": "This approximation algorithm does not guarantee the minimum vertex cover but finds a cover that is within a factor of 2 of the optimal size. The algorithm iterates through each vertex and its edges, adding both the current vertex and one of its adjacent vertices to the vertex cover if they haven't been added yet."
+          },
+          "Complexities": {
+            "Time Complexity": "O(V + E), where V is the number of vertices and E is the number of edges in the graph, as it essentially goes through each edge once.",
+            "Space Complexity": "O(V), for storing the vertex cover and visited vertices."
+          }
+        }
+      },
+      {
+        "Topic": "Hamiltonian Paths",
+        "Info": {
+          "Definition": "A Hamiltonian path is a path in an undirected or directed graph that visits each vertex exactly once. A Hamiltonian cycle (or circuit) is a Hamiltonian path that is a cycle, meaning the path returns to the starting vertex. Determining whether such paths and cycles exist in a graph is an NP-complete problem, and thus no polynomial-time algorithm is known for all classes of graphs.",
+          "Algorithms": {
+            "Backtracking Algorithm for Hamiltonian Cycles": "bool hamiltonianCycle(vector<vector<int>>& graph) {\n  vector<int> path(graph.size(), -1);\n  path[0] = 0; // start from the first vertex\n  if (hamCycleUtil(graph, path, 1) == false) {\n    return false;\n  }\n  printPath(path);\n  return true;\n}\nbool hamCycleUtil(vector<vector<int>>& graph, vector<int>& path, int pos) {\n  if (pos == graph.size()) {\n    if (graph[path[pos-1]][path[0]] == 1) return true;\n    else return false;\n  }\n  for (int v = 1; v < graph.size(); v++) {\n    if (isSafe(v, graph, path, pos)) {\n      path[pos] = v;\n      if (hamCycleUtil(graph, path, pos + 1) == true) return true;\n      path[pos] = -1; // backtrack\n    }\n  }\n  return false;\n}",
+            "isSafe Function": "bool isSafe(int v, vector<vector<int>>& graph, vector<int>& path, int pos) {\n  if (graph[path[pos - 1]][v] == 0) return false;\n  for (int i = 0; i < pos; i++) {\n    if (path[i] == v) return false;\n  }\n  return true;\n}"
+          },
+          "Complexities": {
+            "Time Complexity": "O(n!), where n is the number of vertices in the graph. The factorial time complexity is due to the need to generate all possible vertex sequences.",
+            "Space Complexity": "O(n), for the recursion stack and the path array where n is the number of vertices in the graph."
           }
         }
       },
