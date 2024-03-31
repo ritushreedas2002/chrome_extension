@@ -7,33 +7,6 @@ import DialogBox from "./DialogBox";
 
 
 const Revision = () => {
-  // const { category } = useParams();
-  // const { indices } = useIndex();
-  // const initialIndex = indices[category] || 0; // Get initial index from context, default to 0
-  // const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  // const [currentProblem, setCurrentProblem] = useState(null);
-  // const [showFlowChart, setShowFlowChart] = useState(false);
-
-  // useEffect(() => {
-  //   const categoryData = dsa.find((cat) => cat.category === category);
-  //   if (!categoryData) {
-  //     console.error("Category not found");
-  //     return;
-  //   }
-  //   const problem = categoryData.Problems[currentIndex];
-  //   setCurrentProblem(problem);
-  // }, [category, currentIndex]);
-
-  // const handlePrev = () => {
-  //   setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0)); // Ensure index doesn't go below 0
-  // };
-
-  // const handleNext = () => {
-  //   const categoryData = dsa.find((cat) => cat.category === category);
-  //   setCurrentIndex((prevIndex) =>
-  //     Math.min(prevIndex + 1, categoryData.Problems.length - 1)
-  //   ); // Ensure index doesn't exceed max
-  // };
 
   const { category } = useParams();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,18 +19,18 @@ const Revision = () => {
 
  
 
-  const getExplanation = async (codeText) => {
+  const getExplanation = async (topicName,codeText) => {
     console.log(codeText);
+    console.log(topicName);
     setLoadingExplanation(true);
 
     try {
-
       const response = await fetch('https://gptserver.vercel.app/api/openai', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ codeText: codeText }), // Ensure this matches the server's expected format
+      body: JSON.stringify({ topicName, codeText }), // Ensure this matches the server's expected format
     });
 
     if (!response.ok) {
@@ -213,7 +186,7 @@ const Revision = () => {
             <div key={index} className="mb-4 items-center w-full">
               <h3 className="text-xl font-semibold mb-2 text-center">{key}</h3>
               <button
-                onClick={() => getExplanation(value)}
+                onClick={() => getExplanation(key,value)}
                 className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
               >
                 Explain the code
