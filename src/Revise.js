@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import dsa from "./dsa.json";
 import { useIndex } from "./Context/Context";
 import axios from "axios";
+import DialogBox from "./DialogBox";
+import { openai } from "./openai";
 
 const Revision = () => {
   // const { category } = useParams();
@@ -37,6 +39,48 @@ const Revision = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentProblem, setCurrentProblem] = useState(null);
   const [showFlowChart, setShowFlowChart] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [explanation, setExplanation] = useState("");
+  const [loadingExplanation, setLoadingExplanation] = useState(false);
+  const [codeSnippets, setCodeSnippets] = useState([]);
+
+  // ...existing functions and handlers
+
+  useEffect(() => {
+    // Assuming currentProblem is updated from somewhere else
+    if (currentProblem) {
+      // This will extract the code snippets into an array
+      const newCodeSnippets = Object.values(
+        currentProblem.Info.Algorithms || {}
+      ).map((code) => code);
+      setCodeSnippets(newCodeSnippets);
+    }
+  }, [currentProblem]);
+
+  const getExplanation = async (codeText) => {
+    console.log(codeText);
+    setLoadingExplanation(true);
+    
+    const prompt = `Explain the following pieces of code:\n\n${codeText}`;
+
+    const data = `I have a code writtern in c++ but the writtern format in json .the structure u will get is {"topic":code ,"topic":code}  so taking each individual topic explain what is the code writtern. The above json file given as:\n\n${codeText}\n\n`;
+
+    try {
+      const gptResults = await openai.chat.completions.create({
+        messages: [{ role: "user", content: prompt }],
+        model: "gpt-3.5-turbo",
+      });
+
+      setExplanation(gptResults.choices?.[0]?.message?.content);
+      console.log(gptResults.choices?.[0]?.message?.content);
+    } catch (error) {
+      console.error("Error fetching explanation:", error);
+      setExplanation("Failed to fetch the explanation.");
+    } finally {
+      setLoadingExplanation(false);
+      setIsDialogOpen(true);
+    }
+  };
 
   // Fetch and update the problem based on the current index
   useEffect(() => {
@@ -101,9 +145,11 @@ const Revision = () => {
     try {
       const flowChartDiv = document.getElementById("flowchart-div");
       flowChartDiv.innerHTML = "";
-  
+
       for (let i = 0; i < imageLinks.length; i++) {
-        const response = await axios.get(imageLinks[i], { responseType: "blob" });
+        const response = await axios.get(imageLinks[i], {
+          responseType: "blob",
+        });
         const imageUrl = URL.createObjectURL(response.data);
         const imgElement = document.createElement("img");
         imgElement.src = imageUrl;
@@ -132,8 +178,16 @@ const Revision = () => {
     <div className="flex flex-col items-center justify-center w-full h-screen p-4">
       <h1 className="text-3xl font-bold mb-10">DSA Revision Buddy</h1>
       <div className="flex flex-col items-start justify-start w-full max-w-4xl h-full overflow-auto p-4 bg-white rounded shadow">
-        <div className="text-2xl font-bold mb-4 text-center">
-          {currentProblem.Topic}
+        <div className="flex justify-between">
+          <div className="text-2xl font-bold mb-4 text-center">
+            {currentProblem.Topic}
+          </div>
+          <button
+            onClick={() => setShowFlowChart(true)}
+            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700 ml-16"
+          >
+            view the flowchart
+          </button>
         </div>
         <p
           className="mb-6 text-left text-base font-medium"
@@ -141,12 +195,7 @@ const Revision = () => {
         >
           {currentProblem.Info.Definition}
         </p>
-        <button
-          onClick={() => setShowFlowChart(true)}
-          className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
-        >
-          Click here to view the flowchart
-        </button>
+
         {showFlowChart && (
           <div className="fixed top-0 right-0 w-5/6 h-full bg-white p-4 shadow-xl z-10 overflow-y-auto">
             <button
@@ -159,22 +208,46 @@ const Revision = () => {
             {/* <img src={currentProblem.Info.imageLink} alt="Flowchart" className="w-full h-auto mt-4" /> */}
           </div>
         )}
+
         {Object.entries(currentProblem.Info.Algorithms || {}).map(
           ([key, value], index) => (
             <div key={index} className="mb-4 items-center w-full">
               <h3 className="text-xl font-semibold mb-2 text-center">{key}</h3>
+              <button
+                onClick={() => getExplanation(value)}
+                className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
+              >
+                Explain the code
+              </button>
+
+              {/* Dialog box */}
+              {isDialogOpen && (
+                <DialogBox
+                  isOpen={isDialogOpen}
+                  onClose={() => setIsDialogOpen(false)}
+                >
+                  {loadingExplanation ? (
+                    <p>Loading...</p>
+                  ) : (
+                    <p>{explanation}</p>
+                  )}
+                </DialogBox>
+              )}
               <pre className="bg-gray-100 rounded pl-4 py-3 whitespace-pre-wrap text-left text-lg font-medium">
                 {value}
               </pre>
             </div>
           )
-        )}       
+        )}
         <div className="w-full  ">
-        <div className="text-2xl text-center font-bold m-1 ">Complexities</div>
+          <div className="text-2xl text-center font-bold m-1 ">
+            Complexities
+          </div>
           {Object.entries(currentProblem.Info.Complexities || {}).map(
             ([key, values], index) => (
               <div key={index} className="mt-2 ml-10">
                 <h4 className="font-bold text-left mb-2 text-xl">{key}</h4>
+
                 {typeof values === "object" ? (
                   <ul className="list-disc list-inside">
                     {Object.entries(values).map(
