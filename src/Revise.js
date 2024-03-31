@@ -4,7 +4,7 @@ import dsa from "./dsa.json";
 import { useIndex } from "./Context/Context";
 import axios from "axios";
 import DialogBox from "./DialogBox";
-import { openai } from "./openai";
+
 
 const Revision = () => {
   // const { category } = useParams();
@@ -42,37 +42,36 @@ const Revision = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [explanation, setExplanation] = useState("");
   const [loadingExplanation, setLoadingExplanation] = useState(false);
-  const [codeSnippets, setCodeSnippets] = useState([]);
+ 
 
-  // ...existing functions and handlers
-
-  useEffect(() => {
-    // Assuming currentProblem is updated from somewhere else
-    if (currentProblem) {
-      // This will extract the code snippets into an array
-      const newCodeSnippets = Object.values(
-        currentProblem.Info.Algorithms || {}
-      ).map((code) => code);
-      setCodeSnippets(newCodeSnippets);
-    }
-  }, [currentProblem]);
+ 
 
   const getExplanation = async (codeText) => {
     console.log(codeText);
     setLoadingExplanation(true);
-    
-    const prompt = `Explain the following pieces of code:\n\n${codeText}`;
-
-    //const data = `I have a code writtern in c++ but the writtern format in json .the structure u will get is {"topic":code ,"topic":code}  so taking each individual topic explain what is the code writtern. The above json file given as:\n\n${codeText}\n\n`;
 
     try {
-      const gptResults = await openai.chat.completions.create({
-        messages: [{ role: "user", content: prompt }],
-        model: "gpt-3.5-turbo",
-      });
 
-      setExplanation(gptResults.choices?.[0]?.message?.content);
-      console.log(gptResults.choices?.[0]?.message?.content);
+      const response = await fetch('https://gptserver.vercel.app/api/openai', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ codeText: codeText }), // Ensure this matches the server's expected format
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    console.log(data);
+
+
+
+      setExplanation(data);
+      // setExplanation(gptResults.choices?.[0]?.message?.content);
+      // console.log(gptResults.choices?.[0]?.message?.content);
     } catch (error) {
       console.error("Error fetching explanation:", error);
       setExplanation("Failed to fetch the explanation.");
