@@ -37,8 +37,6 @@
 // };
 
 // export default Category;
-
-
 // Category.js
 // components/Category.js
 import React from 'react';
@@ -75,7 +73,6 @@ const Category = () => {
       <div className="absolute font-bold top-12 text-2xl mb-20">
         DSA Revision Buddy
       </div>
-
       <div
         className="flex flex-col justify-center items-center"
         style={{ maxWidth: "70%" }}
