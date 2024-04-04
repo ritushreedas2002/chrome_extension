@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AddButton from "./assests/AddButton.png";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import ReminderModal from "./ReminderModal";
 
 const ToDoList = () => {
   const [tasks, setTasks] = useState([]);
@@ -8,8 +9,21 @@ const ToDoList = () => {
   const [showModal, setShowModal] = useState(false);
   const [taskInput, setTaskInput] = useState("");
   const [deadline, setDeadline] = useState("");
+  const [showReminderModal, setShowReminderModal] = useState(false);
+  const [currentTaskId, setCurrentTaskId] = useState(null);
   const navigate = useNavigate();
 
+  const setReminderForTask = (email, dateTime) => {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === currentTaskId) {
+        return { ...task, reminderEmail: email, reminderDateTime: dateTime };
+      }
+      return task;
+    });
+
+    setTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
   // useEffect(() => {
   //   // Load completed tasks separately
   //   const loadedCompletedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
@@ -23,7 +37,8 @@ const ToDoList = () => {
 
   useEffect(() => {
     const loadedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    const loadedCompletedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
+    const loadedCompletedTasks =
+      JSON.parse(localStorage.getItem("completedTasks")) || [];
     setTasks(loadedTasks);
     setCompletedTasks(loadedCompletedTasks);
   }, []);
@@ -37,7 +52,7 @@ const ToDoList = () => {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
   };
-  
+
   // const removeCompletedTask = (taskId) => {
   //   const updatedCompletedTasks = completedTasks.filter((task) => task.id !== taskId);
   //   setCompletedTasks(updatedCompletedTasks);
@@ -79,29 +94,29 @@ const ToDoList = () => {
   //       // setCompletedTasks([...completedTasks, updatedTask]);
   //       // localStorage.setItem("completedtasks", JSON.stringify(completedTasks));
   //       // console.log(completedTasks);
-        
+
   //       return updatedTask;
   //     }
   //     return task;
   //   });
   //   setTasks(updatedTasks);
   //   localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    
+
   // };
   const toggleTaskCompletion = (taskId) => {
-    const updatedTasks = tasks.map(task => {
+    const updatedTasks = tasks.map((task) => {
       if (task.id === taskId) {
         return { ...task, completed: !task.completed };
       }
       return task;
     });
-  
+
     let updatedCompletedTasks = [...completedTasks];
-  
-    if (updatedTasks.find(task => task.id === taskId && task.completed)) {
+
+    if (updatedTasks.find((task) => task.id === taskId && task.completed)) {
       // Task was just completed, add to completedTasks if not already present
-      if (!updatedCompletedTasks.find(task => task.id === taskId)) {
-        const completedTask = updatedTasks.find(task => task.id === taskId);
+      if (!updatedCompletedTasks.find((task) => task.id === taskId)) {
+        const completedTask = updatedTasks.find((task) => task.id === taskId);
         updatedCompletedTasks.push(completedTask);
         if (updatedCompletedTasks.length > 10) {
           updatedCompletedTasks.shift(); // Removes the first element from the array
@@ -109,19 +124,24 @@ const ToDoList = () => {
       }
     } else {
       // Task was just unchecked, remove from completedTasks if present
-      updatedCompletedTasks = updatedCompletedTasks.filter(task => task.id !== taskId);
+      updatedCompletedTasks = updatedCompletedTasks.filter(
+        (task) => task.id !== taskId
+      );
     }
-  
+
     setTasks(updatedTasks);
     setCompletedTasks(updatedCompletedTasks);
     console.log(completedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    localStorage.setItem("completedtasks", JSON.stringify(updatedCompletedTasks))
+    localStorage.setItem(
+      "completedtasks",
+      JSON.stringify(updatedCompletedTasks)
+    );
   };
 
   const showCompletedTasks = () => {
     // const completedTasks = tasks.filter(task => task.completed);
-    navigate('/completed', { state: { completedTasks } });
+    navigate("/completed", { state: { completedTasks } });
   };
 
   return (
@@ -171,8 +191,25 @@ const ToDoList = () => {
               >
                 Delete
               </button>
+              <button
+                onClick={() => {
+                  setShowReminderModal(true);
+                  setCurrentTaskId(task.id);
+                }}
+                className="ml-4 bg-red-500 hover:bg-red-600 text-white p-1 rounded"
+              >
+                Set Reminder
+              </button>
             </li>
           ))}
+          {showReminderModal && (
+            <ReminderModal
+              onSave={(email, dateTime) => setReminderForTask(email, dateTime)}
+              onClose={() => setShowReminderModal(false)}
+              taskId={currentTaskId}
+              taskText={tasks.find((task) => task.id === currentTaskId)?.text}
+            />
+          )}
         </ul>
       </div>
       <img
@@ -183,7 +220,10 @@ const ToDoList = () => {
           setShowModal(true);
         }}
       />
-      <button className="fixed right-8 top-12 bg-blue-500 text-white text-base font-semibold p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110" onClick={showCompletedTasks}>
+      <button
+        className="fixed right-8 top-12 bg-blue-500 text-white text-base font-semibold p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110"
+        onClick={showCompletedTasks}
+      >
         Completed tasks
       </button>
       {/* Modal for adding a new task */}
