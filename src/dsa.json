@@ -793,9 +793,10 @@
         "Info": {
           "Definition": "The Knuth-Morris-Pratt (KMP) Algorithm is used for substring search, which efficiently finds all occurrences of a word within a text, doing so in linear time. The key to KMP's performance is the construction of a 'partial match' table (also known as the 'failure function') that allows the algorithm to skip ahead at specific points where a mismatch occurs, avoiding unnecessary comparisons.",
           "Algorithms": {
-            "Code": "void KMPSearch(string pat, string txt) {\n  int M = pat.length();\n  int N = txt.length();\n  vector<int> lps(M, 0);\n  computeLPSArray(pat, M, lps);\n  int i = 0; // index for txt[]\n  int j = 0; // index for pat[]\n  while (i < N) {\n    if (pat[j] == txt[i]) {\n      j++;\n      i++;\n    }\n    if (j == M) {\n      cout << \"Found pattern at index \" << i - j;\n      j = lps[j - 1];\n    }\n    else if (i < N && pat[j] != txt[i]) {\n      if (j != 0) j = lps[j - 1];\n      else i = i + 1;\n    }\n  }\n}",
+            "KMP Search": "void KMPSearch(string pat, string txt) {\n  int M = pat.length();\n  int N = txt.length();\n  vector<int> lps(M, 0);\n  computeLPSArray(pat, M, lps);\n  int i = 0; // index for txt[]\n  int j = 0; // index for pat[]\n  while (i < N) {\n    if (pat[j] == txt[i]) {\n      j++;\n      i++;\n    }\n    if (j == M) {\n      cout << \"Found pattern at index \" << i - j;\n      j = lps[j - 1];\n    }\n    else if (i < N && pat[j] != txt[i]) {\n      if (j != 0) j = lps[j - 1];\n      else i = i + 1;\n    }\n  }\n}",
             "computeLPSArray": "void computeLPSArray(string pat, int M, vector<int>& lps) {\n  int len = 0;\n  lps[0] = 0; // lps[0] is always 0\n  int i = 1;\n  while (i < M) {\n    if (pat[i] == pat[len]) {\n      len++;\n      lps[i] = len;\n      i++;\n    } else {\n      if (len != 0) {\n        len = lps[len - 1];\n      } else {\n        lps[i] = 0;\n        i++;\n      }\n    }\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1ab1m8fcI6qP6Sp30KynE0rWW9Nsmax8w"],
           "Complexities": {
             "Time Complexity": "O(N+M), where N is the length of the text and M is the length of the pattern.",
             "Space Complexity": "O(M), for the LPS (Longest Prefix Suffix) array."
@@ -810,6 +811,7 @@
             "Code": "void floodFillUtil(vector<vector<int>>& screen, int x, int y, int prevC, int newC) {\n  // Base cases\n  if (x < 0 || x >= screen.size() || y < 0 || y >= screen[0].size()) return;\n  if (screen[x][y] != prevC) return;\n  if (screen[x][y] == newC) return;\n  // Replace the color at (x, y)\n  screen[x][y] = newC;\n  // Recur for north, east, south and west\n  floodFillUtil(screen, x+1, y, prevC, newC);\n  floodFillUtil(screen, x-1, y, prevC, newC);\n  floodFillUtil(screen, x, y+1, prevC, newC);\n  floodFillUtil(screen, x, y-1, prevC, newC);\n}",
             "Flood Fill": "void floodFill(vector<vector<int>>& screen, int x, int y, int newC) {\n  int prevC = screen[x][y];\n  if (prevC == newC) return;\n  floodFillUtil(screen, x, y, prevC, newC);\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1K3RvaitdT6_RHw2So091AxBczrEgPBQy"],
           "Complexities": {
             "Time Complexity": "O(n), where n is the number of pixels in the screen. In the worst case, all pixels will need to be visited.",
             "Space Complexity": "O(n), in the worst case, due to the recursion stack if all pixels need to be visited."
@@ -821,9 +823,9 @@
         "Info": {
           "Definition": "Lee algorithm is a breadth-first search (BFS) based algorithm used for finding the shortest path in a maze or a grid, from a starting point to a target point, while avoiding obstacles. It explores all possible directions one step at a time, expanding outwards from the starting point until it reaches the target, effectively finding the shortest path.",
           "Algorithms": {
-            "Code": "void leeAlgorithm(int grid[][], int startX, int startY, int endX, int endY) {\n  queue<pair<int, int>> q;\n  q.push({startX, startY});\n  grid[startX][startY] = 0; // Starting point\n  while (!q.empty()) {\n    pair<int, int> p = q.front();\n    q.pop();\n    int x = p.first, y = p.second;\n    // Check all 4 directions\n    for (int i = 0; i < 4; i++) {\n      int adjX = x + dx[i], adjY = y + dy[i];\n      // Check if valid move\n      if (isValid(adjX, adjY) && grid[adjX][adjY] == 1) {\n        grid[adjX][adjY] = grid[x][y] + 1;\n        q.push({adjX, adjY});\n        if (adjX == endX && adjY == endY) // Reached destination\n          return;\n      }\n    }\n  }\n}",
-            "Note": "This pseudocode assumes 'grid' is a 2D array where 0 represents obstacles, 1 represents possible paths, and distances are marked as the algorithm progresses. 'dx' and 'dy' arrays define movement directions (up, down, left, right), and 'isValid' checks for valid moves within the grid boundaries and obstacle avoidance."
+            "Lee Algorithm": "void leeAlgorithm(int grid[][], int startX, int startY, int endX, int endY) {\n  queue<pair<int, int>> q;\n  q.push({startX, startY});\n  grid[startX][startY] = 0; // Starting point\n  while (!q.empty()) {\n    pair<int, int> p = q.front();\n    q.pop();\n    int x = p.first, y = p.second;\n    // Check all 4 directions\n    for (int i = 0; i < 4; i++) {\n      int adjX = x + dx[i], adjY = y + dy[i];\n      // Check if valid move\n      if (isValid(adjX, adjY) && grid[adjX][adjY] == 1) {\n        grid[adjX][adjY] = grid[x][y] + 1;\n        q.push({adjX, adjY});\n        if (adjX == endX && adjY == endY) // Reached destination\n          return;\n      }\n    }\n  }\n}\n\n This pseudocode assumes 'grid' is a 2D array where 0 represents obstacles, 1 represents possible paths, and distances are marked as the algorithm progresses. 'dx' and 'dy' arrays define movement directions (up, down, left, right), and 'isValid' checks for valid moves within the grid boundaries and obstacle avoidance."
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1T7W14EXcudPfs6oyD8l38Mu6olU03QOw"],
           "Complexities": {
             "Time Complexity": "O(n*m), where n and m are the dimensions of the grid, since each cell is visited at most once.",
             "Space Complexity": "O(n*m), due to the queue potentially holding all cells in the worst case."
@@ -837,6 +839,7 @@
           "Algorithms": {
             "Code": "int maxSubArray(vector<int>& nums) {\n  int maxSoFar = nums[0], currentMax = nums[0];\n  for(int i = 1; i < nums.size(); i++) {\n    currentMax = max(nums[i], currentMax + nums[i]);\n    maxSoFar = max(maxSoFar, currentMax);\n  }\n  return maxSoFar;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1rzq0qrys7qiaBpFDfIqvy6gYyPDM1Nuy"],
           "Complexities": {
             "Time Complexity": "O(n), where n is the number of elements in the array.",
             "Space Complexity": "O(1), as it requires a constant space regardless of the input size."
