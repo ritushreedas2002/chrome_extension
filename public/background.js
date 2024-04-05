@@ -175,7 +175,7 @@ async function checkAndShowReminders() {
           type: 'basic',
           iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png', // Ensure you have an 'icon.png' in your extension's directory
           title: 'Reminder!',
-          message: "Hii",
+          message: reminder.taskText,
           silent: false
         });
       }
