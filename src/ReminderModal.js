@@ -1,36 +1,41 @@
+
+
 // import React, { useState } from "react";
 // import axios from "axios";
 
 // const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
-//   const formatDateAndHour = () => {
-//     const now = new Date();
-//     const year = now.getUTCFullYear();
-//     const month = (now.getUTCMonth() + 1).toString().padStart(2, "0"); // getUTCMonth is 0-based
-//     const day = now.getUTCDate().toString().padStart(2, "0");
-//     const hour = now.getUTCHours().toString().padStart(2, "0");
-//     return `${year}-${month}-${day}T${hour}:00:00.000+00:00`;
-//   };
-
 //   const [email, setEmail] = useState("");
-//   const [reminderDateTime, setReminderDateTime] = useState(formatDateAndHour());
+//   const [reminderDateTime, setReminderDateTime] = useState("");
 
 //   const handleSave = async () => {
-//     console.log(taskText, taskId, reminderDateTime);
+//     // Convert local datetime to UTC for consistent backend processing
+//     const userSelectedDate = new Date(reminderDateTime);
+//     const reminderDateTimeUtc = userSelectedDate.toISOString();
+
 //     try {
 //       const response = await axios.post(
 //         "https://nodemailer-opal.vercel.app/api/sendreminder",
 //         {
 //           email,
-//           reminderDateTime,
+//           reminderDateTime: reminderDateTimeUtc, // Use UTC datetime string
 //           taskText,
 //         }
 //       );
 //       console.log(response.data.msg);
-//       onSave(email, reminderDateTime);
-//       onClose();
+//       onSave(email, reminderDateTimeUtc); // Optionally, handle UI updates or cleanup
+//       onClose(); // Assuming you have a method to close the modal
 //     } catch (error) {
 //       console.error("Error:", error);
+//       // Handle error state in UI, such as showing a message to the user
 //     }
+//   };
+
+//   // Provides a default initial value for the datetime-local input,
+//   // formatted as a local datetime string to be converted upon submission
+//   const getDefaultDateTimeLocal = () => {
+//     const now = new Date();
+//     now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // Adjust to local timezone offset
+//     return now.toISOString().slice(0, 16); // Format as 'YYYY-MM-DDTHH:MM', suitable for datetime-local input
 //   };
 
 //   return (
@@ -48,7 +53,7 @@
 //         />
 //         <input
 //           type="datetime-local"
-//           value={reminderDateTime}
+//           value={reminderDateTime || getDefaultDateTimeLocal()}
 //           onChange={(e) => setReminderDateTime(e.target.value)}
 //           className="block w-full p-2 border rounded mb-4"
 //         />
@@ -73,42 +78,71 @@
 
 // export default ReminderModal;
 
-import React, { useState } from "react";
+
+
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
   const [email, setEmail] = useState("");
   const [reminderDateTime, setReminderDateTime] = useState("");
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    // Check if chrome.storage is available
+    if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.sync) {
+      chrome.storage.sync.get(["userId"], (result) => {
+        if (result.userId) {
+          setUserId(result.userId);
+        } else {
+          console.error("User ID not found in Chrome storage.");
+          alert("User ID not found. Please log in.");
+        }
+      });
+    }
+  }, []);
 
   const handleSave = async () => {
+    // Basic validation for email and reminderDateTime
+    if (!email || !reminderDateTime) {
+      alert("Email and Reminder Date/Time are required.");
+      return;
+    }
+
+    if (!userId) {
+      alert("User ID is required. Please ensure you are logged in.");
+      return;
+    }
+
+
     // Convert local datetime to UTC for consistent backend processing
     const userSelectedDate = new Date(reminderDateTime);
     const reminderDateTimeUtc = userSelectedDate.toISOString();
+
+    
 
     try {
       const response = await axios.post(
         "https://nodemailer-opal.vercel.app/api/sendreminder",
         {
           email,
-          reminderDateTime: reminderDateTimeUtc, // Use UTC datetime string
+          reminderDateTime: reminderDateTimeUtc,
           taskText,
+          userId
         }
       );
       console.log(response.data.msg);
       onSave(email, reminderDateTimeUtc); // Optionally, handle UI updates or cleanup
-      onClose(); // Assuming you have a method to close the modal
+      onClose(); // Close the modal
     } catch (error) {
       console.error("Error:", error);
-      // Handle error state in UI, such as showing a message to the user
     }
   };
 
-  // Provides a default initial value for the datetime-local input,
-  // formatted as a local datetime string to be converted upon submission
   const getDefaultDateTimeLocal = () => {
     const now = new Date();
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // Adjust to local timezone offset
-    return now.toISOString().slice(0, 16); // Format as 'YYYY-MM-DDTHH:MM', suitable for datetime-local input
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 16);
   };
 
   return (
@@ -122,13 +156,15 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email for reminder"
+          required // Mark email as required
           className="block w-full p-2 border rounded mb-2"
         />
         <input
           type="datetime-local"
           value={reminderDateTime || getDefaultDateTimeLocal()}
           onChange={(e) => setReminderDateTime(e.target.value)}
-          className="block w-full p-2 border rounded mb-4"
+          required // Mark datetime as required
+          className="block w-full p-2 border rounded mb-2"
         />
         <div className="text-right">
           <button
@@ -150,3 +186,4 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
 };
 
 export default ReminderModal;
+
