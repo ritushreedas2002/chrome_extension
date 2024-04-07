@@ -146,44 +146,54 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 
 
 async function checkAndShowReminders() {
-  // Fetch the userId from chrome.storage.sync
-  const userId = await new Promise((resolve, reject) => {
-    chrome.storage.sync.get(['userId'], function(result) {
-      if (result.userId) {
-        resolve(result.userId);
-      } else {
-        reject('User ID not found.');
-      }
+  try {
+    // Fetch the userId from chrome.storage.sync
+    const userId = await new Promise((resolve, reject) => {
+      chrome.storage.sync.get(['userId'], function(result) {
+        if (result.userId) {
+          resolve(result.userId);
+        } else {
+          reject('User ID not found.');
+        }
+      });
     });
-  });
 
-  // Fetch reminders for the user from your backend
-  const response = await fetch(`https://nodemailer-opal.vercel.app/api/userInfo?userId=${userId}`);
-  const data = await response.json();
+    // Fetch reminders for the user from your backend
+    const response = await fetch(`https://nodemailer-opal.vercel.app/api/userInfo?userId=${userId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch reminders');
+    }
+    const data = await response.json();
 
-  // Check if the data received is an array
-  if (Array.isArray(data.reminders)) {
-    const now = new Date().getTime();
-
-    data.reminders.forEach(reminder => {
-      const reminderTime = new Date(reminder.reminderDateTime).getTime();
-
-      // Check if the reminder's time is past or present
-      if (reminderTime <= now) {
-        // Create a browser notification for the reminder
-        chrome.notifications.create(`reminder-${reminder._id}`, {
-          type: 'basic',
-          iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png', // Ensure you have an 'icon.png' in your extension's directory
-          title: 'Reminder!',
-          message: reminder.taskText,
-          silent: false
-        });
-      }
-    });
-  } else {
-    console.error('Expected an array of reminders, received:', data.reminders);
+    // Check if the data received is an array of reminders
+    if (Array.isArray(data.reminders) && data.reminders.length > 0) {
+      const now = new Date().getTime();
+  
+      data.reminders.forEach(reminder => {
+        const reminderTime = new Date(reminder.reminderDateTime).getTime();
+  
+        // Check if the reminder's time is past or present
+        if (reminderTime <= now) {
+          // Create a browser notification for the reminder
+          chrome.notifications.create(`reminder-${reminder._id}`, {
+            type: 'basic',
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png', // Make sure the icon URL is accessible
+            title: 'Reminder!',
+            message: `You task is pending -${reminder.taskText}`,
+            silent: false
+          });
+        }
+      });
+    } else {
+      console.error('Expected an array of reminders, received:', data.reminders);
+    }
+  } catch (error) {
+    console.error('Error fetching reminders:', error);
   }
 }
+
+// You might need
+
 
 
 
@@ -262,7 +272,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.action.setBadgeText({ text: '' });
   }
 });
-
+  
 
 // background.js
 
