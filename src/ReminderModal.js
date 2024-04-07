@@ -1,3 +1,5 @@
+
+
 // import React, { useState } from "react";
 // import axios from "axios";
 
@@ -77,7 +79,8 @@
 // export default ReminderModal;
 
 
-import React, { useState,useEffect } from "react";
+
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
@@ -120,60 +123,50 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
   };
 
   const handleSave = async () => {
-    // Check if reminderDate or reminderTime is empty to prevent invalid date construction
-    if (!reminderDate || !reminderTime) {
-      console.error("Date or time is not selected.");
-      return; // Exit the function if either date or time is missing
+    // Basic validation for email and reminderDateTime
+    if (!email || !reminderDateTime) {
+      alert("Email and Reminder Date/Time are required.");
+      return;
     }
-  
+
+    if (!userId) {
+      alert("User ID is required. Please ensure you are logged in.");
+      return;
+    }
+
+
+    // Convert local datetime to UTC for consistent backend processing
+    const userSelectedDate = new Date(reminderDateTime);
+    const reminderDateTimeUtc = userSelectedDate.toISOString();
+
+    
+
     try {
-      // Convert 12-hour formatted time (with AM/PM) into 24-hour format
-      const [_, hourPart, minutePart, period] = reminderTime.match(/(\d+):(\d+)\s?(AM|PM)/i) || [];
-      let hour = parseInt(hourPart, 10);
-      const minutes = parseInt(minutePart, 10);
-  
-      if (period.toUpperCase() === "PM" && hour < 12) {
-        hour += 12;
-      } else if (period.toUpperCase() === "AM" && hour === 12) {
-        hour = 0;
-      }
-  
-      // If hour or minutes are invalid (NaN), log an error and return
-      if (isNaN(hour) || isNaN(minutes)) {
-        console.error("Invalid time format.");
-        return;
-      }
-  
-      // Construct the full datetime string in ISO format
-      const datetime = new Date(`${reminderDate}T${hour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`);
-      if (isNaN(datetime.getTime())) {
-        throw new Error("Invalid datetime value");
-      }
-  
-      const reminderDateTimeUtc = datetime.toISOString();
-  
       const response = await axios.post(
         "https://nodemailer-opal.vercel.app/api/sendreminder",
         {
           email,
           reminderDateTime: reminderDateTimeUtc,
           taskText,
+          userId
         }
       );
   
       console.log(response.data.msg);
       onSave(email, reminderDateTimeUtc);
       onClose();
+      onSave(email, reminderDateTimeUtc); // Optionally, handle UI updates or cleanup
+      onClose(); // Close the modal
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  
 
-  // const getDefaultDate = () => {
-  //   const now = new Date();
-  //   return now.toISOString().slice(0, 10); // Format as 'YYYY-MM-DD'
-  // };
+  const getDefaultDateTimeLocal = () => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 16);
+  };
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
@@ -186,21 +179,16 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email for reminder"
+          required // Mark email as required
           className="block w-full p-2 border rounded mb-2"
         />
         <input
-          type="date"
-          value={reminderDate || getDefaultDate()}
-          onChange={(e) => setReminderDate(e.target.value)}
+          type="datetime-local"
+          value={reminderDateTime || getDefaultDateTimeLocal()}
+          onChange={(e) => setReminderDateTime(e.target.value)}
+          required // Mark datetime as required
           className="block w-full p-2 border rounded mb-2"
         />
-        <select
-          value={reminderTime}
-          onChange={(e) => setReminderTime(e.target.value)}
-          className="block w-full p-2 border rounded mb-4"
-        >
-          {generateTimeOptions()}
-        </select>
         <div className="text-right">
           <button
             onClick={handleSave}
@@ -221,5 +209,4 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
 };
 
 export default ReminderModal;
-
 

@@ -86,7 +86,116 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === 'updateBadge') {
     updateBadge();
   }
+  if (alarm.name === "checkReminders") {
+    checkAndShowReminders();
+  }
+
 });
+// async function checkAndShowReminders() {
+//   const userId = await getUserId();
+
+//   try {
+//     const reminders = await fetchRemindersForUser(userId);
+    
+//     // Ensure reminders is an array before proceeding
+//     if (Array.isArray(reminders)) {
+//       const now = new Date().getTime();
+
+//       for (const reminder of reminders) {
+//         const reminderTime = new Date(reminder.reminderDateTime).getTime();
+
+//         if (reminderTime <= now) {
+//           chrome.notifications.create(`reminder-${reminder._id}`, {
+//             type: 'basic',
+//             iconUrl: 'your_icon_url_here.png',
+//             title: 'Reminder!',
+//             message: reminder.taskText,
+//             priority: 2
+//           });
+//         }
+//       }
+//     } else {
+//       console.error('Fetched data is not an array.');
+//     }
+//   } catch (error) {
+//     console.error('Error fetching reminders:', error);
+//   }
+// }
+
+// async function getUserId() {
+//   // Fetch the userId from chrome.storage.local
+//   return new Promise((resolve, reject) => {
+//     chrome.storage.sync.get(['userId'], function(result) {
+//       if (result.userId) {
+//         resolve(result.userId);
+//       } else {
+//         reject('User ID not found.');
+//       }
+//     });
+//   });
+// }
+
+// async function fetchRemindersForUser(userId) {
+//   // Fetch reminders from your backend or local storage
+//   // Placeholder for fetching from backend
+//   const response = await fetch(`https://nodemailer-opal.vercel.app/api/userInfo?userId=${userId}`);
+//   const reminders = await response.json();
+//   return reminders;
+// }
+
+
+
+async function checkAndShowReminders() {
+  try {
+    // Fetch the userId from chrome.storage.sync
+    const userId = await new Promise((resolve, reject) => {
+      chrome.storage.sync.get(['userId'], function(result) {
+        if (result.userId) {
+          resolve(result.userId);
+        } else {
+          reject('User ID not found.');
+        }
+      });
+    });
+
+    // Fetch reminders for the user from your backend
+    const response = await fetch(`https://nodemailer-opal.vercel.app/api/userInfo?userId=${userId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch reminders');
+    }
+    const data = await response.json();
+
+    // Check if the data received is an array of reminders
+    if (Array.isArray(data.reminders) && data.reminders.length > 0) {
+      const now = new Date().getTime();
+  
+      data.reminders.forEach(reminder => {
+        const reminderTime = new Date(reminder.reminderDateTime).getTime();
+  
+        // Check if the reminder's time is past or present
+        if (reminderTime <= now) {
+          // Create a browser notification for the reminder
+          chrome.notifications.create(`reminder-${reminder._id}`, {
+            type: 'basic',
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/4436/4436481.png', // Make sure the icon URL is accessible
+            title: 'Reminder!',
+            message: `You task is pending -${reminder.taskText}`,
+            silent: false
+          });
+        }
+      });
+    } else {
+      console.error('Expected an array of reminders, received:', data.reminders);
+    }
+  } catch (error) {
+    console.error('Error fetching reminders:', error);
+  }
+}
+
+// You might need
+
+
+
 
 // Function to update the badge
 function updateBadge() {
@@ -104,14 +213,54 @@ function updateBadge() {
   // For example, check the storage to see if the user has completed the daily task
   // background.js
 
-
-
 }
 
 //Initial badge setup when the extension is installed or reloaded
 chrome.runtime.onInstalled.addListener(() => {
   updateBadge();
 });
+
+// chrome.runtime.onInstalled.addListener(() => {
+//   chrome.storage.sync.get(['userId'], (result) => {
+//     if (!result.userId) {
+//       // Generate a unique ID for the user
+//       const userId = generateUserId();
+
+//       // Store the generated userId
+//       chrome.storage.sync.set({ userId: userId }, () => {
+//         console.log('User ID is set to ', userId);
+//       });
+//     } else {
+//       console.log('User ID already exists: ', result.userId);
+//     }
+//   });
+// });
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.alarms.create("checkReminders", { delayInMinutes: 10,
+    periodInMinutes: 10 });
+  chrome.storage.sync.get(['userId'], (result) => {
+    if (!result.userId) {
+      // Generate a unique ID for the user
+      const userId = generateUserId();
+
+      // Store the generated userId
+      chrome.storage.sync.set({ userId: userId }, () => {
+        console.log('User ID is set to ', userId);
+      });
+    } else {
+      console.log('User ID already exists: ', result.userId);
+    }
+  });
+})
+
+function generateUserId() {
+  // Generate a UUID (Universally Unique Identifier)
+  return 'xxxx-xxxx-4xxx-yxxx-xxxx-yyyyxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 
 // chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   
@@ -123,7 +272,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.action.setBadgeText({ text: '' });
   }
 });
-
+  
 
 // background.js
 

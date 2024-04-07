@@ -17,7 +17,7 @@
     "https://drive.google.com/*",
     "<all_urls>"
   ],
-  "permissions": ["tabs", "alarms", "storage"],
+  "permissions": ["tabs", "alarms", "storage","notifications"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
