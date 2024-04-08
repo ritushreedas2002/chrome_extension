@@ -231,29 +231,29 @@ const ToDoList = () => {
           onClick={() => setShowModal(false)}
         >
           <div
-            className="bg-[#e6ecda] p-6 rounded-2xl shadow-lg"
+            className="bg-[#e6ecda] p-6 pb-3 rounded-2xl shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
             <input
               type="text"
               value={taskInput}
               onChange={handleTaskInputChange}
-              className="mr-2 p-2 w-full border rounded mb-2"
+              className="mr-2 p-2 text-base w-full border rounded mb-1"
               placeholder="Add a new task..."
               maxLength={maxCharacters}
             />
-            <div className="text-sm text-right text-gray-500 mb-2">
+            <div className="text-xs text-right text-gray-500 mb-2">
               {maxCharacters - taskInput.length}{"/50"} 
             </div>
             <input
               type="datetime-local"
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}
-              className="p-2 w-full border rounded mb-2"
+              className="p-2 w-full border rounded mb-4"
             />
             <button
               onClick={addTask}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="px-4 py-2 bg-[#1d84b5] text-white font-semibold rounded-lg hover:bg-[#1d85b5dc]"
             >
               Add Task
             </button>
