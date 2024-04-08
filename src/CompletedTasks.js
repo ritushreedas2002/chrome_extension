@@ -7,14 +7,6 @@ const CompletedTasks = () => {
   // const location = useLocation();
   // const { completedTasks } = location.state;
   const [completedTasks, setCompletedTasks] = useState([]);
-
-  // useEffect(() => {
-  //   const loadedCompletedTasks =
-  //     JSON.parse(localStorage.getItem("tasks"))?.filter(
-  //       (task) => task.completed
-  //     ) || [];
-  //   setCompletedTasks(loadedCompletedTasks);
-  // }, []);
   useEffect(() => {
     // Load completed tasks from localStorage
     const allTasks = JSON.parse(localStorage.getItem("completedtasks")) || [];
@@ -22,6 +14,10 @@ const CompletedTasks = () => {
     setCompletedTasks(allTasks);
     console.log(allTasks);
   }, []);
+  useEffect(() => {
+    // Update localStorage whenever the backlogTasks state changes
+    localStorage.setItem("completedtasks", JSON.stringify(completedTasks));
+  }, [completedTasks]);
   const removeTask = (taskId) => {
     const updatedTasks = completedTasks.filter((task) => task.id !== taskId);
     setCompletedTasks(updatedTasks);

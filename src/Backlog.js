@@ -4,17 +4,8 @@ import React, { useState, useEffect } from "react";
 import {  Link } from "react-router-dom";
 
 const Backlog = () => {
-  // const location = useLocation();
-  // const { completedTasks } = location.state;
   const [backlogTasks, setbacklogTasks] = useState([]);
 
-  // useEffect(() => {
-  //   const loadedCompletedTasks =
-  //     JSON.parse(localStorage.getItem("tasks"))?.filter(
-  //       (task) => task.completed
-  //     ) || [];
-  //   setCompletedTasks(loadedCompletedTasks);
-  // }, []);
   useEffect(() => {
     // Load completed tasks from localStorage
     const allTasks = JSON.parse(localStorage.getItem("backlogTasks")) || [];
@@ -22,6 +13,10 @@ const Backlog = () => {
     setbacklogTasks(allTasks);
     console.log(allTasks);
   }, []);
+  useEffect(() => {
+    // Update localStorage whenever the backlogTasks state changes
+    localStorage.setItem("backlogTasks", JSON.stringify(backlogTasks));
+  }, [backlogTasks]);
   const removeTask = (taskId) => {
     const updatedTasks = backlogTasks.filter((task) => task.id !== taskId);
     setbacklogTasks(updatedTasks);
