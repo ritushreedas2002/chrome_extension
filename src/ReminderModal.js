@@ -1,5 +1,3 @@
-
-
 // import React, { useState } from "react";
 // import axios from "axios";
 
@@ -78,140 +76,6 @@
 
 // export default ReminderModal;
 
-
-
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-
-// const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
-//   const [email, setEmail] = useState("");
-//   const [reminderDate, setReminderDate] = useState("");
-//   const [reminderTime, setReminderTime] = useState("");
-
-//   useEffect(() => {
-//     setReminderDate(getDefaultDate());
-//     setReminderTime(getDefaultTime());
-//   }, []);
-
-//   const getDefaultDate = () => {
-//     const now = new Date();
-//     return now.toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
-//   };
-
-//   const getDefaultTime = () => {
-//     const now = new Date();
-//     now.setMinutes(now.getMinutes() + (10 - now.getMinutes() % 10)); // Round up to the next closest 10-minute mark
-//     const hours = now.getHours() % 12 || 12; // Convert 24hr to 12hr format
-//     const minutes = now.getMinutes();
-//     const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
-//     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
-//   };
-
-//   // Function to generate 12-hour format time options with AM/PM
-//   const generateTimeOptions = () => {
-//     let times = [];
-//     for (let hour = 0; hour < 24; hour++) {
-//       // Convert 24-hour to 12-hour format
-//       const hour12 = hour % 12 === 0 ? 12 : hour % 12;
-//       const suffix = hour < 12 ? 'AM' : 'PM';
-//       for (let minute = 0; minute < 60; minute += 10) {
-//         const time = `${hour12.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')} ${suffix}`;
-//         times.push(<option key={time} value={time}>{time}</option>);
-//       }
-//     }
-//     return times;
-//   };
-
-//   const handleSave = async () => {
-//     // Basic validation for email and reminderDateTime
-//     if (!email || !reminderDateTime) {
-//       alert("Email and Reminder Date/Time are required.");
-//       return;
-//     }
-
-//     if (!userId) {
-//       alert("User ID is required. Please ensure you are logged in.");
-//       return;
-//     }
-
-
-//     // Convert local datetime to UTC for consistent backend processing
-//     const userSelectedDate = new Date(reminderDateTime);
-//     const reminderDateTimeUtc = userSelectedDate.toISOString();
-
-    
-
-//     try {
-//       const response = await axios.post(
-//         "https://nodemailer-opal.vercel.app/api/sendreminder",
-//         {
-//           email,
-//           reminderDateTime: reminderDateTimeUtc,
-//           taskText,
-//           userId
-//         }
-//       );
-  
-//       console.log(response.data.msg);
-//       onSave(email, reminderDateTimeUtc);
-//       onClose();
-//       onSave(email, reminderDateTimeUtc); // Optionally, handle UI updates or cleanup
-//       onClose(); // Close the modal
-//     } catch (error) {
-//       console.error("Error:", error);
-//     }
-//   };
-
-//   const getDefaultDateTimeLocal = () => {
-//     const now = new Date();
-//     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-//     return now.toISOString().slice(0, 16);
-//   };
-
-//   return (
-//     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-//       <div
-//         className="bg-white p-6 rounded shadow-lg"
-//         onClick={(e) => e.stopPropagation()}
-//       >
-//         <input
-//           type="email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           placeholder="Email for reminder"
-//           required // Mark email as required
-//           className="block w-full p-2 border rounded mb-2"
-//         />
-//         <input
-//           type="datetime-local"
-//           value={reminderDateTime || getDefaultDateTimeLocal()}
-//           onChange={(e) => setReminderDateTime(e.target.value)}
-//           required // Mark datetime as required
-//           className="block w-full p-2 border rounded mb-2"
-//         />
-//         <div className="text-right">
-//           <button
-//             onClick={handleSave}
-//             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
-//           >
-//             Save
-//           </button>
-//           <button
-//             onClick={onClose}
-//             className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-//           >
-//             Cancel
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ReminderModal;
-
-
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -245,13 +109,9 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
       alert("User ID is required. Please ensure you are logged in.");
       return;
     }
-
-
     // Convert local datetime to UTC for consistent backend processing
     const userSelectedDate = new Date(reminderDateTime);
     const reminderDateTimeUtc = userSelectedDate.toISOString();
-
-    
 
     try {
       const response = await axios.post(
