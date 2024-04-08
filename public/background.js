@@ -236,8 +236,8 @@ chrome.runtime.onInstalled.addListener(() => {
 //   });
 // });
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.alarms.create("checkReminders", { delayInMinutes: 2,
-    periodInMinutes: 2 });
+  chrome.alarms.create("checkReminders", { delayInMinutes: 10,
+    periodInMinutes: 10 });
   chrome.storage.sync.get(['userId'], (result) => {
     if (!result.userId) {
       // Generate a unique ID for the user
