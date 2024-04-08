@@ -1,72 +1,62 @@
 import React from "react";
-
+import backgroundImage from './assests/quiz.png';
 import { useNavigate } from "react-router-dom";
 
 const Quizzes = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   return (
     <div
-      className=" bg-yellow-100"
+      className="relative bg-[#0A2342]"
       style={{
-        display: "flex",
-        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         width: "700px",
         height: "500px",
-        position: "relative",
       }}
     >
-      <div className="absolute font-bold top-12 text-2xl mb-20">
-        Quizzomania
-      </div>
-      <div className=" flex justify-around w-[80%]">
-        <div
-          className="buttons-container flex flex-col"
-          style={{ marginTop: "20px" }}
-        >
-          <button className="p-4 m-2 w-48 text-lg font-semibold bg-blue-500 text-white rounded-lg" onClick={()=>{navigate(`/quiz/${0}`)}}>
+      <div className=" flex ">
+        <div className="z-10 mt-[20%] text-white text-center w-[60%]  ml-10">
+          <div className=" text-4xl font-bold mb-12">QuizzoMania</div>
+          <div className=" text-xl font-semibold mb-4">
+            Navigate the Depths of Programming, Dive into Our Programming Quiz!
+          </div>
+          <div className=" text-xl font-semibold">
+            Expertly Crafted Questions for Top Programming Language Preparation
+          </div>
+        </div>
+        <div className="mt-[15%] flex flex-col justify-center items-center w-[40%]">
+          <button
+            className="p-4 my-2 w-48 text-xl font-semibold bg-[#479d6b] hover:bg-[#31744d] text-white rounded-3xl"
+            onClick={() => {
+              navigate(`/quiz/${0}`);
+            }}
+          >
             C++
-          </button >
-          <button className="p-4 m-2 w-48 text-lg font-semibold bg-blue-500 text-white rounded-lg" onClick={()=>{navigate(`/quiz/${1}`)}}>
+          </button>
+          <button
+            className="p-4 my-2 w-48 text-xl font-semibold bg-[#479d6b] hover:bg-[#31744d] text-white rounded-3xl"
+            onClick={() => {
+              navigate(`/quiz/${1}`);
+            }}
+          >
             Java
           </button>
-          <button className="p-4 m-2 w-48 text-lg font-semibold bg-blue-500 text-white rounded-lg">
+          <button className="p-4 my-2 w-48 text-xl font-semibold bg-[#479d6b] hover:bg-[#31744d] text-white rounded-3xl">
             Python
           </button>
-          <button className="p-4 m-2 w-48 text-lg font-semibold bg-blue-500 text-white rounded-lg">
+          <button className="p-4 my-2 w-48 text-xl font-semibold bg-[#479d6b] hover:bg-[#31744d] text-white rounded-3xl">
             JavaScript
           </button>
         </div>
-        {/* <div
-          className="buttons-container flex flex-col"
-          style={{ marginTop: "20px" }}
-        >
-          <button className="p-4 m-2 w-52 text-lg font-semibold bg-blue-500 text-white rounded-lg">
-            Operating System
-          </button>
-          <button className="p-4 m-2 w-52 text-lg font-semibold bg-blue-500 text-white rounded-lg">
-            DBMS
-          </button>
-          <button className="p-4 m-2 w-52 text-lg font-semibold bg-blue-500 text-white rounded-lg">
-            Computer Networks
-          </button>
-          <button className="p-4 m-2 w-52 text-lg font-semibold bg-blue-500 text-white rounded-lg">
-            System Design
-          </button>
-        </div> */}
       </div>
-
-      {/* {questions.map((item, index) => (
-        <div key={index}>
-          <h3>{item.topic}</h3>
-          <ul>
-            {item.questions.map((q, qIndex) => (
-              <li key={qIndex}>{q.questionText}</li>
-            ))}
-          </ul>
-        </div>
-      ))} */}
+      <div
+        className="absolute top-0 left-16 h-40 w-[60%]"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "top left",
+        }}
+      ></div>
     </div>
   );
 };

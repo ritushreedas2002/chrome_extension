@@ -5,9 +5,7 @@ import { useIndex } from "./Context/Context";
 import axios from "axios";
 import DialogBox from "./DialogBox";
 
-
 const Revision = () => {
-
   const { category } = useParams();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentProblem, setCurrentProblem] = useState(null);
@@ -15,36 +13,28 @@ const Revision = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [explanation, setExplanation] = useState("");
   const [loadingExplanation, setLoadingExplanation] = useState(false);
- 
 
- 
-
-  const getExplanation = async (topicName,codeText) => {
+  const getExplanation = async (topicName, codeText) => {
     console.log(codeText);
     console.log(topicName);
     setLoadingExplanation(true);
 
     try {
-      const response = await fetch('https://gptserver.vercel.app/api/openai', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ topicName, codeText }), // Ensure this matches the server's expected format
-    });
+      const response = await fetch("https://gptserver.vercel.app/api/openai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ topicName, codeText }), // Ensure this matches the server's expected format
+      });
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
 
-    const data = await response.json();
-    console.log(data);
-
-
-
+      const data = await response.json();
+      console.log(data);
       setExplanation(data);
-      // setExplanation(gptResults.choices?.[0]?.message?.content);
-      // console.log(gptResults.choices?.[0]?.message?.content);
     } catch (error) {
       console.error("Error fetching explanation:", error);
       setExplanation("Failed to fetch the explanation.");
@@ -98,21 +88,6 @@ const Revision = () => {
     }
   }, [currentProblem, showFlowChart]);
 
-  // const fetchFlowchartImage = async (imageLink) => {
-  //   try {
-  //     const response = await axios.get(imageLink, { responseType: "blob" });
-  //     const imageUrl = URL.createObjectURL(response.data);
-  //     const imgElement = document.createElement("img");
-  //     imgElement.src = imageUrl;
-  //     imgElement.alt = "Flowchart";
-  //     imgElement.className = "w-full h-auto mt-4";
-  //     const flowChartDiv = document.getElementById("flowchart-div");
-  //     flowChartDiv.innerHTML = "";
-  //     flowChartDiv.appendChild(imgElement);
-  //   } catch (error) {
-  //     console.error("Failed to fetch image:", error);
-  //   }
-  // };
   const fetchFlowchartImage = async (imageLinks) => {
     try {
       const flowChartDiv = document.getElementById("flowchart-div");
@@ -186,7 +161,7 @@ const Revision = () => {
             <div key={index} className="mb-4 items-center w-full">
               <h3 className="text-xl font-semibold mb-2 text-center">{key}</h3>
               <button
-                onClick={() => getExplanation(key,value)}
+                onClick={() => getExplanation(key, value)}
                 className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
               >
                 Explain the code
