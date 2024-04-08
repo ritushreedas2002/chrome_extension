@@ -216,7 +216,7 @@ const ToDoList = () => {
               >
                 <MdOutlineDelete />
               </button>
-              <button
+              {!task.completed &&<button
                 onClick={() => {
                   setShowReminderModal(true);
                   setCurrentTaskId(task.id);
@@ -224,7 +224,7 @@ const ToDoList = () => {
                 className="ml-2 bg-red-500 text-2xl font-bold hover:bg-red-600 text-white py-1.5 px-3  rounded-md"
               >
                 <MdOutlineAlarm />
-              </button>
+              </button>}
             </li>
           ))}
           {showReminderModal && (
