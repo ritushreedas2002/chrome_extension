@@ -3,23 +3,22 @@
 import React, { useState, useEffect } from "react";
 import {  Link } from "react-router-dom";
 
-const CompletedTasks = () => {
-  // const location = useLocation();
-  // const { completedTasks } = location.state;
-  const [completedTasks, setCompletedTasks] = useState([]);
+const Backlog = () => {
+  const [backlogTasks, setbacklogTasks] = useState([]);
+
   useEffect(() => {
     // Load completed tasks from localStorage
-    const allTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
+    const allTasks = JSON.parse(localStorage.getItem("backlogTasks")) || [];
     // setCompletedTasks(allTasks.filter(task => task.completed));
-    setCompletedTasks(allTasks);
+    setbacklogTasks(allTasks);
     console.log(allTasks);
   }, []);
- 
   const removeTask = (taskId) => {
-    const updatedTasks = completedTasks.filter((task) => task.id !== taskId);
-    setCompletedTasks(updatedTasks);
-    localStorage.setItem("completedTasks", JSON.stringify(updatedTasks));
+    const updatedTasks = backlogTasks.filter((task) => task.id !== taskId);
+    setbacklogTasks(updatedTasks);
+    localStorage.setItem("backlogTasks", JSON.stringify(updatedTasks));
   };
+
   return (
     <div
       className="bg-yellow-100 "
@@ -32,10 +31,10 @@ const CompletedTasks = () => {
         height: "500px",
       }}
     >
-      <h1 className="text-2xl font-bold mb-4">Completed Tasks</h1>
+      <h1 className="text-2xl font-bold mb-4">Backlog Tasks</h1>
       <div className="max-h-96 overflow-y-scroll items-center no-scrollbar">
       <ul>
-        {completedTasks.map((task) => (
+        {backlogTasks.map((task) => (
           <li key={task.id} className=" flex items-center justify-between p-3  w-96 ml-20p-3 my-2 bg-green-100 rounded shadow">
             <div>
             <div className="text-md font-serif font-semibold">{task.text}</div>
@@ -71,4 +70,4 @@ const CompletedTasks = () => {
   );
 };
 
-export default CompletedTasks;
+export default Backlog;
