@@ -20,7 +20,7 @@ const Quizzes = () => {
           <IoChevronBackCircleOutline />
         </button>
       </Link>
-      <Link to="/trackprogress">
+      <Link to="/quizprogress">
         <button
           className="fixed right-4 top-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-base p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110"
         >

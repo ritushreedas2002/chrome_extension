@@ -7,7 +7,7 @@ import DailyChallenge from "./DailyChallenge";
 import Quizzes from "./Quizzes";
 import QuizPage from "./QuizPage";
 import Topic from "./Topic";
-import TrackProgress from "./TrackProgress";
+import QuizProgress from "./QuizProgress";
 import { IndexProvider } from './Context/Context'
 
 import QuizResult from "./QuizResult";
@@ -48,7 +48,7 @@ function App() {
           <Route path="/quiz/:index" element={<Topic/>} />
           <Route path="/quiz/:index/:topicindex" element={<QuizPage/>}/>
           <Route path="/quizresult" element={<QuizResult />} />
-          <Route path="/trackprogress" element={<TrackProgress/>}/>
+          <Route path="/quizprogress" element={<QuizProgress/>}/>
           <Route path="/todo" element={<ToDoList/>}/>
           <Route path="/completed" element={<CompletedTasks />} />
           <Route path="/backlog" element={<Backlog />} />
