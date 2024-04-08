@@ -15,6 +15,7 @@ import Category from "./Category";
 import Daily2 from "./Daily2";
 import ToDoList from "./ToDoList";
 import CompletedTasks from "./CompletedTasks";
+import Backlog from "./Backlog";
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path="/trackprogress" element={<TrackProgress/>}/>
           <Route path="/todo" element={<ToDoList/>}/>
           <Route path="/completed" element={<CompletedTasks />} />
+          <Route path="/backlog" element={<Backlog />} />
          
         </Routes>
         </IndexProvider>
