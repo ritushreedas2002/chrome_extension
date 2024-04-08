@@ -20,13 +20,13 @@ const Quizzes = () => {
           <IoChevronBackCircleOutline />
         </button>
       </Link>
-      <Link to="/quizprogress">
+      {/* <Link to="/quizprogress">
         <button
           className="fixed right-4 top-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-base p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110"
         >
           View Results
         </button>
-      </Link>
+      </Link> */}
 
       <div className=" flex ">
         <div className="z-10 mt-[20%] text-white text-center w-[60%]  ml-10">
@@ -38,7 +38,7 @@ const Quizzes = () => {
             Expertly Crafted Questions for Top Programming Language Preparation
           </div>
         </div>
-        <div className="mt-[15%] flex flex-col justify-center items-center w-[40%]">
+        <div className="mt-[10%] flex flex-col justify-center items-center w-[40%]">
           <button
             className="p-4 my-2 w-48 text-xl font-semibold bg-[#479d6b] hover:bg-[#31744d] text-white rounded-3xl"
             onClick={() => {
@@ -61,6 +61,11 @@ const Quizzes = () => {
           <button className="p-4 my-2 w-48 text-xl font-semibold bg-[#479d6b] hover:bg-[#31744d] text-white rounded-3xl">
             JavaScript
           </button>
+          <Link to="/quizprogress">
+          <button className="p-4 my-2 w-48 text-xl font-semibold bg-[#479d6b] hover:bg-[#31744d] text-white rounded-3xl">
+            View Results
+          </button>
+          </Link>
         </div>
       </div>
       <div

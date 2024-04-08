@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MdOutlineDelete } from "react-icons/md";
+import { IoChevronBackCircleOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 const QuizProgress = () => {
   const [quizResults, setQuizResults] = useState([]);
 
@@ -57,6 +59,11 @@ const QuizProgress = () => {
           </li>
         ))}
       </div>
+      <Link to="/quiz">
+        <button className="fixed left-4 bottom-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-lg font-bold p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110">
+          <IoChevronBackCircleOutline />
+        </button>
+      </Link>
     </div>
   );
 };

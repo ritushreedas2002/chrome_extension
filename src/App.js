@@ -9,7 +9,7 @@ import QuizPage from "./QuizPage";
 import Topic from "./Topic";
 import QuizProgress from "./QuizProgress";
 import { IndexProvider } from './Context/Context'
-
+import Trackprogress from "./TrackProgress";
 import QuizResult from "./QuizResult";
 import Category from "./Category";
 import Daily2 from "./Daily2";
@@ -49,6 +49,7 @@ function App() {
           <Route path="/quiz/:index/:topicindex" element={<QuizPage/>}/>
           <Route path="/quizresult" element={<QuizResult />} />
           <Route path="/quizprogress" element={<QuizProgress/>}/>
+          <Route path="/trackprogress" element={<Trackprogress/>}/>
           <Route path="/todo" element={<ToDoList/>}/>
           <Route path="/completed" element={<CompletedTasks />} />
           <Route path="/backlog" element={<Backlog />} />
