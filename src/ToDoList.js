@@ -17,10 +17,6 @@ const ToDoList = () => {
   const [currentTaskId, setCurrentTaskId] = useState(null);
   const navigate = useNavigate();
 
-
-
-
-
   useEffect(() => {
     // Function to update tasks and backlog based on deadlines
     const updateTasksAndBacklog = () => {
@@ -29,7 +25,7 @@ const ToDoList = () => {
   
       // Filter tasks to find which are overdue
       const updatedTasks = tasks.filter(task => {
-        if (task.deadline && new Date(task.deadline) < now) {
+        if (task.deadline && new Date(task.deadline) < now && !task.completed) {
           isTasksUpdated = true;
           return false; // This task is overdue, so don't include it in the updated tasks list
         }
@@ -77,7 +73,7 @@ const ToDoList = () => {
   
     // Immediately move overdue tasks to backlog
     const [updatedTasks, newBacklogTasks] = loadedTasks.reduce(([tasks, backlog], task) => {
-      if (task.deadline && new Date(task.deadline) < now) {
+      if (task.deadline && new Date(task.deadline) < now && !task.completed) {
         return [tasks, [...backlog, task]]; // Add to backlog if deadline is past
       } else {
         return [[...tasks, task], backlog]; // Keep in tasks otherwise
@@ -149,7 +145,7 @@ const ToDoList = () => {
     console.log(completedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     localStorage.setItem(
-      "completedtasks",
+      "completedTasks",
       JSON.stringify(updatedCompletedTasks)
     );
   };

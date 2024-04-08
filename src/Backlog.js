@@ -13,13 +13,10 @@ const Backlog = () => {
     setbacklogTasks(allTasks);
     console.log(allTasks);
   }, []);
-  useEffect(() => {
-    // Update localStorage whenever the backlogTasks state changes
-    localStorage.setItem("backlogTasks", JSON.stringify(backlogTasks));
-  }, [backlogTasks]);
   const removeTask = (taskId) => {
     const updatedTasks = backlogTasks.filter((task) => task.id !== taskId);
     setbacklogTasks(updatedTasks);
+    localStorage.setItem("backlogTasks", JSON.stringify(updatedTasks));
   };
 
   return (

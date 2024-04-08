@@ -9,20 +9,17 @@ const CompletedTasks = () => {
   const [completedTasks, setCompletedTasks] = useState([]);
   useEffect(() => {
     // Load completed tasks from localStorage
-    const allTasks = JSON.parse(localStorage.getItem("completedtasks")) || [];
+    const allTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
     // setCompletedTasks(allTasks.filter(task => task.completed));
     setCompletedTasks(allTasks);
     console.log(allTasks);
   }, []);
-  useEffect(() => {
-    // Update localStorage whenever the backlogTasks state changes
-    localStorage.setItem("completedtasks", JSON.stringify(completedTasks));
-  }, [completedTasks]);
+ 
   const removeTask = (taskId) => {
     const updatedTasks = completedTasks.filter((task) => task.id !== taskId);
     setCompletedTasks(updatedTasks);
+    localStorage.setItem("completedTasks", JSON.stringify(updatedTasks));
   };
-
   return (
     <div
       className="bg-yellow-100 "
