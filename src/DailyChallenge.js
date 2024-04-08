@@ -3,6 +3,8 @@ import gfg from "./assests/gfg.png";
 import gfg2 from "./assests/gfg-gg-logo.svg";
 import leet from "./assests/leetcode.png";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 const DailyChallenge = () => {
   const [problemData, setProblemData] = useState(null);
@@ -93,6 +95,7 @@ const DailyChallenge = () => {
 
   return (
     <div
+      className="relative bg-[#0A2342]"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -102,11 +105,19 @@ const DailyChallenge = () => {
         height: "500px",
       }}
     >
-      <div className="absolute font-bold top-12 text-2xl mb-20">
-        DSA Revision Buddy
+      <div className="absolute font-bold text-white top-4 text-3xl ">
+        Daily Challenges
       </div>
+      <div className="absolute text-lg text-white top-14 mb-4">
+        Solve daily problems on top coding websites to improve coding skills
+      </div>
+      <Link to="/">
+          <button className="fixed left-4 bottom-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-lg font-bold p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110">
+            <IoChevronBackCircleOutline />
+          </button>
+        </Link>
       <div className=" p-4 mt-20 rounded-lg w-[80%] ">
-        <div className="mb-6 flex  bg-slate-400 p-4 rounded-lg">
+        <div className="mb-6 flex  bg-[#4a76ab] p-4 rounded-lg">
           <img
             src={gfg2}
             className="w-16 h-16 px-1 ml-4 items-center mt-3 bg-white mr-12 rounded-md"
@@ -124,7 +135,7 @@ const DailyChallenge = () => {
                 <p className=" text-white text-base font-semibold text-start">
                   Difficulty: {problemData.difficulty}
                 </p>
-                <button className=" text-white text-base -mb-3 mr-24 bg-blue-500 p-2 px-5 mt-3 font-semibold rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110">
+                <button className=" text-white text-base -mb-3 mr-24 bg-[#479d6b] hover:bg-[#31744d] p-2 px-5 mt-3 font-semibold rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110">
                   <a
                     href={problemData.problem_url}
                     target="_blank"
@@ -137,7 +148,7 @@ const DailyChallenge = () => {
             </div>
           )}
         </div>
-        <div className=" bg-slate-400 p-4 flex rounded-lg">
+        <div className=" bg-[#4a76ab] p-4 flex rounded-lg">
           <img
             src={leet}
             className="w-16 h-16 p-1 ml-4 items-center mt-3 bg-white mr-12 rounded-md"
@@ -163,7 +174,7 @@ const DailyChallenge = () => {
                     ?.question?.difficulty
                 }
               </p>
-              <button className=" text-white text-base -mb-3 mr-24 bg-blue-500 p-2 px-5 mt-3 font-semibold rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110 ">
+              <button className=" text-white text-base -mb-3 mr-24 bg-[#479d6b] hover:bg-[#31744d] p-2 px-5 mt-3 font-semibold rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110 ">
                 <a href={urllink} target="_blank" rel="noopener noreferrer">
                   Solve Challenge
                 </a>

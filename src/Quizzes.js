@@ -1,6 +1,7 @@
 import React from "react";
-import backgroundImage from './assests/quiz.png';
-import { useNavigate } from "react-router-dom";
+import backgroundImage from "./assests/quiz.png";
+import { Link, useNavigate } from "react-router-dom";
+import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 const Quizzes = () => {
   const navigate = useNavigate();
@@ -14,6 +15,19 @@ const Quizzes = () => {
         height: "500px",
       }}
     >
+      <Link to="/">
+        <button className="fixed left-4 bottom-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-lg font-bold p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110">
+          <IoChevronBackCircleOutline />
+        </button>
+      </Link>
+      <Link to="/trackprogress">
+        <button
+          className="fixed right-4 top-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-base p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110"
+        >
+          View Results
+        </button>
+      </Link>
+
       <div className=" flex ">
         <div className="z-10 mt-[20%] text-white text-center w-[60%]  ml-10">
           <div className=" text-4xl font-bold mb-12">QuizzoMania</div>

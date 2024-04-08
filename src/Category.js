@@ -1,8 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useIndex } from "./Context/Context";
 import dsa from "./dsa.json";
 import backgroundImage from './assests/prog4.png';
+import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 const Category = () => {
   let navigate = useNavigate();
@@ -38,6 +39,11 @@ const Category = () => {
           backgroundSize: "cover",
         }}
       ></div>
+      <Link to="/">
+          <button className="fixed left-4 bottom-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-lg font-bold p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110">
+            <IoChevronBackCircleOutline />
+          </button>
+        </Link>
       <div className="z-10 text-white text-center w-[60%]  ml-10">
         <div className=" text-4xl font-bold mb-12">Revise Concepts</div>
         <div className=" text-xl font-semibold">

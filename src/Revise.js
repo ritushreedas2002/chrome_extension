@@ -3,9 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import dsa from "./dsa.json";
 import axios from "axios";
 import DialogBox from "./DialogBox";
+import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 const Revision = () => {
-  const { category} = useParams();
+  const { category } = useParams();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentProblem, setCurrentProblem] = useState(null);
   const [showFlowChart, setShowFlowChart] = useState(false);
@@ -17,9 +18,9 @@ const Revision = () => {
 
   const changeProblem = (index) => {
     console.log(index);
-    setCurrentIndex(index+1);
+    setCurrentIndex(index + 1);
     setShowFlowChart(false); // Close the modal
-    localStorage.setItem(category, index+1);
+    localStorage.setItem(category, index + 1);
   };
   const getExplanation = async (topicName, codeText) => {
     console.log(codeText);
@@ -97,10 +98,10 @@ const Revision = () => {
   };
 
   useEffect(() => {
-    if (currentProblem && showFlowChart && modalContent==="Flowchart") {
+    if (currentProblem && showFlowChart && modalContent === "Flowchart") {
       fetchFlowchartImage(currentProblem.Info.imageLink);
     }
-  }, [currentProblem, showFlowChart,modalContent]);
+  }, [currentProblem, showFlowChart, modalContent]);
 
   const fetchFlowchartImage = async (imageLinks) => {
     try {
@@ -132,14 +133,15 @@ const Revision = () => {
   };
 
   if (!currentProblem) {
-    return <div>
-     
-      <h1>No problem exits</h1>
-      </div>;
+    return (
+      <div>
+        <h1>No problem exits</h1>
+      </div>
+    );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen p-4">
+    <div className="relative flex flex-col items-center justify-center w-full h-screen p-4">
       <h1 className="text-3xl font-bold mb-10">DSA Revision Buddy</h1>
       <h2
         className="text-xl text-slate-500 font-bold mb-2 ml-80 cursor-pointer"
@@ -171,25 +173,40 @@ const Revision = () => {
         >
           {currentProblem.Info.Definition}
         </p>
-
+        <Link to="/revise">
+          <button className="fixed left-4 bottom-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-lg font-bold p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110">
+            <IoChevronBackCircleOutline />
+          </button>
+        </Link>
         {showFlowChart && (
           <div className="fixed top-0 right-0 w-5/6 h-full bg-white p-4 shadow-xl z-10 overflow-y-auto">
-            
-            <div id="flowchart-div" className="bg-yellow-100 flex-col justify-start">
+            <div
+              id="flowchart-div"
+              className="bg-yellow-100 flex-col justify-start"
+            >
               {modalContent === "ProblemList" && (
                 <div className="text-left">
-                  <h1 className="text-black text-2xl text-center">List Of Algorithms</h1>
+                  <h1 className="text-black text-2xl text-center">
+                    List Of Algorithms
+                  </h1>
                   {categorylist.map(
                     (
                       problem,
                       index // Correctly use 'map' here
                     ) => (
-                      <li className="ml-10" key={index} onClick={()=>{changeProblem(index)}}>{problem.Topic}</li>
+                      <li
+                        className="ml-10"
+                        key={index}
+                        onClick={() => {
+                          changeProblem(index);
+                        }}
+                      >
+                        {problem.Topic}
+                      </li>
                     )
                   )}
                 </div>
               )}
-              
             </div>
             {/* <img src={currentProblem.Info.imageLink} alt="Flowchart" className="w-full h-auto mt-4" /> */}
             <button

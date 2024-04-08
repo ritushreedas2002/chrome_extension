@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import AddButton from "./assests/AddButton.png";
 import { useNavigate } from "react-router-dom";
 import ReminderModal from "./ReminderModal";
 import { MdOutlineAlarm } from "react-icons/md";
 import { MdOutlineDelete } from "react-icons/md";
+import { IoChevronBackCircleOutline } from "react-icons/io5";
 
 const ToDoList = () => {
   const [tasks, setTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
-  const [backlogtasks,setbacklogtasks]=useState([]);
+  const [backlogtasks, setbacklogtasks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [taskInput, setTaskInput] = useState("");
   const maxCharacters = 50;
@@ -22,37 +24,45 @@ const ToDoList = () => {
     const updateTasksAndBacklog = () => {
       const now = new Date();
       let isTasksUpdated = false;
-  
+
       // Filter tasks to find which are overdue
-      const updatedTasks = tasks.filter(task => {
+      const updatedTasks = tasks.filter((task) => {
         if (task.deadline && new Date(task.deadline) < now && !task.completed) {
           isTasksUpdated = true;
           return false; // This task is overdue, so don't include it in the updated tasks list
         }
         return true;
       });
-  
+
       // If any tasks were overdue and filtered out, update tasks and backlog
       if (isTasksUpdated) {
-        const newBacklogTasks = tasks.filter(task => !updatedTasks.includes(task));
-  
+        const newBacklogTasks = tasks.filter(
+          (task) => !updatedTasks.includes(task)
+        );
+
         // Update state
         setTasks(updatedTasks);
-        setbacklogtasks(prevBacklog => [...prevBacklog, ...newBacklogTasks]);
-  
+        setbacklogtasks((prevBacklog) => [...prevBacklog, ...newBacklogTasks]);
+
         // Update localStorage
         localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-        localStorage.setItem("backlogTasks", JSON.stringify([...JSON.parse(localStorage.getItem("backlogTasks") || '[]'), ...newBacklogTasks]));
+        localStorage.setItem(
+          "backlogTasks",
+          JSON.stringify([
+            ...JSON.parse(localStorage.getItem("backlogTasks") || "[]"),
+            ...newBacklogTasks,
+          ])
+        );
       }
     };
-  
+
     // Check tasks every minute
     const intervalId = setInterval(updateTasksAndBacklog, 60000);
-  
+
     // Cleanup on component unmount
     return () => clearInterval(intervalId);
   }, [tasks]);
-  
+
   const setReminderForTask = (email, dateTime) => {
     const updatedTasks = tasks.map((task) => {
       if (task.id === currentTaskId) {
@@ -68,32 +78,35 @@ const ToDoList = () => {
   useEffect(() => {
     const now = new Date();
     const loadedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    const loadedCompletedTasks = JSON.parse(localStorage.getItem("completedTasks")) || [];
-    const loadedBacklogTasks = JSON.parse(localStorage.getItem("backlogTasks")) || [];
-  
+    const loadedCompletedTasks =
+      JSON.parse(localStorage.getItem("completedTasks")) || [];
+    const loadedBacklogTasks =
+      JSON.parse(localStorage.getItem("backlogTasks")) || [];
+
     // Immediately move overdue tasks to backlog
-    const [updatedTasks, newBacklogTasks] = loadedTasks.reduce(([tasks, backlog], task) => {
-      if (task.deadline && new Date(task.deadline) < now && !task.completed) {
-        return [tasks, [...backlog, task]]; // Add to backlog if deadline is past
-      } else {
-        return [[...tasks, task], backlog]; // Keep in tasks otherwise
-      }
-    }, [[], loadedBacklogTasks]); // Start with empty arrays for tasks and backlog
-  
+    const [updatedTasks, newBacklogTasks] = loadedTasks.reduce(
+      ([tasks, backlog], task) => {
+        if (task.deadline && new Date(task.deadline) < now && !task.completed) {
+          return [tasks, [...backlog, task]]; // Add to backlog if deadline is past
+        } else {
+          return [[...tasks, task], backlog]; // Keep in tasks otherwise
+        }
+      },
+      [[], loadedBacklogTasks]
+    ); // Start with empty arrays for tasks and backlog
+
     setTasks(updatedTasks);
     setCompletedTasks(loadedCompletedTasks);
     setbacklogtasks(newBacklogTasks);
-  
+
     // Persist the updated separation into localStorage
-   
   }, []);
-  
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
     localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
     localStorage.setItem("backlogTasks", JSON.stringify(backlogtasks));
-  }, [tasks, completedTasks,backlogtasks]);
+  }, [tasks, completedTasks, backlogtasks]);
 
   const removeTask = (taskId) => {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
@@ -107,6 +120,7 @@ const ToDoList = () => {
       text: taskInput,
       completed: false,
       deadline: deadline || null,
+      completionTime: null,
     };
     setTasks([...tasks, newTask]);
     setTaskInput("");
@@ -115,9 +129,14 @@ const ToDoList = () => {
   };
 
   const toggleTaskCompletion = (taskId) => {
+    const now = new Date();
     const updatedTasks = tasks.map((task) => {
       if (task.id === taskId) {
-        return { ...task, completed: !task.completed };
+        return {
+          ...task,
+          completed: !task.completed,
+          completionTime: now,
+        };
       }
       return task;
     });
@@ -216,15 +235,17 @@ const ToDoList = () => {
               >
                 <MdOutlineDelete />
               </button>
-              {!task.completed &&<button
-                onClick={() => {
-                  setShowReminderModal(true);
-                  setCurrentTaskId(task.id);
-                }}
-                className="ml-2 bg-red-500 text-2xl font-bold hover:bg-red-600 text-white py-1.5 px-3  rounded-md"
-              >
-                <MdOutlineAlarm />
-              </button>}
+              {!task.completed && (
+                <button
+                  onClick={() => {
+                    setShowReminderModal(true);
+                    setCurrentTaskId(task.id);
+                  }}
+                  className="ml-2 bg-red-500 text-2xl font-bold hover:bg-red-600 text-white py-1.5 px-3  rounded-md"
+                >
+                  <MdOutlineAlarm />
+                </button>
+              )}
             </li>
           ))}
           {showReminderModal && (
@@ -251,13 +272,20 @@ const ToDoList = () => {
       >
         Completed
       </button>
-      <button className="fixed right-4 top-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-base font-medium p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110"
-      onClick={showBacklogTasks}>
+      <button
+        className="fixed right-4 top-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-base font-medium p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110"
+        onClick={showBacklogTasks}
+      >
         Backlogs
       </button>
+      <Link to="/">
+        <button className="fixed left-4 bottom-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-lg font-bold p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110">
+          <IoChevronBackCircleOutline />
+        </button>
+      </Link>
+
       {/* Modal for adding a new task */}
       {showModal && (
-        
         <div
           className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center"
           onClick={() => setShowModal(false)}
@@ -273,17 +301,18 @@ const ToDoList = () => {
               className="mr-2 p-2 text-base w-full border rounded mb-1"
               placeholder="Add a new task..."
               maxLength={maxCharacters}
-              required 
+              required
             />
             <div className="text-xs text-right text-gray-500 mb-2">
-              {maxCharacters - taskInput.length}{"/50"} 
+              {maxCharacters - taskInput.length}
+              {"/50"}
             </div>
             <input
               type="datetime-local"
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}
               className="p-2 w-full border rounded mb-2"
-              required 
+              placeholder="Enter deadline..."
             />
             <button
               onClick={addTask}

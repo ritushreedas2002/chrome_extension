@@ -86,7 +86,11 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
 
   useEffect(() => {
     // Check if chrome.storage is available
-    if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.sync) {
+    if (
+      typeof chrome !== "undefined" &&
+      chrome.storage &&
+      chrome.storage.sync
+    ) {
       chrome.storage.sync.get(["userId"], (result) => {
         if (result.userId) {
           setUserId(result.userId);
@@ -112,7 +116,7 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
     // Convert local datetime to UTC for consistent backend processing
     const userSelectedDate = new Date(reminderDateTime);
     const reminderDateTimeUtc = userSelectedDate.toISOString();
-
+    onClose();
     try {
       const response = await axios.post(
         "https://nodemailer-opal.vercel.app/api/sendreminder",
@@ -120,12 +124,12 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
           email,
           reminderDateTime: reminderDateTimeUtc,
           taskText,
-          userId
+          userId,
         }
       );
       console.log(response.data.msg);
       onSave(email, reminderDateTimeUtc); // Optionally, handle UI updates or cleanup
-      onClose(); // Close the modal
+       // Close the modal
     } catch (error) {
       console.error("Error:", error);
     }
@@ -140,7 +144,7 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
       <div
-        className="bg-white p-6 rounded shadow-lg"
+        className="bg-[#e6ecda] p-6 pb-3 rounded-2xl shadow-lg w-[43%] h-[35%]"
         onClick={(e) => e.stopPropagation()}
       >
         <input
@@ -149,25 +153,25 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email for reminder"
           required // Mark email as required
-          className="block w-full p-2 border rounded mb-2"
+          className="block w-full p-2 border rounded mb-4"
         />
         <input
           type="datetime-local"
           value={reminderDateTime || getDefaultDateTimeLocal()}
           onChange={(e) => setReminderDateTime(e.target.value)}
           required // Mark datetime as required
-          className="block w-full p-2 border rounded mb-2"
+          className="block w-full p-2 border rounded mb-4"
         />
         <div className="text-right">
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
+            className="px-4 py-2 bg-[#1d84b5] mb-2 hover:bg-[#1d85b5dc] text-white font-semibold rounded-lg mr-2"
           >
             Save
           </button>
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+            className="px-4 py-2 bg-[#C13C43] mb-2 text-white font-semibold rounded hover:bg-[#d8585ec4]"
           >
             Cancel
           </button>
