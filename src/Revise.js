@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import dsa from "./dsa.json";
-import { useIndex } from "./Context/Context";
 import axios from "axios";
 import DialogBox from "./DialogBox";
 
 const Revision = () => {
-  const { category } = useParams();
+  const { category} = useParams();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentProblem, setCurrentProblem] = useState(null);
   const [showFlowChart, setShowFlowChart] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [explanation, setExplanation] = useState("");
   const [loadingExplanation, setLoadingExplanation] = useState(false);
+  const [categorylist, setcategorylist] = useState([]);
+  const [modalContent, setModalContent] = useState("");
 
+  const changeProblem = (index) => {
+    console.log(index);
+    setCurrentIndex(index+1);
+    setShowFlowChart(false); // Close the modal
+    localStorage.setItem(category, index+1);
+  };
   const getExplanation = async (topicName, codeText) => {
     console.log(codeText);
     console.log(topicName);
@@ -58,6 +65,13 @@ const Revision = () => {
     } else {
       console.error("Category not found or no problems available");
     }
+
+    if (categoryData && categoryData.Problems.length > 0) {
+      setcategorylist(categoryData.Problems);
+    } else {
+      // Reset to empty array if no problems found
+      setcategorylist([]);
+    }
   }, [category, currentIndex]);
 
   // Handle previous problem navigation
@@ -83,10 +97,10 @@ const Revision = () => {
   };
 
   useEffect(() => {
-    if (currentProblem && showFlowChart) {
+    if (currentProblem && showFlowChart && modalContent==="Flowchart") {
       fetchFlowchartImage(currentProblem.Info.imageLink);
     }
-  }, [currentProblem, showFlowChart]);
+  }, [currentProblem, showFlowChart,modalContent]);
 
   const fetchFlowchartImage = async (imageLinks) => {
     try {
@@ -118,19 +132,34 @@ const Revision = () => {
   };
 
   if (!currentProblem) {
-    return <div>Loading...</div>;
+    return <div>
+     
+      <h1>No problem exits</h1>
+      </div>;
   }
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen p-4">
       <h1 className="text-3xl font-bold mb-10">DSA Revision Buddy</h1>
+      <h2
+        className="text-xl text-slate-500 font-bold mb-2 ml-80 cursor-pointer"
+        onClick={() => {
+          setShowFlowChart(true);
+          setModalContent("ProblemList");
+        }}
+      >
+        Know More
+      </h2>
       <div className="flex flex-col items-start justify-start w-full max-w-4xl h-full overflow-auto p-4 bg-white rounded shadow">
         <div className="flex justify-between">
           <div className="text-2xl font-bold mb-4 text-center">
             {currentProblem.Topic}
           </div>
           <button
-            onClick={() => setShowFlowChart(true)}
+            onClick={() => {
+              setShowFlowChart(true);
+              setModalContent("Flowchart");
+            }}
             className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700 ml-16"
           >
             view the flowchart
@@ -145,14 +174,30 @@ const Revision = () => {
 
         {showFlowChart && (
           <div className="fixed top-0 right-0 w-5/6 h-full bg-white p-4 shadow-xl z-10 overflow-y-auto">
+            
+            <div id="flowchart-div" className="bg-yellow-100 flex-col justify-start">
+              {modalContent === "ProblemList" && (
+                <div className="text-left">
+                  <h1 className="text-black text-2xl text-center">List Of Algorithms</h1>
+                  {categorylist.map(
+                    (
+                      problem,
+                      index // Correctly use 'map' here
+                    ) => (
+                      <li className="ml-10" key={index} onClick={()=>{changeProblem(index)}}>{problem.Topic}</li>
+                    )
+                  )}
+                </div>
+              )}
+              
+            </div>
+            {/* <img src={currentProblem.Info.imageLink} alt="Flowchart" className="w-full h-auto mt-4" /> */}
             <button
               onClick={() => setShowFlowChart(false)}
-              className="px-4 py-2 text-white bg-red-500 rounded-xl hover:bg-red-700"
+              className="px-4 py-2 text-white bg-red-500 rounded-xl hover:bg-red-700 ml-96 mb-8"
             >
               Close
             </button>
-            <div id="flowchart-div"></div>
-            {/* <img src={currentProblem.Info.imageLink} alt="Flowchart" className="w-full h-auto mt-4" /> */}
           </div>
         )}
 
