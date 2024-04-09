@@ -16,7 +16,7 @@ const Category = () => {
       return;
     }
     incrementIndex(category, categoryData.Problems.length);
-    console.log(categoryData.Problems.length);
+    //console.log(categoryData.Problems.length);
     navigate(`/revise/${category}`);
   };
 

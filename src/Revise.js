@@ -4,6 +4,7 @@ import dsa from "./dsa.json";
 import axios from "axios";
 import DialogBox from "./DialogBox";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
+import { IoChevronForwardCircleOutline } from "react-icons/io5";
 
 const Revision = () => {
   const { category } = useParams();
@@ -15,6 +16,7 @@ const Revision = () => {
   const [loadingExplanation, setLoadingExplanation] = useState(false);
   const [categorylist, setcategorylist] = useState([]);
   const [modalContent, setModalContent] = useState("");
+  const [completedTopics, setCompletedTopics] = useState([]);
 
   const changeProblem = (index) => {
     console.log(index);
@@ -57,6 +59,11 @@ const Revision = () => {
     const storedIndex = localStorage.getItem(category);
     const initialIndex = storedIndex ? parseInt(storedIndex, 10) - 1 : 0;
     setCurrentIndex(initialIndex);
+
+    // Retrieve completed topics from local storage
+    // const storedCompletedTopics =
+    //   JSON.parse(localStorage.getItem("completedTopics")) || [];
+    // setCompletedTopics(storedCompletedTopics);
 
     // This part of the effect handles fetching the problem data
     const categoryData = dsa.find((cat) => cat.category === category);
@@ -140,9 +147,16 @@ const Revision = () => {
     );
   }
 
+  const markAsCompleted = (topic) => {
+    const updatedCompletedTopics = [...completedTopics, topic];
+    setCompletedTopics(updatedCompletedTopics);
+    console.log(updatedCompletedTopics);
+    localStorage.setItem("completedTopics", JSON.stringify(updatedCompletedTopics));
+  };
+
   return (
-    <div className="relative flex flex-col items-center justify-center w-full h-screen p-4">
-      <h1 className="text-3xl font-bold mb-10">DSA Revision Buddy</h1>
+    <div className="relative bg-[#0A2342] flex flex-col items-center justify-center w-full h-screen p-4">
+      <h1 className="text-3xl text-white font-bold mb-4">AlgoAce</h1>
       <h2
         className="text-xl text-slate-500 font-bold mb-2 ml-80 cursor-pointer"
         onClick={() => {
@@ -152,29 +166,29 @@ const Revision = () => {
       >
         Know More
       </h2>
-      <div className="flex flex-col items-start justify-start w-full max-w-4xl h-full overflow-auto p-4 bg-white rounded shadow">
+      <button
+        onClick={() => {
+          setShowFlowChart(true);
+          setModalContent("Flowchart");
+        }}
+        className="absolute top-14 left-4 p-2 text-base font-semibold text-white bg-[#479d6b] hover:bg-[#31744d] rounded-lg "
+      >
+        View Flowchart
+      </button>
+      <div className="flex flex-col items-start justify-start w-full max-w-4xl h-full overflow-auto no-scrollbar p-4 bg-[#7ba0b3ac] rounded shadow">
         <div className="flex justify-between">
-          <div className="text-2xl font-bold mb-4 text-center">
+          <div className="text-2xl text-white font-bold mb-4 text-center">
             {currentProblem.Topic}
           </div>
-          <button
-            onClick={() => {
-              setShowFlowChart(true);
-              setModalContent("Flowchart");
-            }}
-            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700 ml-16"
-          >
-            view the flowchart
-          </button>
         </div>
         <p
-          className="mb-6 text-left text-base font-medium"
+          className="mb-6 text-left text-white text-base font-medium"
           style={{ whiteSpace: "pre-wrap" }}
         >
           {currentProblem.Info.Definition}
         </p>
         <Link to="/revise">
-          <button className="fixed left-4 bottom-4 bg-[#479d6b] hover:bg-[#31744d] text-white text-lg font-bold p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110">
+          <button className="absolute left-5 bottom-5 z-10 bg-[#479d6b] hover:bg-[#31744d] text-white text-lg font-bold p-2 rounded-lg transition-transform duration-100 cursor-pointer hover:scale-110">
             <IoChevronBackCircleOutline />
           </button>
         </Link>
@@ -217,17 +231,12 @@ const Revision = () => {
             </button>
           </div>
         )}
-
         {Object.entries(currentProblem.Info.Algorithms || {}).map(
           ([key, value], index) => (
             <div key={index} className="mb-4 items-center w-full">
-              <h3 className="text-xl font-semibold mb-2 text-center">{key}</h3>
-              <button
-                onClick={() => getExplanation(key, value)}
-                className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
-              >
-                Explain the code
-              </button>
+              <h3 className="text-xl text-white font-semibold mb-2 text-center">
+                {key}
+              </h3>
 
               {/* Dialog box */}
               {isDialogOpen && (
@@ -242,59 +251,78 @@ const Revision = () => {
                   )}
                 </DialogBox>
               )}
-              <pre className="bg-gray-100 rounded pl-4 py-3 whitespace-pre-wrap text-left text-lg font-medium">
-                {value}
-              </pre>
+              <div style={{ position: "relative" }}>
+                <pre className="bg-gray-100 rounded pl-4 py-3 whitespace-pre-wrap text-left text-lg font-medium">
+                  {value}
+                  <button
+                    onClick={() => getExplanation(key, value)}
+                    className="absolute bottom-1.5 right-1.5 p-2 text-white text-base bg-blue-500 rounded-lg hover:bg-blue-700"
+                  >
+                    Explain the code
+                  </button>
+                </pre>
+              </div>
             </div>
           )
         )}
         <div className="w-full  ">
-          <div className="text-2xl text-center font-bold m-1 ">
+          <div className="text-2xl text-white text-center font-bold m-1 ">
             Complexities
           </div>
           {Object.entries(currentProblem.Info.Complexities || {}).map(
             ([key, values], index) => (
               <div key={index} className="mt-2 ml-10">
-                <h4 className="font-bold text-left mb-2 text-xl">{key}</h4>
-
+                <h4 className="font-bold text-white text-left mb-2 text-xl">
+                  {key}
+                </h4>
                 {typeof values === "object" ? (
-                  <ul className="list-disc list-inside">
+                  <ul className="list-disc list-inside mb-10">
                     {Object.entries(values).map(
                       ([subKey, subValue], subIndex) => (
                         <li
                           key={subIndex}
-                          className="text-base text-left mb-1"
+                          className="text-base text-white text-left mb-1"
                         >{`${subKey}: ${subValue}`}</li>
                       )
                     )}
                   </ul>
                 ) : (
-                  <div className=" text-base text-left mb-1">{values}</div>
+                  <div className=" text-base text-white text-left mb-10">
+                    {values}
+                  </div>
                 )}
               </div>
             )
           )}
         </div>
-        <div className="flex justify-start mt-5">
+        <div className="">
           <button
             onClick={handlePrev}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded focus:outline-none focus:shadow-outline"
+            className="absolute bottom-5 right-[64px] text-2xl bg-[#0A2342] hover:bg-[#0a2342bf] text-white font-bold p-2 rounded-full "
           >
-            Prev
+            <IoChevronBackCircleOutline />
           </button>
           <button
             onClick={handleNext}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-[480px]"
+            className="absolute bottom-5 right-5 text-2xl bg-[#0A2342] hover:bg-[#0a2342bf] text-white font-bold p-2 rounded-full "
           >
-            Next
+            <IoChevronForwardCircleOutline />
           </button>
         </div>
         <button
           onClick={handleSendToChatGPT}
-          className="mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="absolute bottom-5 left-16 bg-[#479d6b] hover:bg-[#31744d] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-transform duration-100 cursor-pointer hover:scale-110"
         >
           Send to ChatGPT
         </button>
+        <label className="text-white -mt-10">
+          <input
+            type="checkbox"
+            onChange={() => markAsCompleted(currentProblem.Topic)}
+            checked={completedTopics.some((t) => t === currentProblem.Topic)}
+          />
+          Mark as Completed?
+        </label>
       </div>
     </div>
   );

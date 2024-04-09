@@ -6,6 +6,7 @@ import ReminderModal from "./ReminderModal";
 import { MdOutlineAlarm } from "react-icons/md";
 import { MdOutlineDelete } from "react-icons/md";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
+import backgroundImage from './assests/task2.png';
 
 const ToDoList = () => {
   const [tasks, setTasks] = useState([]);
@@ -202,61 +203,72 @@ const ToDoList = () => {
         To Do Tasks
       </div>
       <div className="absolute inset-0 overflow-y-auto mt-24 p-4  no-scrollbar max-h-96">
-        <ul>
-          {tasks.map((task) => (
-            <li
-              key={task.id}
-              className={`flex items-center justify-between p-3 my-2 w-[80%] ml-20 bg-white rounded shadow ${
-                task.completed ? "bg-green-100" : "bg-gray-100"
-              }`}
-            >
-              <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={() => toggleTaskCompletion(task.id)}
-                className="form-checkbox h-5 w-5"
-              />
-              <span
-                className={`ml-2 flex-1 ${
-                  task.completed ? "line-through" : ""
+        {tasks.length === 0 ? (
+          <div className=" w-[80%] mx-auto">
+            <img src={backgroundImage} alt="Image not loaded" className="w-full h-full -mt-10 mb-2"/>
+            <span className=" text-lg text-white font-semibold">
+              Your To Do List is Empty, Start Adding Some & Keep Progressing
+            </span>
+          </div>
+        ) : (
+          <ul>
+            {tasks.map((task) => (
+              <li
+                key={task.id}
+                className={`flex items-center justify-between p-3 my-2 w-[80%] ml-20 bg-white rounded shadow ${
+                  task.completed ? "bg-green-100" : "bg-gray-100"
                 }`}
               >
-                <div className=" text-base font-semibold">{task.text}</div>
-
-                {task.deadline && (
-                  <span className="ml-2 text-sm text-gray-500">
-                    Due by {new Date(task.deadline).toLocaleString()}
-                  </span>
-                )}
-              </span>
-              <button
-                className="ml-4 bg-red-500 text-2xl font-bold hover:bg-red-600 text-white py-1.5 px-3 rounded-md"
-                onClick={() => removeTask(task.id)}
-              >
-                <MdOutlineDelete />
-              </button>
-              {!task.completed && (
-                <button
-                  onClick={() => {
-                    setShowReminderModal(true);
-                    setCurrentTaskId(task.id);
-                  }}
-                  className="ml-2 bg-red-500 text-2xl font-bold hover:bg-red-600 text-white py-1.5 px-3  rounded-md"
+                <input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => toggleTaskCompletion(task.id)}
+                  className="form-checkbox h-5 w-5"
+                />
+                <span
+                  className={`ml-2 flex-1 ${
+                    task.completed ? "line-through" : ""
+                  }`}
                 >
-                  <MdOutlineAlarm />
+                  <div className=" text-base font-semibold">{task.text}</div>
+
+                  {task.deadline && (
+                    <span className="ml-2 text-sm text-gray-500">
+                      Due by {new Date(task.deadline).toLocaleString()}
+                    </span>
+                  )}
+                </span>
+                <button
+                  className="ml-4 bg-red-500 text-2xl font-bold hover:bg-red-600 text-white py-1.5 px-3 rounded-md"
+                  onClick={() => removeTask(task.id)}
+                >
+                  <MdOutlineDelete />
                 </button>
-              )}
-            </li>
-          ))}
-          {showReminderModal && (
-            <ReminderModal
-              onSave={(email, dateTime) => setReminderForTask(email, dateTime)}
-              onClose={() => setShowReminderModal(false)}
-              taskId={currentTaskId}
-              taskText={tasks.find((task) => task.id === currentTaskId)?.text}
-            />
-          )}
-        </ul>
+                {!task.completed && (
+                  <button
+                    onClick={() => {
+                      setShowReminderModal(true);
+                      setCurrentTaskId(task.id);
+                    }}
+                    className="ml-2 bg-red-500 text-2xl font-bold hover:bg-red-600 text-white py-1.5 px-3  rounded-md"
+                  >
+                    <MdOutlineAlarm />
+                  </button>
+                )}
+              </li>
+            ))}
+            {showReminderModal && (
+              <ReminderModal
+                onSave={(email, dateTime) =>
+                  setReminderForTask(email, dateTime)
+                }
+                onClose={() => setShowReminderModal(false)}
+                taskId={currentTaskId}
+                taskText={tasks.find((task) => task.id === currentTaskId)?.text}
+              />
+            )}
+          </ul>
+        )}
       </div>
       <img
         src={AddButton}

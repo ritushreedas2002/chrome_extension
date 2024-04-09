@@ -117,7 +117,7 @@ const DailyChallenge = () => {
           </button>
         </Link>
       <div className=" p-4 mt-20 rounded-lg w-[80%] ">
-        <div className="mb-6 flex  bg-[#4a76ab] p-4 rounded-lg">
+        <div className="mb-6 flex  bg-[#7ba0b3ac] p-4 rounded-lg">
           <img
             src={gfg2}
             className="w-16 h-16 px-1 ml-4 items-center mt-3 bg-white mr-12 rounded-md"
@@ -148,7 +148,7 @@ const DailyChallenge = () => {
             </div>
           )}
         </div>
-        <div className=" bg-[#4a76ab] p-4 flex rounded-lg">
+        <div className=" bg-[#7ba0b3ac] p-4 flex rounded-lg">
           <img
             src={leet}
             className="w-16 h-16 p-1 ml-4 items-center mt-3 bg-white mr-12 rounded-md"
