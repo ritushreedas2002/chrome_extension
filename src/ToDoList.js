@@ -149,9 +149,6 @@ const ToDoList = () => {
       if (!updatedCompletedTasks.find((task) => task.id === taskId)) {
         const completedTask = updatedTasks.find((task) => task.id === taskId);
         updatedCompletedTasks.push(completedTask);
-        if (updatedCompletedTasks.length > 10) {
-          updatedCompletedTasks.shift(); // Removes the first element from the array
-        }
       }
     } else {
       // Task was just unchecked, remove from completedTasks if present

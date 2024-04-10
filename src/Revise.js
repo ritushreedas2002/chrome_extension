@@ -17,7 +17,15 @@ const Revision = () => {
   const [categorylist, setcategorylist] = useState([]);
   const [modalContent, setModalContent] = useState("");
   const [completedTopics, setCompletedTopics] = useState([]);
-
+  useEffect(() => {
+    // Retrieve the completedTopics from localStorage
+    const storedCompletedTopicsJSON = localStorage.getItem(`${category}completedTopics`);
+    const storedCompletedTopics = storedCompletedTopicsJSON ? JSON.parse(storedCompletedTopicsJSON) : [];
+    
+    setCompletedTopics(storedCompletedTopics);
+  }, []);
+  
+  
   const changeProblem = (index) => {
     console.log(index);
     setCurrentIndex(index + 1);
@@ -147,13 +155,32 @@ const Revision = () => {
     );
   }
 
-  const markAsCompleted = (topic) => {
-    const updatedCompletedTopics = [...completedTopics, topic];
-    setCompletedTopics(updatedCompletedTopics);
-    console.log(updatedCompletedTopics);
-    localStorage.setItem("completedTopics", JSON.stringify(updatedCompletedTopics));
-  };
+  // const markAsCompleted = (topic) => {
+  //   const updatedCompletedTopics = [...completedTopics, topic];
+  //   setCompletedTopics(updatedCompletedTopics);
+  //   console.log(updatedCompletedTopics);
+  //   localStorage.setItem("completedTopics", JSON.stringify(updatedCompletedTopics));
+  // };
 
+  const markAsCompleted = (topic) => {
+    setCompletedTopics((prevCompletedTopics) => {
+      let updatedCompletedTopics;
+  
+      if (prevCompletedTopics.includes(topic)) {
+        // If the topic is already marked as completed, remove it
+        updatedCompletedTopics = prevCompletedTopics.filter(t => t !== topic);
+      } else {
+        // Otherwise, add it to the completed topics
+        updatedCompletedTopics = [...prevCompletedTopics, topic];
+      }
+  
+      // Persist the updated list to localStorage
+      localStorage.setItem(`${category}completedTopics`, JSON.stringify(updatedCompletedTopics));
+  
+      return updatedCompletedTopics;
+    });
+  };
+  
   return (
     <div className="relative bg-[#0A2342] flex flex-col items-center justify-center w-full h-screen p-4">
       <h1 className="text-3xl text-white font-bold mb-4">AlgoAce</h1>
