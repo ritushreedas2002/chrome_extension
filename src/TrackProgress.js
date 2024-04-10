@@ -120,6 +120,7 @@ const Trackprogress = () => {
  
   
   useEffect(() => {
+    localStorage.removeItem('completedTopics');
     let tempTotalProblems = 0;
     let tempTotalCompletedProblems = 0;
     const progressData = {};
@@ -210,8 +211,9 @@ const Trackprogress = () => {
                 </button>
               </div>
               {expandedCategory === category && (
-                <div className="mt-2 overflow-auto max-h-32">
-                  <ul className="text-sm">
+                <div className="mt-2 overflow-auto max-h-12 overflow-y-auto no-scrollbar">
+                  <h1 className="font-bold text-sm">List of {category} topics completed</h1>
+                  <ul className="text-xs">
                     {completedTopics.map((topic, idx) => (
                       <li key={idx} className="text-gray-800">
                         {topic}
