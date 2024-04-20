@@ -55,10 +55,14 @@ const Quizzes = () => {
           >
             Java
           </button>
-          <button className="p-4 my-2 w-48 text-xl font-semibold bg-[#479d6b] hover:bg-[#31744d] text-white rounded-3xl">
+          <button className="p-4 my-2 w-48 text-xl font-semibold bg-[#479d6b] hover:bg-[#31744d] text-white rounded-3xl" onClick={() => {
+              navigate(`/quiz/${2}`);
+            }}>
             Python
           </button>
-          <button className="p-4 my-2 w-48 text-xl font-semibold bg-[#479d6b] hover:bg-[#31744d] text-white rounded-3xl">
+          <button className="p-4 my-2 w-48 text-xl font-semibold bg-[#479d6b] hover:bg-[#31744d] text-white rounded-3xl" onClick={() => {
+              navigate(`/quiz/${3}`);
+            }}>
             JavaScript
           </button>
           {/* <Link to="/quizprogress">
