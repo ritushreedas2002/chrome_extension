@@ -1165,6 +1165,7 @@
             "Postorder Traversal": "void postorderTraversal(Node* root) {\n  if (root == NULL) return;\n  postorderTraversal(root->left);\n  postorderTraversal(root->right);\n  cout << root->data << ' ';\n}",
             "Level Order Traversal": "void levelOrderTraversal(Node* root) {\n  if (root == NULL) return;\n  queue<Node*> q;\n  q.push(root);\n  while (!q.empty()) {\n    Node* node = q.front();\n    cout << node->data << ' ';\n    q.pop();\n    if (node->left != NULL) q.push(node->left);\n    if (node->right != NULL) q.push(node->right);\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=129LaYfDSjncsVOB5IVXtgW2zVUCTxyrj","https://drive.google.com/uc?export=view&id=1QYWhP3R6nqn4bbK7z3xSunhqEeM8QgUU","https://drive.google.com/uc?export=view&id=10Kb3UOe78XO8jyDBf7OMmzWyRqwBPTI-","https://drive.google.com/uc?export=view&id=1Qs8-S_vmL6YNpICvK_eiOynIJcBARGfM"],
           "Complexities": {
             "Time Complexities": {
               "Preorder": "O(n)",
@@ -1184,10 +1185,11 @@
         "Info": {
           "Definition": "A Splay Tree is a self-adjusting binary search tree with the additional property that recently accessed elements are quick to access again. It performs basic operations such as insertion, look-up, and deletion in O(log n) amortized time. Operations on the tree involve a series of splay operations, moving an element to the root of the tree through a combination of tree rotations.",
           "Algorithms": {
-            "Splay Operation": "void splay(Node*& root, int key) {\n  if (root == NULL || root->key == key) return;\n\n  // Node to be splayed is in the left subtree\n  if (root->key > key) {\n    if (root->left == NULL) return;\n    // Zig-Zig (Left Left)\n    if (root->left->key > key) {\n      splay(root->left->left, key);\n      root = rightRotate(root);\n    } else if (root->left->key < key) { // Zig-Zag (Left Right)\n      splay(root->left->right, key);\n      if (root->left->right != NULL)\n        root->left = leftRotate(root->left);\n    }\n    root = (root->left == NULL) ? root : rightRotate(root);\n  } else { // Node to be splayed is in the right subtree\n    if (root->right == NULL) return;\n    // Zag-Zig (Right Left)\n    if (root->right->key > key) {\n      splay(root->right->left, key);\n      if (root->right->left != NULL)\n        root->right = rightRotate(root->right);\n    } else if (root->right->key < key) { // Zag-Zag (Right Right)\n      splay(root->right->right, key);\n      root = leftRotate(root);\n    }\n    root = (root->right == NULL) ? root : leftRotate(root);\n  }\n}",
+            "Splay Operation": "void splay(Node*& root, int key) {\n  if (root == NULL || root->key == key) return;\n  // Node to be splayed is in the left subtree\n  if (root->key > key) {\n    if (root->left == NULL) return;\n    // Zig-Zig (Left Left)\n    if (root->left->key > key) {\n      splay(root->left->left, key);\n      root = rightRotate(root);\n    } else if (root->left->key < key) {\n   // Zig-Zag (Left Right)\n      splay(root->left->right, key);\n      if (root->left->right != NULL)\n        root->left = leftRotate(root->left);\n    }\n    root = (root->left == NULL) ? root : rightRotate(root);\n  } else { // Node to be splayed is in the right subtree\n    if (root->right == NULL) return;\n    // Zag-Zig (Right Left)\n    if (root->right->key > key) {\n      splay(root->right->left, key);\n      if (root->right->left != NULL)\n        root->right = rightRotate(root->right);\n    } else if (root->right->key < key) {\n   // Zag-Zag (Right Right)\n      splay(root->right->right, key);\n      root = leftRotate(root);\n    }\n    root = (root->right == NULL) ? root : leftRotate(root);\n  }\n}",
             "Right Rotate": "Node* rightRotate(Node* x) {\n  Node* y = x->left;\n  x->left = y->right;\n  y->right = x;\n  return y;\n}",
             "Left Rotate": "Node* leftRotate(Node* x) {\n  Node* y = x->right;\n  x->right = y->left;\n  y->left = x;\n  return y;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=177fdKzrX8_pSjxqXDLhEIo_jutRuw3IB"],
           "Complexities": {
             "Time Complexity": "O(log n) amortized for operations like search, insert, and delete, considering the tree remains balanced.",
             "Space Complexity": "O(n), for storing the tree elements."
@@ -1201,31 +1203,44 @@
           "Algorithms": {
             "Update Function": "void updateBIT(int BITree[], int n, int index, int val) {\n  index = index + 1;\n  while (index <= n) {\n    BITree[index] += val;\n    index += index & (-index);\n  }\n}",
             "Get Sum Function": "int getSum(int BITree[], int index) {\n  int sum = 0;\n  index = index + 1;\n  while (index > 0) {\n    sum += BITree[index];\n    index -= index & (-index);\n  }\n  return sum;\n}",
-            "Construction": "void constructBITree(int arr[], int **BITree, int n) {\n  *BITree = new int[n+1];\n  for (int i = 1; i <= n; i++)\n    (*BITree)[i] = 0;\n  for (int i = 0; i < n; i++)\n    updateBIT(*BITree, n, i, arr[i]);\n}"
+            "Range Sum Query": "int rangeSum(int BITree[], int start, int end) {\n  return getSum(BITree, end) - getSum(BITree, start - 1);\n}",
+            "Construction": "void constructBITree(int arr[], int **BITree, int n) {\n  *BITree = new int[n+1];\n  for (int i = 1; i <= n; i++) (*BITree)[i] = 0;\n  for (int i = 0; i < n; i++) updateBIT(*BITree, n, i, arr[i]);\n}",
+            "Initialization": "void initializeBIT(int arr[], int n) {\n  int *BITree = new int[n+1];\n  for (int i = 1; i <= n; i++) BITree[i] = 0;\n  for (int i = 0; i < n; i++) updateBIT(BITree, n, i, arr[i]);\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1HVQrpfqPKFuNWMQgURTPm7wi7f5x_haZ","https://drive.google.com/uc?export=view&id=1B5_VFfGXDXVb2Sa88sDbr5PfaXYpUJ39","https://drive.google.com/uc?export=view&id=18cHGaXhSVhghE5BM99OnMo7fNF_0Fkgt","https://drive.google.com/uc?export=view&id=1g1-4qZER8Do4o_oc_y0xECA4FgdbpCF5"],
           "Complexities": {
             "Time Complexity": {
               "Update Function": "O(log n), for updating a value in the array.",
               "Get Sum Function": "O(log n), for calculating the prefix sum up to a given index.",
-              "Construction": "O(n log n), for constructing the Fenwick Tree from an array of n elements."
+              "Range Sum Query": "O(log n), for calculating the sum between two indices.",
+              "Construction": "O(n log n), for constructing the Fenwick Tree from an array of n elements.",
+              "Initialization": "O(n log n), similar to construction, used for setting up the initial tree with values."
             },
-            "Space Complexity": "O(n), for storing the Fenwick Tree."
+            "Space Complexity": {
+              "General": "O(n), for storing the Fenwick Tree."
+            }
           }
         }
       },
       {
-        "Topic": "B-Tree",
+        "Topic": "B Tree",
         "Info": {
           "Definition": "A B-Tree is a self-balancing tree data structure that maintains sorted data and allows searches, sequential access, insertions, and deletions in logarithmic time. It generalizes the binary search tree, allowing for nodes with more than two children.",
           "Algorithms": {
-            "Insertion Code": "void insert(Node* &root, int key) {\n    // Check if the tree is empty\n    if (root == nullptr) {\n        root = createNode(key);\n        return;\n    }\n\n    // Recursive insert function\n    // Insert logic for B-Tree insertion\n}",
-            "Deletion Code": "void deleteKey(Node* &root, int key) {\n    // Deletion logic for B-Tree\n    // Handle cases: leaf and internal nodes\n}"
+            "Insertion Code": "void splitChild(Node* parent, int i, Node* y) {\n    Node* z = new Node();\n    z->keys = vector<int>(y->keys.begin() + B, y->keys.end());\n    y->keys.resize(B - 1);\n    if (!y->children.empty()) {\n        z->children = vector<Node*>(y->children.begin() + B, y->children.end());\n        y->children.resize(B);\n    }\n    parent->children.insert(parent->children.begin() + i + 1, z);\n    parent->keys.insert(parent->keys.begin() + i, y->keys[B-1]);\n}\n\nvoid insertNonFull(Node* node, int key) {\n    int i = node->keys.size() - 1;\n    if (node->children.empty()) {\n        node->keys.push_back(0); // Resize the vector up one\n        while (i >= 0 && node->keys[i] > key) {\n            node->keys[i + 1] = node->keys[i];\n            i--;\n        }\n        node->keys[i + 1] = key;\n    } else {\n        while (i >= 0 && node->keys[i] > key) {\n            i--;\n        }\n        i++;\n        if (node->children[i]->keys.size() == 2 * B - 1) {\n            splitChild(node, i, node->children[i]);\n            if (key > node->keys[i]) {\n                i++;\n            }\n        }\n        insertNonFull(node->children[i], key);\n    }\n}\n\nvoid insert(Node* &root, int key) {\n    if (root == nullptr) {\n        root = createNode(key);\n    } else if (root->keys.size() == 2 * B - 1) {\n        Node* newRoot = new Node;\n        newRoot->children.push_back(root);\n        splitChild(newRoot, 0, root);\n        int i = 0;\n        if (key > newRoot->keys[0]) {\n            i++;\n        }\n        insertNonFull(newRoot->children[i], key);\n        root = newRoot;\n    } else {\n        insertNonFull(root, key);\n    }\n}\n\nNote: B is the maximum number of children a node can have, typically referred to as the 'order' of the B-tree.\n\n",
+            "Deletion Code": "void removeFromNonLeaf(Node* node, int idx) {\n    int key = node->keys[idx];\n    if (node->children[idx]->keys.size() >= B) {\n        int pred = getPred(node, idx);\n        node->keys[idx] = pred;\n        deleteNode(node->children[idx], pred);\n    } else if (node->children[idx + 1]->keys.size() >= B) {\n        int succ = getSucc(node, idx);\n        node->keys[idx] = succ;\n        deleteNode(node->children[idx + 1], succ);\n    } else {\n        merge(node, idx);\n        deleteNode(node->children[idx], key);\n    }\n}\n\nvoid removeFromLeaf(Node* node, int idx) {\n    node->keys.erase(node->keys.begin() + idx);\n}\n\nint findKey(Node* root, int key) {\n    int idx = 0;\n    while (idx < root->keys.size() && root->keys[idx] < key) idx++;\n    return idx;\n}\n\nvoid deleteNode(Node* &root, int key) {\n    int idx = findKey(root, key);\n    if (idx != -1 && root->keys[idx] == key) {\n        if (root->children.empty()) removeFromLeaf(root, idx);\n        else removeFromNonLeaf(root, idx);\n    } else {\n        bool flag = (idx == root->keys.size());\n        if (root->children[idx]->keys.size() < B) fill(root, idx);\n        if (flag && idx > root->keys.size()) deleteNode(root->children[idx - 1], key);\n        else deleteNode(root->children[idx], key);\n    }\n}",
+            "Search Code": "Node* search(Node* root, int key) {\n    int i = 0;\n    while (i < root->keys.size() && key > root->keys[i]) {\n        i++;\n    }\n    if (i < root->keys.size() && root->keys[i] == key) return root;\n    if (root->children.empty()) return nullptr;\n    return search(root->children[i], key);\n}",
+            "Find Minimum": "int findMin(Node* node) {\n    while (!node->children.empty()) {\n        node = node->children[0];\n    }\n    return node->keys[0];\n}",
+            "Find Maximum": "int findMax(Node* node) {\n    while (!node->children.empty()) {\n        node = node->children[node->children.size() - 1];\n    }\n    return node->keys[node->keys.size() - 1];\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1ABztN69knX6Fsgr3nuUYod8A6BgKBKwZ","https://drive.google.com/uc?export=view&id=1c0KVVZnD9qEOQU2DjTCV6Yw17rMJQRwv","https://drive.google.com/uc?export=view&id=1GZnfa0v8haYWA9Vf0DH3lT5B1E-iTAk7","https://drive.google.com/uc?export=view&id=1-lDufQ21M3NQHnPkt1tVZUtq6prYSWYx","https://drive.google.com/uc?export=view&id=15w-8jqQgwGB77IbWrJIpno4mTpye3oT_"],
           "Complexities": {
             "Time Complexity": {
               "Search": "O(log n)",
               "Insert": "O(log n)",
-              "Delete": "O(log n)"
+              "Delete": "O(log n)",
+              "Find Minimum": "O(log n)",
+              "Find Maximum": "O(log n)"
             },
             "Space Complexity": "O(n), where n is the number of keys in the tree."
           }
@@ -1236,9 +1251,11 @@
         "Info": {
           "Definition": "A B+ Tree is a type of B-Tree used in databases and filesystems to store data for efficient retrieval. It differs from a B-Tree by storing all data in leaf nodes and using internal nodes as a means to provide a pathway to these leaf nodes.",
           "Algorithms": {
-            "Insertion Code": "void BPlusTreeInsertion(Node* &root, int key) {\n    // Insert logic for B+ Tree\n    // Ensures that all data is in the leaf nodes\n}",
-            "Deletion Code": "void BPlusTreeDeletion(Node* &root, int key) {\n    // Deletion logic for B+ Tree\n    // Adjusts tree to maintain properties after deletion\n}"
+            "Insertion Code": "void BPlusTreeInsertion(Node* &root, int key) {\n  if (root == nullptr) {\n    root = new Node();\n    root->keys.push_back(key);\n    root->isLeaf = true;\n  } else {\n    Node* cursor = root;\n    Node* parent;\n    while (!cursor->isLeaf) {\n      parent = cursor;\n      int idx = upper_bound(cursor->keys.begin(), cursor->keys.end(), key) - cursor->keys.begin();\n      cursor = cursor->children[idx];\n    }\n    if (cursor->keys.size() < MAX) {\n      int idx = upper_bound(cursor->keys.begin(), cursor->keys.end(), key) - cursor->keys.begin();\n      cursor->keys.insert(cursor->keys.begin() + idx, key);\n    } else {\n      // Split the leaf node\n      Node* newLeaf = new Node();\n      vector<int> temp(cursor->keys);\n      temp.insert(temp.begin() + upper_bound(temp.begin(), temp.end(), key) - temp.begin(), key);\n      newLeaf->isLeaf = true;\n      cursor->keys.clear();\n      cursor->keys.assign(temp.begin(), temp.begin() + (MAX + 1) / 2);\n      newLeaf->keys.assign(temp.begin() + (MAX + 1) / 2, temp.end());\n      if (parent) {\n        int idx = upper_bound(parent->keys.begin(), parent->keys.end(), newLeaf->keys[0]) - parent->keys.begin();\n        parent->children.insert(parent->children.begin() + idx + 1, newLeaf);\n        parent->keys.insert(parent->keys.begin() + idx, newLeaf->keys[0]);\n      } else {\n        // Create new root\n        Node* newRoot = new Node();\n        newRoot->keys.push_back(newLeaf->keys[0]);\n        newRoot->children.push_back(cursor);\n        newRoot->children.push_back(newLeaf);\n        root = newRoot;\n      }\n    }\n  }\n}",
+            "Deletion Code": "void BPlusTreeDeletion(Node* &root, int key) {\n    Node* cursor = root;\n    Node* parent = nullptr;\n    int idx;\n\n    // Step 1: Find the key in the tree\n    while (cursor != nullptr && !cursor->isLeaf) {\n        idx = upper_bound(cursor->keys.begin(), cursor->keys.end(), key) - cursor->keys.begin();\n        parent = cursor;\n        cursor = cursor->children[idx];\n    }\n\n    // If the key is not found\n    if (cursor == nullptr || find(cursor->keys.begin(), cursor->keys.end(), key) == cursor->keys.end()) {\n        return; // Key not found\n    }\n\n    // Step 2: Remove the key\n    idx = find(cursor->keys.begin(), cursor->keys.end(), key) - cursor->keys.begin();\n    cursor->keys.erase(cursor->keys.begin() + idx);\n\n    // Step 3: If the node is a leaf and underflows, handle underflow\n    if (cursor->keys.size() < (MAX + 1) / 2) {\n        if (cursor == root) {\n            if (cursor->keys.size() == 0) {\n                delete cursor;\n                root = nullptr;\n            }\n        } else {\n            int cursorIdx = find(parent->children.begin(), parent->children.end(), cursor) - parent->children.begin();\n\n            Node* leftSibling = (cursorIdx > 0) ? parent->children[cursorIdx - 1] : nullptr;\n            Node* rightSibling = (cursorIdx < parent->children.size() - 1) ? parent->children[cursorIdx + 1] : nullptr;\n\n            // Try to borrow from the left sibling\n            if (leftSibling != nullptr && leftSibling->keys.size() > (MAX + 1) / 2) {\n                cursor->keys.insert(cursor->keys.begin(), leftSibling->keys.back());\n                leftSibling->keys.pop_back();\n                parent->keys[cursorIdx - 1] = cursor->keys.front();\n            } else if (rightSibling != nullptr && rightSibling->keys.size() > (MAX + 1) / 2) {\n                // Try to borrow from the right sibling\n                cursor->keys.push_back(rightSibling->keys.front());\n                rightSibling->keys.erase(rightSibling->keys.begin());\n                parent->keys[cursorIdx] = rightSibling->keys.front();\n            } else {\n                // Merge with a sibling\n                if (leftSibling != nullptr) {\n                    leftSibling->keys.insert(leftSibling->keys.end(), cursor->keys.begin(), cursor->keys.end());\n                    parent->keys.erase(parent->keys.begin() + cursorIdx - 1);\n                    parent->children.erase(parent->children.begin() + cursorIdx);\n                    delete cursor;\n                } else if (rightSibling != nullptr) {\n                    cursor->keys.insert(cursor->keys.end(), rightSibling->keys.begin(), rightSibling->keys.end());\n                    parent->keys.erase(parent->keys.begin() + cursorIdx);\n                    parent->children.erase(parent->children.begin() + cursorIdx + 1);\n                    delete rightSibling;\n                }\n            }\n        }\n    }\n}",
+            "Search Code": "Node* BPlusTreeSearch(Node* root, int key) {\n  Node* cursor = root;\n  while (cursor != nullptr && !cursor->isLeaf) {\n    cursor = cursor->children[upper_bound(cursor->keys.begin(), cursor->keys.end(), key) - cursor->keys.begin()];\n  }\n  if (cursor != nullptr && find(cursor->keys.begin(), cursor->keys.end(), key) != cursor->keys.end()) return cursor;\n  return nullptr;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1Osq1I-Q17BcZd3HuZVh3eB5NGcoqMb8U","https://drive.google.com/uc?export=view&id=1TZ82eB1GHYw4d-8uNIWA_TFHJYBC3c82","https://drive.google.com/uc?export=view&id=1cuilCARHitQkS9d1aa6KwIeVk-d_KY8e"],
           "Complexities": {
             "Time Complexity": {
               "Search": "O(log n)",
@@ -1256,6 +1273,7 @@
           "Algorithms": {
             "Code": "void merge(int arr[], int l, int m, int r) {\n    int n1 = m - l + 1;\n    int n2 = r - m;\n\n    // Create temp arrays\n    int L[n1], R[n2];\n\n    // Copy data to temp arrays L[] and R[]\n    for (int i = 0; i < n1; i++)\n        L[i] = arr[l + i];\n    for (int j = 0; j < n2; j++)\n        R[j] = arr[m + 1 + j];\n\n    // Merge the temp arrays back into arr[l..r]\n    int i = 0; // Initial index of first subarray\n    int j = 0; // Initial index of second subarray\n    int k = l; // Initial index of merged subarray\n    while (i < n1 && j < n2) {\n        if (L[i] <= R[j]) {\n            arr[k] = L[i];\n            i++;\n        } else {\n            arr[k] = R[j];\n            j++;\n        }\n        k++;\n    }\n\n    // Copy the remaining elements of L[], if there are any\n    while (i < n1) {\n        arr[k] = L[i];\n        i++;\n        k++;\n    }\n\n    // Copy the remaining elements of R[], if there are any\n    while (j < n2) {\n        arr[k] = R[j];\n        j++;\n        k++;\n    }\n}\n\nvoid mergeSort(int arr[], int l, int r) {\n    if (l < r) {\n        // Find the middle point to divide the array into two halves\n        int m = l + (r-l)/2;\n\n        // Call mergeSort for first half\n        mergeSort(arr, l, m);\n\n        // Call mergeSort for second half\n        mergeSort(arr, m+1, r);\n\n        // Merge the sorted halves\n        merge(arr, l, m, r);\n    }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1e1rCq39XszbqRU9EcyzjMHjkqsw_t_6r"],
           "Complexities": {
             "Time Complexity": "Worst, Average, and Best Case: O(n log n) - Merge sort always divides the array in half and takes linear time to merge two halves.",
             "Space Complexity": "O(n) - Requires additional space for the temporary arrays used in the merge process."
@@ -1267,10 +1285,14 @@
         "Info": {
           "Definition": "Quick Sort is a highly efficient sorting algorithm and is based on partitioning of array of data into smaller arrays. A large array is partitioned into two arrays one of which holds values smaller than the specified value, say pivot, based on which the partition is made and another array holds values greater than the pivot value.",
           "Algorithms": {
-            "Code": "void quickSort(int arr[], int low, int high) {\n  if (low < high) {\n    int pi = partition(arr, low, high);\n    quickSort(arr, low, pi - 1);\n    quickSort(arr, pi + 1, high);\n  }\n}\n\nint partition(int arr[], int low, int high) {\n  // This function takes last element as pivot, places the pivot element at its correct position in sorted array, and places all smaller to left of pivot and all greater elements to right of pivot.\n}"
+            "Code": "void quickSort(int arr[], int low, int high) {\n  if (low < high) {\n    int pi = partition(arr, low, high);\n    quickSort(arr, low, pi - 1);\n    quickSort(arr, pi + 1, high);\n  }\n}\n\nint partition(int arr[], int low, int high) {\n  int pivot = arr[high]; // pivot\n  int i = (low - 1); // Index of smaller element and indicates the right position of pivot found so far\n  for (int j = low; j <= high - 1; j++) {\n    // If current element is smaller than the pivot\n    if (arr[j] < pivot) {\n      i++; // increment index of smaller element\n      swap(arr[i], arr[j]);\n    }\n  }\n  swap(arr[i + 1], arr[high]);\n  return (i + 1);\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1fdGozCb4XuWz86ff2hQAjFau6Au601Wk"],
           "Complexities": {
-            "Time Complexity": "Worst Case: O(n^2) when the pivot selection is poor. Average and Best Case: O(n log n) - The array is divided into subarrays that are processed recursively.",
+            "Time Complexity": {
+              "Worst Case": "O(n^2) when the pivot selection is poor.",
+              "Average and Best Case": "O(n log n) - The array is divided into subarrays that are processed recursively."
+            },
             "Space Complexity": "O(log n) - The space complexity comes from the stack space used for recursion. The worst case is O(n), depending on the implementation."
           }
         }
@@ -1280,11 +1302,13 @@
         "Info": {
           "Definition": "A Heap is a special Tree-based data structure that satisfies the heap property. In a max heap, for any given node C, if P is a parent node of C, then the key (the value) of P is greater than or equal to the key of C. The same property must be recursively true for all nodes in Binary Tree. Min heap is a heap where the value of parent nodes is less than or equal to that of child nodes.",
           "Algorithms": {
-            "Insert (Heapify Up)": "Inserts a new element into the heap and re-arranges the heap to maintain the heap property.\n\nvoid insert(int key) {\n  heapSize++; // Assume heapSize is the current number of elements in the heap\n  int index = heapSize - 1;\n  heap[index] = key;\n  // Heapify up\n  while (index != 0 && heap[parent(index)] < heap[index]) {\n    swap(heap[index], heap[parent(index)]);\n    index = parent(index);\n  }\n}",
-            "Delete (Heapify Down)": "Removes the root element from the heap and re-arranges it to maintain the heap property.\n\nvoid deleteRoot() {\n  if (heapSize <= 0) return;\n  heap[0] = heap[heapSize-1];\n  heapSize--;\n  heapifyDown(0);\n}",
-            "Get Max or Min": "Retrieves the maximum element from a max heap or the minimum element from a min heap without removing it.\n\nint getPeak() {\n  return heap[0];\n}",
-            "Build Heap (Heapify)": "Converts an unsorted array into a heap.\n\nvoid buildHeap(int arr[], int n) {\n  for (int i = (n / 2) - 1; i >= 0; i--) {\n    heapify(arr, n, i);\n  }\n}"
+            "Insert (Heapify Up)": "void insert(vector<int>& heap, int key) {\n  heap.push_back(key);\n  int index = heap.size() - 1;\n  while (index != 0 && heap[(index - 1) / 2] < heap[index]) {\n    swap(heap[index], heap[(index - 1) / 2]);\n    index = (index - 1) / 2;\n  }\n}",
+            "Delete (Heapify Down)": "void deleteRoot(vector<int>& heap) {\n  if (heap.size() <= 0) return;\n  heap[0] = heap.back();\n  heap.pop_back();\n  heapifyDown(heap, 0);\n}",
+            "Heapify Down": "void heapifyDown(vector<int>& heap, int i) {\n  int left = 2 * i + 1;\n  int right = 2 * i + 2;\n  int largest = i;\n  if (left < heap.size() && heap[left] > heap[largest]) {\n    largest = left;\n  }\n  if (right < heap.size() && heap[right] > heap[largest]) {\n    largest = right;\n  }\n  if (largest != i) {\n    swap(heap[i], heap[largest]);\n    heapifyDown(heap, largest);\n  }\n}",
+            "Get Max or Min": "int getPeak(const vector<int>& heap) {\n  if (heap.empty()) return -1; // Handle empty heap scenario\n  return heap[0];\n}",
+            "Build Heap (Heapify)": "void buildHeap(vector<int>& heap, int arr[], int n) {\n  heap.assign(arr, arr + n);\n  for (int i = n / 2 - 1; i >= 0; i--) {\n    heapifyDown(heap, i);\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=14rhPYg47x37e5y-1qIKSGPz5G5BWaqHY","https://drive.google.com/uc?export=view&id=1lx8TF6WXaH66kap_ZxMHhcymv0fdVZoC","https://drive.google.com/uc?export=view&id=1S_CFr1de6OpqgFmUBTeqGW3F_gGzYRI4","https://drive.google.com/uc?export=view&id=1kW1GK7c6OmR_Q3yvQ5LBkiB__guzXp0I","https://drive.google.com/uc?export=view&id=1mejtEuA4F8PBwPC6yYXH_TdQl9Gos8SL"],
           "Complexities": {
             "Time Complexities": {
               "Insert (Heapify Up)": "O(log n) - Because it may traverse from the node inserted at the very end up to the root node.",
@@ -1303,6 +1327,7 @@
           "Algorithms": {
             "Code": "void heapify(int arr[], int n, int i) {\n    int largest = i; // Initialize largest as root\n    int l = 2 * i + 1; // left = 2*i + 1\n    int r = 2 * i + 2; // right = 2*i + 2\n\n    // If left child is larger than root\n    if (l < n && arr[l] > arr[largest])\n        largest = l;\n\n    // If right child is larger than largest so far\n    if (r < n && arr[r] > arr[largest])\n        largest = r;\n\n    // If largest is not root\n    if (largest != i) {\n        swap(arr[i], arr[largest]);\n\n        // Recursively heapify the affected sub-tree\n        heapify(arr, n, largest);\n    }\n}\n\nvoid heapSort(int arr[], int n) {\n    // Build heap (rearrange array)\n    for (int i = n / 2 - 1; i >= 0; i--)\n        heapify(arr, n, i);\n\n    // One by one extract an element from heap\n    for (int i = n - 1; i >= 0; i--) {\n        // Move current root to end\n        swap(arr[0], arr[i]);\n\n        // call max heapify on the reduced heap\n        heapify(arr, i, 0);\n    }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1WeQSESrRBBTAgPMi7v6eOTvDJGcUGBzY"],
           "Complexities": {
             "Time Complexity": {
               "Worst Case": "O(n log n)",
@@ -1320,6 +1345,7 @@
           "Algorithms": {
             "Code": "void countSort(int arr[], int n) {\n    int output[n];\n    int count[256], i;\n    memset(count, 0, sizeof(count));\n\n    for(i = 0; arr[i]; ++i)\n        ++count[arr[i]];\n\n    for (i = 1; i <= 255; ++i)\n        count[i] += count[i-1];\n\n    for (i = 0; arr[i]; ++i) {\n        output[count[arr[i]]-1] = arr[i];\n        --count[arr[i]];\n    }\n\n    for (i = 0; arr[i]; ++i)\n        arr[i] = output[i];\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1oqud_UvpH2Qk8KTxls706son-IDdly6_"],
           "Complexities": {
             "Time Complexity": "O(n + k) - Where n is the number of elements and k is the range of the input.",
             "Space Complexity": "O(k) - The space used by the count array."
@@ -1333,6 +1359,7 @@
           "Algorithms": {
             "Code": "void countSort(int arr[], int n, int exp) {\n    vector<int> output(n);\n    int i, count[10] = {0};\n\n    for (i = 0; i < n; i++)\n        count[(arr[i] / exp) % 10]++;\n\n    for (i = 1; i < 10; i++)\n        count[i] += count[i - 1];\n\n    for (i = n - 1; i >= 0; i--) {\n        output[count[(arr[i] / exp) % 10] - 1] = arr[i];\n        count[(arr[i] / exp) % 10]--;\n    }\n\n    for (i = 0; i < n; i++)\n        arr[i] = output[i];\n}\n\nvoid radixSort(int arr[], int n) {\n    int m = getMax(arr, n);\n    for (int exp = 1; m / exp > 0; exp *= 10)\n        countSort(arr, n, exp);\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1fcnhjq6S8wnTzGY8odiwT7eYiIOhD2lh"],
           "Complexities": {
             "Time Complexity": "O(nk) - Where n is the number of elements and k is the number of digits in the maximum number.",
             "Space Complexity": "O(n + k) - For the intermediate count sort operations."
@@ -1346,6 +1373,7 @@
           "Algorithms": {
             "Code": "void bucketSort(float arr[], int n) {\n    vector<float> b[n];\n    for (int i = 0; i < n; i++) {\n       int bi = n * arr[i]; // Index in bucket\n       b[bi].push_back(arr[i]);\n    }\n\n    for (int i = 0; i < n; i++)\n       sort(b[i].begin(), b[i].end());\n\n    int index = 0;\n    for (int i = 0; i < n; i++)\n       for (int j = 0; j < b[i].size(); j++)\n          arr[index++] = b[i][j];\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1-_EnZuJs7heT_qWQ56SnBH5ts1IWr_4O"],
           "Complexities": {
             "Time Complexity": "Average Case: O(n + n^2/k + k), and Worst Case: O(n^2). Here, n is the number of elements, and k is the number of buckets.",
             "Space Complexity": "O(n*k) - For the buckets used during sorting."
@@ -1359,6 +1387,7 @@
           "Algorithms": {
             "Code": "void cycleSort(int arr[], int n) {\n  for (int cycle_start = 0; cycle_start <= n - 2; cycle_start++) {\n    int item = arr[cycle_start];\n    int pos = cycle_start;\n    for (int i = cycle_start + 1; i < n; i++)\n      if (arr[i] < item)\n        pos++;\n    if (pos == cycle_start)\n      continue;\n    while (item == arr[pos])\n      pos += 1;\n    if (pos != cycle_start) {\n      swap(item, arr[pos]);\n    }\n    while (pos != cycle_start) {\n      pos = cycle_start;\n      for (int i = cycle_start + 1; i < n; i++)\n        if (arr[i] < item)\n          pos += 1;\n      while (item == arr[pos])\n        pos += 1;\n      if (item != arr[pos]) {\n        swap(item, arr[pos]);\n      }\n    }\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1ctqijAUnESZRaFEf5ausfCiywN2jWKf0"],
           "Complexities": {
             "Time Complexity": "O(n^2), where n is the number of elements in the array. Despite its quadratic time complexity, it has the theoretical minimum number of writes.",
             "Space Complexity": "O(1), as it is an in-place sorting algorithm."
@@ -1372,6 +1401,7 @@
           "Algorithms": {
             "Code": "void pigeonholeSort(int arr[], int n) {\n  int min = *min_element(arr, arr + n);\n  int max = *max_element(arr, arr + n);\n  int range = max - min + 1;\n  vector<int> holes[range];\n  for (int i = 0; i < n; i++)\n    holes[arr[i] - min].push_back(arr[i]);\n  int index = 0;\n  for (int i = 0; i < range; i++) {\n    for (int j = 0; j < holes[i].size(); j++) {\n      arr[index++] = holes[i][j];\n    }\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=12V_89D6_pZTUvsotU62ztvLenJq19F_n"],
           "Complexities": {
             "Time Complexity": "O(n + N), where n is the number of elements in the array and N is the range of the input.",
             "Space Complexity": "O(n + N), for the pigeonholes used to sort the elements."
@@ -1385,6 +1415,7 @@
           "Algorithms": {
             "Code": "void combSort(int arr[], int n) {\n  int gap = n;\n  bool swapped = true;\n  while (gap != 1 || swapped == true) {\n    gap = (gap * 10) / 13;\n    if (gap < 1)\n      gap = 1;\n    swapped = false;\n    for (int i = 0; i < n - gap; i++) {\n      if (arr[i] > arr[i + gap]) {\n        swap(arr[i], arr[i + gap]);\n        swapped = true;\n      }\n    }\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1B3AQEgeVDs7eAGlnYOt8H2GGBKH3Q6tF"],
           "Complexities": {
             "Time Complexity": "Average case: O(n^2/2^p), where p is the number of increments. The worst-case time complexity is O(n^2), but in practical scenarios, it tends to be closer to O(n log n) for partially sorted sequences.",
             "Space Complexity": "O(1), as it only requires a constant amount of extra space."
@@ -1398,6 +1429,7 @@
           "Algorithms": {
             "Code": "void dijkstra(const vector<vector<int>>& graph, int src) {\n  int V = graph.size();\n  vector<int> dist(V, INT_MAX);\n  dist[src] = 0;\n  vector<bool> sptSet(V, false);\n\n  for (int count = 0; count < V-1; count++) {\n    int u = -1;\n    for(int i = 0; i < V; i++)\n      if (!sptSet[i] && (u == -1 || dist[i] < dist[u]))\n        u = i;\n    sptSet[u] = true;\n    for (int v = 0; v < V; v++)\n      if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX && dist[u]+graph[u][v] < dist[v])\n        dist[v] = dist[u] + graph[u][v];\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=15f9AEnsqO-j25lUksWnkvRL0b3K5DwA9"],
           "Complexities": {
             "Time Complexity": "O(V^2) - For the implementation using adjacency matrix. With a priority queue, it can be reduced to O(V + E log V) where E is the number of edges.",
             "Space Complexity": "O(V) - Space needed for the distance array and the sptSet."
@@ -1412,6 +1444,7 @@
             "Kruskal's Algorithm Implementation": "struct Edge { int src, dest, weight; };\nvector<int> parent, rank;\nint find(int i) {\n  if (parent[i] != i)\n    parent[i] = find(parent[i]);\n  return parent[i];\n}\nvoid unionSet(int x, int y) {\n  x = find(x);\n  y = find(y);\n  if (rank[x] > rank[y])\n    parent[y] = x;\n  else\n    parent[x] = y;\n  if (rank[x] == rank[y])\n    rank[y]++;\n}\nvoid KruskalMST(vector<Edge>& edges, int V) {\n  sort(edges.begin(), edges.end(), [](Edge a, Edge b) { return a.weight < b.weight; });\n  parent.resize(V);\n  rank.resize(V, 0);\n  for (int i = 0; i < V; i++)\n    parent[i] = i;\n  vector<Edge> mst;\n  for (Edge e : edges) {\n    if (find(e.src) != find(e.dest)) {\n      unionSet(e.src, e.dest);\n      mst.push_back(e);\n    }\n  }\n}",
             "Prim's Algorithm Implementation": "int minKey(vector<int>& key, vector<bool>& mstSet, int V) {\n  int min = INT_MAX, min_index;\n  for (int v = 0; v < V; v++)\n    if (mstSet[v] == false && key[v] < min)\n      min = key[v], min_index = v;\n  return min_index;\n}\nvoid primMST(vector<vector<int>>& graph, int V) {\n  vector<int> parent(V);\n  vector<int> key(V, INT_MAX);\n  vector<bool> mstSet(V, false);\n  key[0] = 0;\n  parent[0] = -1;\n  for (int count = 0; count < V-1; count++) {\n    int u = minKey(key, mstSet, V);\n    mstSet[u] = true;\n    for (int v = 0; v < V; v++)\n      if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v])\n        parent[v] = u, key[v] = graph[u][v];\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=10Nd8-CjQ5RI-NzwsGKjlGONJ3JlrDque","https://drive.google.com/uc?export=view&id=1un52xkJ0povm54kZv7xxnerMNzbGnxSk"],
           "Complexities": {
             "Time Complexities": {
               "Kruskal's Algorithm": "O(E log E) or O(E log V), where E is the number of edges and V is the number of vertices.",
@@ -1431,6 +1464,7 @@
           "Algorithms": {
             "Code": "struct Edge { int src, dest, weight; };\nstruct Graph { int V, E; vector<Edge> edges; };\nint find(vector<int>& parent, int i) {\n  if (parent[i] == i) return i;\n  return find(parent, parent[i]);\n}\nvoid kruskalMST(struct Graph& graph) {\n  sort(graph.edges.begin(), graph.edges.end(), [](Edge a, Edge b) { return a.weight < b.weight; });\n  vector<int> parent(graph.V);\n  for (int i = 0; i < graph.V; i++) parent[i] = i;\n  vector<Edge> mst;\n  for (Edge e : graph.edges) {\n    int x = find(parent, e.src);\n    int y = find(parent, e.dest);\n    if (x != y) {\n      mst.push_back(e);\n      parent[x] = y;\n    }\n  }\n  // mst contains the resulting minimum spanning tree\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1A3zRR-TwD1nNNs9D-lS41YrIj8UpT_zr"],
           "Complexities": {
             "Time Complexity": "O(E log E) - Or O(E log V) because of the sorting of edges, where E is the number of edges in the graph.",
             "Space Complexity": "O(V + E) - For storing the graph and the minimum spanning tree."
@@ -1444,6 +1478,7 @@
           "Algorithms": {
             "Code": "void primMST(int graph[V][V]) {\n    int parent[V];\n    int key[V];\n    bool mstSet[V];\n    for (int i = 0; i < V; i++)\n        key[i] = INT_MAX, mstSet[i] = false;\n    key[0] = 0;\n    parent[0] = -1;\n    for (int count = 0; count < V-1; count++) {\n        int u = minKey(key, mstSet);\n        mstSet[u] = true;\n        for (int v = 0; v < V; v++)\n            if (graph[u][v] && !mstSet[v] && graph[u][v] < key[v])\n                parent[v] = u, key[v] = graph[u][v];\n    }\n    printMST(parent, V, graph);\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1rNa1HV_HBNyJnTQJf4MYneNwZ_hi4ggL"],
           "Complexities": {
             "Time Complexity": "O(V^2) - For a graph represented using adjacency matrix. Can be improved to O(E log V) with adjacency list and priority queue.",
             "Space Complexity": "O(V) - To store the keys, MST set, and parent array."
@@ -1454,7 +1489,6 @@
         "Topic": "Recursion and Backtracking",
         "Info": {
           "Definition": "Recursion\nRecursion is a method of solving a problem where the solution depends on solutions to smaller instances of the same problem. A recursive function calls itself with a base case to stop the recursion.\nBacktracking\nBacktracking is an algorithmic-technique for solving problems recursively by trying to build a solution incrementally, one piece at a time, removing those solutions that fail to satisfy the constraints of the problem at any point of time.",
-
           "Algorithms": {
             "Recursion Example - Factorial": "int factorial(int n) {\n  if (n <= 1) return 1;\n  return n * factorial(n - 1);\n}",
             "Backtracking Example - N Queens Problem": "bool isSafe(int board[N][N], int row, int col) {\n  // Check this row on left side\n  // Check upper diagonal on left side\n  // Check lower diagonal on left side\n  // For simplification, these checks are omitted\n  return true;\n}\n\nbool solveNQUtil(int board[N][N], int col) {\n  if (col >= N) return true;\n  for (int i = 0; i < N; i++) {\n    if (isSafe(board, i, col)) {\n      board[i][col] = 1;\n      if (solveNQUtil(board, col + 1)) return true;\n      board[i][col] = 0; // BACKTRACK\n    }\n  }\n  return false;\n}"
@@ -1631,24 +1665,22 @@
         "Topic": "Hashing Techniques",
         "Info": {
           "Definition": "Hashing techniques are methods used to store and retrieve data efficiently by converting the key into a unique hash index where the value is stored. This process allows for fast data access. Common hashing techniques include Chaining and Open Addressing, which address collisions - when two keys hash to the same index - in different ways.",
-          "Algorithms": {
-            "Chaining": "Chaining involves using an array of linked lists. The hash function assigns an index to each key, and the key-value pair is then added to the linked list at that index. This allows multiple values to exist at the same index, effectively handling collisions.",
-            "Open Addressing": "Open Addressing resolves collisions by finding another empty slot or bucket within the array for the key-value pair. Common methods include Linear Probing, where the next empty slot is found in a linear sequence; Quadratic Probing, which searches for an empty slot based on a quadratic formula; and Double Hashing, which uses a second hash function to find an empty slot.",
-            "Linear Probing": "void insert(key, value) { int index = hashFunction(key); while(array[index] is not empty) { index = (index + 1) % array_size; } array[index] = value; }",
-            "Quadratic Probing": "void insert(key, value) { int index = hashFunction(key); int i = 0; while(array[(index + i*i) % array_size] is not empty) { i++; } array[(index + i*i) % array_size] = value; }",
-            "Double Hashing": "void insert(key, value) { int index1 = hashFunction1(key); int index2 = hashFunction2(key); int i = 0; while(array[(index1 + i*index2) % array_size] is not empty) { i++; } array[(index1 + i*index2) % array_size] = value; }"
-          },
+            "Algorithms": {
+              "Chaining": "struct Node {\n  int key;\n  int value;\n  Node* next;\n};\n\nclass HashTable {\n  vector<Node*> table;\n  int size;\n\n  int hashFunction(int key) {\n    return key % size;\n  }\n\n  void insert(int key, int value) {\n    int index = hashFunction(key);\n    Node* newNode = new Node{key, value, nullptr};\n    if (table[index] == nullptr) {\n      table[index] = newNode;\n    } else {\n      Node* temp = table[index];\n      while (temp->next != nullptr) {\n        temp = temp->next;\n      }\n      temp->next = newNode;\n    }\n  }\n};",
+              "Linear Probing": "void insert(vector<int>& array, int key, int value, int array_size) {\n  int index = hashFunction(key);\n  while (array[index] != NULL) {\n    index = (index + 1) % array_size;\n  }\n  array[index] = value;\n}",
+              "Quadratic Probing": "void insert(vector<int>& array, int key, int value, int array_size) {\n  int index = hashFunction(key);\n  int i = 0;\n  while (array[(index + i * i) % array_size] != NULL) {\n    i++;\n  }\n  array[(index + i * i) % array_size] = value;\n}",
+              "Double Hashing": "void insert(vector<int>& array, int key, int value, int array_size) {\n  int index1 = hashFunction1(key);\n  int index2 = hashFunction2(key);\n  int i = 0;\n  while (array[(index1 + i * index2) % array_size] != NULL) {\n    i++;\n  }\n  array[(index1 + i * index2) % array_size] = value;\n}"
+            },
+            "imageLink":["https://drive.google.com/uc?export=view&id=1Qm9qekkmHnEKFEZ6rwPlrzZhqDn0rPnt","https://drive.google.com/uc?export=view&id=1pynGbD0R-vqXQhXrfLuQPH1yqImO_Hzw","https://drive.google.com/uc?export=view&id=19pgRs1jKByawNJGKp8tkh0OOJlYfkLOo","https://drive.google.com/uc?export=view&id=1LDx5N_VEXqa3B6sZAgzlVWrLpjVdBW_6"],
           "Complexities": {
             "Time Complexities": {
               "Chaining": "Average: O(1), Worst: O(n), where n is the number of keys",
-              "Open Addressing": "Average: O(1), Worst: O(n), although performance degrades with increased loading factor",
               "Linear Probing": "Average: O(1), Worst: O(n)",
               "Quadratic Probing": "Average: O(1), Worst: O(n)",
               "Double Hashing": "Average: O(1), Worst: O(n)"
             },
             "Space Complexity": {
               "Chaining": "O(n), where n is the number of keys, potentially more due to linked list overhead",
-              "Open Addressing": "O(n), where n is the size of the array. Typically requires a larger array size than chaining to maintain performance",
               "Linear Probing": "O(n), where n is the size of the array",
               "Quadratic Probing": "O(n), where n is the size of the array",
               "Double Hashing": "O(n), where n is the size of the array"
