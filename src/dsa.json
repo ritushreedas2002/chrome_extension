@@ -1493,6 +1493,7 @@
             "Recursion Example - Factorial": "int factorial(int n) {\n  if (n <= 1) return 1;\n  return n * factorial(n - 1);\n}",
             "Backtracking Example - N Queens Problem": "bool isSafe(int board[N][N], int row, int col) {\n  // Check this row on left side\n  // Check upper diagonal on left side\n  // Check lower diagonal on left side\n  // For simplification, these checks are omitted\n  return true;\n}\n\nbool solveNQUtil(int board[N][N], int col) {\n  if (col >= N) return true;\n  for (int i = 0; i < N; i++) {\n    if (isSafe(board, i, col)) {\n      board[i][col] = 1;\n      if (solveNQUtil(board, col + 1)) return true;\n      board[i][col] = 0; // BACKTRACK\n    }\n  }\n  return false;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=14vVHoLnVQhDoTlW2D4VTzYNxi00SWs8O","https://drive.google.com/uc?export=view&id=1BdETNj72mmQwapYXXRnMT9xbnCXzrpPB"],
           "Complexities": {
             "Time Complexity": {
               "Recursion Example - Factorial": "O(n) - The time complexity is linear, as it makes a single call for each decrement of n until it reaches the base case.",
@@ -1514,12 +1515,14 @@
             "N Queens Problem": "bool solveNQ(vector<vector<int>>& board, int col) {\n  if(col >= N) return true;\n  for(int i = 0; i < N; i++) {\n    if(isSafe(board, i, col)) {\n      board[i][col] = 1;\n      if(solveNQ(board, col + 1)) return true;\n      board[i][col] = 0; // backtrack\n    }\n  }\n  return false;\n}",
             "Graph Coloring": "bool graphColoring(vector<int> graph[], int m, int V) {\n  vector<int> color(V, 0);\n  if(!graphColoringUtil(graph, m, color, 0, V)) {\n    return false;\n  }\n  return true;\n}\nbool graphColoringUtil(vector<int> graph[], int m, vector<int>& color, int v, int V) {\n  if(v == V) return true;\n  for(int c = 1; c <= m; c++) {\n    if(isSafe(v, graph, color, c, V)) {\n      color[v] = c;\n      if(graphColoringUtil(graph, m, color, v+1, V)) return true;\n      color[v] = 0; // backtrack\n    }\n  }\n  return false;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1s96R489Mp0vXkvqAPCThGiIyQkP2gfKu","https://drive.google.com/uc?export=view&id=1BdETNj72mmQwapYXXRnMT9xbnCXzrpPB","https://drive.google.com/uc?export=view&id=1PFOFtA9qW8FKHNV_zb5aMNy9l7LVtOjX"],
           "Complexities": {
             "Time Complexities": {
               "Sudoku Solver": "O(9^(n^2)), where n is the number of rows/columns of the board (typically 9)",
               "N Queens Problem": "O(N!), where N is the number of queens",
               "Graph Coloring": "O(m^V), where m is the number of colors and V is the number of vertices"
             },
+            
             "Space Complexity": {
               "Sudoku Solver": "O(n^2), for storing the board",
               "N Queens Problem": "O(N), for the recursion call stack",
@@ -1535,6 +1538,7 @@
           "Algorithms": {
             "Union Find Implementation": "class UnionFind {\nprivate:\n  vector<int> parent, rank;\npublic:\n  UnionFind(int N) {\n    parent.resize(N);\n    rank.resize(N, 0);\n    for(int i = 0; i < N; ++i) parent[i] = i;\n  }\n  int find(int x) {\n    if (parent[x] != x) {\n      parent[x] = find(parent[x]); // Path compression\n    }\n    return parent[x];\n  }\n  void unionSet(int x, int y) {\n    int xRoot = find(x), yRoot = find(y);\n    if (xRoot != yRoot) {\n      if (rank[xRoot] < rank[yRoot]) {\n        parent[xRoot] = yRoot;\n      } else if (rank[xRoot] > rank[yRoot]) {\n        parent[yRoot] = xRoot;\n      } else {\n        parent[yRoot] = xRoot;\n        rank[xRoot] = rank[xRoot] + 1;\n      }\n    }\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1TDiZCfXOTmmWO31RA_-nprbruDclOcN3","https://drive.google.com/uc?export=view&id=12Im59jstbcJ73E42oZiqMwKISWqkaUdz","https://drive.google.com/uc?export=view&id=1d2nlmwBjbIWme3_eXpRVDbncb-rylMLh"],
           "Complexities": {
             "Time Complexities": {
               "Find": "Amortized O(α(n)), where α(n) is the inverse Ackermann function. Practically, it's almost constant.",
@@ -1553,6 +1557,7 @@
           "Algorithms": {
             "Fractional Knapsack Algorithm": "struct Item {\n  int value, weight;\n};\nbool cmp(Item a, Item b) {\n  double r1 = (double)a.value / a.weight;\n  double r2 = (double)b.value / b.weight;\n  return r1 > r2;\n}\ndouble fractionalKnapsack(int W, Item arr[], int n) {\n  sort(arr, arr + n, cmp);\n  int curWeight = 0;\n  double finalvalue = 0.0;\n  for (int i = 0; i < n; i++) {\n    if (curWeight + arr[i].weight <= W) {\n      curWeight += arr[i].weight;\n      finalvalue += arr[i].value;\n    } else {\n      int remain = W - curWeight;\n      finalvalue += arr[i].value * ((double) remain / arr[i].weight);\n      break;\n    }\n  }\n  return finalvalue;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1nb9s1y94SuZT5pZXbgY105Sn5AUuJfp_"],
           "Complexities": {
             "Time Complexities": {
               "Fractional Knapsack Algorithm": "O(n log n) for sorting the items based on their value/weight ratio, followed by O(n) for computing the final value."
@@ -1570,6 +1575,7 @@
           "Algorithms": {
             "Job Scheduling Algorithm": "struct Job {\n  char id;\n  int deadline, profit;\n};\nbool comparison(Job a, Job b) {\n  return (a.profit > b.profit);\n}\nvoid printJobScheduling(vector<Job> arr, int n) {\n  sort(arr.begin(), arr.end(), comparison);\n  vector<int> result(n, -1);\n  vector<bool> slot(n, false);\n  for (int i = 0; i < n; i++) {\n    for (int j = min(n, arr[i].deadline) - 1; j >= 0; j--) {\n      if (slot[j] == false) {\n        result[j] = i;\n        slot[j] = true;\n        break;\n      }\n    }\n  }\n  for (int i = 0; i < n; i++)\n    if (slot[i])\n      cout << arr[result[i]].id << ' ';\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1foAeq-DtBWAYLaw00oC9MmSpb5hzOgsG"],
           "Complexities": {
             "Time Complexities": {
               "Job Scheduling Algorithm": "O(n log n) for sorting the jobs by profit, followed by O(n^2) for scheduling jobs where n is the number of jobs."
@@ -1588,6 +1594,7 @@
             "Memoization Example (Fibonacci)": "int fib(int n, vector<int>& memo) {\n  if (n <= 1) return n;\n  if (memo[n] != -1) return memo[n];\n  memo[n] = fib(n-1, memo) + fib(n-2, memo);\n  return memo[n];\n}",
             "Tabulation Example (Fibonacci)": "int fib(int n) {\n  vector<int> table(n+1, 0);\n  table[1] = 1;\n  for(int i = 2; i <= n; i++) {\n    table[i] = table[i-1] + table[i-2];\n  }\n  return table[n];\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1v8TWxU_9_15VfkiseFLZzpxB-DbZqKyQ","https://drive.google.com/uc?export=view&id=1Bk-CO-1sfMZnnqVWInzLMpSZpV2kpKW9"],
           "Complexities": {
             "Time Complexities": {
               "Memoization Example": "O(n), as it ensures that each problem is solved only once",
@@ -1608,6 +1615,7 @@
             "Brute Force Solution": "int tsp(vector<vector<int>>& graph, vector<bool>& v, int currPos, int n, int count, int cost, int ans) {\n  if (count == n && graph[currPos][0]) {\n    ans = min(ans, cost + graph[currPos][0]);\n    return ans;\n  }\n  for (int i = 0; i < n; i++) {\n    if (!v[i] && graph[currPos][i]) {\n      v[i] = true;\n      ans = tsp(graph, v, i, n, count + 1, cost + graph[currPos][i], ans);\n      v[i] = false;\n    }\n  }\n  return ans;\n}",
             "Dynamic Programming Solution (Held-Karp Algorithm)": "int tspDP(vector<vector<int>>& distance) {\n  int n = distance.size();\n  vector<vector<int>> dp(1 << n, vector<int>(n, INT_MAX));\n  dp[1][0] = 0;\n  for (int mask = 1; mask < (1 << n); mask += 2) {\n    for (int i = 1; i < n; i++) {\n      if ((mask & (1 << i)) != 0) {\n        for (int j = 0; j < n; j++) {\n          if ((mask & (1 << j)) != 0) {\n            dp[mask][i] = min(dp[mask][i], dp[mask ^ (1 << i)][j] + distance[j][i]);\n          }\n        }\n      }\n    }\n  }\n  int ans = INT_MAX;\n  for (int i = 1; i < n; i++) {\n    ans = min(ans, dp[(1 << n) - 1][i] + distance[i][0]);\n  }\n  return ans;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1ez_8eICWrjfQLOFYqgYm4TIiH49BphHG","https://drive.google.com/uc?export=view&id=17PxmR8oXdTfKSYoDKyC5d3IINfXZsxTz"],
           "Complexities": {
             "Time Complexity": {
               "Brute Force Solution": "O(n!), where n is the number of cities. This approach examines every possible tour.",
@@ -1628,6 +1636,7 @@
             "Recursive Solution": "bool isSubsetSum(vector<int>& set, int n, int sum) {\n  if (sum == 0) return true;\n  if (n == 0) return false;\n  if (set[n-1] > sum) return isSubsetSum(set, n-1, sum);\n  return isSubsetSum(set, n-1, sum) || isSubsetSum(set, n-1, sum-set[n-1]);\n}",
             "Dynamic Programming Solution": "bool isSubsetSumDP(vector<int>& set, int sum) {\n  int n = set.size();\n  vector<vector<bool>> dp(n+1, vector<bool>(sum+1, false));\n  for (int i = 0; i <= n; i++) dp[i][0] = true;\n  for (int i = 1; i <= n; i++) {\n    for (int j = 1; j <= sum; j++) {\n      if (set[i-1] <= j) dp[i][j] = dp[i-1][j] || dp[i-1][j-set[i-1]];\n      else dp[i][j] = dp[i-1][j];\n    }\n  }\n  return dp[n][sum];\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1QCyMEvo8Wr-7Cw5qET2kk6Cy6hUj8B4U","https://drive.google.com/uc?export=view&id=100648q6D1Xhr9XktQkSFfITauq0LKTyc"],
           "Complexities": {
             "Time Complexity": {
               "Recursive Solution": "O(2^n), where n is the number of elements in the set. This is due to the generation of all subsets.",
@@ -1652,6 +1661,7 @@
           "Algorithms": {
             "Code": "class HashTable {\nprivate:\n  int BUCKET;\n  list<int> *table;\npublic:\n  HashTable(int V);\n  void insertItem(int key, int value);\n  void deleteItem(int key);\n  int hashFunction(int x) {\n    return (x % BUCKET);\n  }\n};\n\nHashTable::HashTable(int b) {\n  this->BUCKET = b;\n  table = new list<int>[BUCKET];\n}\n\nvoid HashTable::insertItem(int key, int value) {\n  int index = hashFunction(key);\n  table[index].push_back(value);\n}\n\nvoid HashTable::deleteItem(int key) {\n  int index = hashFunction(key);\n  list<int>::iterator i;\n  for (i = table[index].begin(); i != table[index].end(); i++) {\n    if (*i == key)\n      break;\n  }\n  if (i != table[index].end())\n    table[index].erase(i);\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1ZU0cWiV-PNF024ktdBIcYqWAiknuFTdr","https://drive.google.com/uc?export=view&id=1kMJK0vPH2OGuOlpUU0vITOf6rKExAwqs","https://drive.google.com/uc?export=view&id=1B3NlIa0cf3BG4R_T5ApXnmMkJFQxIMhp"],
           "Complexities": {
             "Time Complexities": {
               "Average case (insert/search/delete)": "O(1)",
@@ -1698,6 +1708,7 @@
             "StartsWith": "bool startsWith(string prefix) {\n  TrieNode* node = root;\n  for (char ch : prefix) {\n    if (!node->children[ch - 'a'])\n      return false;\n    node = node->children[ch - 'a'];\n  }\n  return true;\n}",
             "Deletion": "bool deleteWord(TrieNode* node, string key, int depth = 0) {\n  if (node) {\n    if (depth == key.size()) {\n      if (node->isEndOfWord) {\n        node->isEndOfWord = false;\n        return isEmpty(node);\n      }\n    } else {\n      int index = key[depth] - 'a';\n      if (deleteWord(node->children[index], key, depth + 1) && !node->isEndOfWord) {\n        delete node->children[index];\n        node->children[index] = nullptr;\n        return isEmpty(node);\n      }\n    }\n  }\n  return false;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1KftIbfCD6Hb-YuNZK4Y2dCYZ3B0WKsA7","https://drive.google.com/uc?export=view&id=1qEXKuRhNJoXPC6Ewapwq3FN8jxDhaLIe","https://drive.google.com/uc?export=view&id=19eGX6eridUyv4idiy7sOiE-4TejryfHI","https://drive.google.com/uc?export=view&id=17EGv8m5e9KtCFLZeZdTUmpVQDcAZlgPj"],
           "Complexities": {
             "Time Complexities": {
               "Insertion": "O(m), where m is the key length",
@@ -1721,6 +1732,7 @@
           "Algorithms": {
             "Code": "int knapSack(int W, int wt[], int val[], int n) {\n   vector<vector<int>> dp(n+1, vector<int>(W+1, 0));\n   for(int i = 1; i <= n; i++) {\n       for(int w = 1; w <= W; w++) {\n           if(wt[i-1] <= w)\n               dp[i][w] = max(val[i-1] + dp[i-1][w-wt[i-1]], dp[i-1][w]);\n           else\n               dp[i][w] = dp[i-1][w];\n       }\n   }\n   return dp[n][W];\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1UNAIohz9VhhY5nhPyIpIrqhozchL85hM"],
           "Complexities": {
             "Time Complexity": "O(nW) - Where n is the number of items and W is the capacity of the knapsack.",
             "Space Complexity": "O(nW) - For the DP table storing solutions for subproblems."
@@ -1734,6 +1746,7 @@
           "Algorithms": {
             "Code": "int lcs(string &X, string &Y) {\n   int m = X.length(), n = Y.length();\n   vector<vector<int>> dp(m+1, vector<int>(n+1));\n   for(int i=1; i<=m; i++) {\n       for(int j=1; j<=n; j++) {\n           if(X[i-1] == Y[j-1])\n               dp[i][j] = dp[i-1][j-1] + 1;\n           else\n               dp[i][j] = max(dp[i-1][j], dp[i][j-1]);\n       }\n   }\n   return dp[m][n];\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1ssiXWNZTQGvUHvQzQB9jt91k1soiaNEW"],
           "Complexities": {
             "Time Complexity": "O(mn) - Where m and n are the lengths of the two sequences.",
             "Space Complexity": "O(mn) - For the DP table."
@@ -1748,6 +1761,7 @@
             "Recursive Solution": "int MatrixChainOrder(int p[], int i, int j) {\n  if(i == j)\n    return 0;\n  int min = INT_MAX;\n  for (int k = i; k < j; k++) {\n    int count = MatrixChainOrder(p, i, k) +\n                MatrixChainOrder(p, k+1, j) +\n                p[i-1]*p[k]*p[j];\n    if (count < min)\n      min = count;\n  }\n  return min;\n}",
             "Dynamic Programming Solution": "int MatrixChainOrder(int p[], int n) {\n  int m[n][n];\n  for (int i=1; i<n; i++)\n    m[i][i] = 0;\n  for (int L=2; L<n; L++) {\n    for (int i=1; i<n-L+1; i++) {\n      int j = i+L-1;\n      m[i][j] = INT_MAX;\n      for (int k=i; k<=j-1; k++) {\n        int q = m[i][k] + m[k+1][j] + p[i-1]*p[k]*p[j];\n        if (q < m[i][j])\n          m[i][j] = q;\n      }\n    }\n  }\n  return m[1][n-1];\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1Eot1-coLjN6pXcuo8I3IuwrH1Gf8p1eY"],
           "Complexities": {
             "Time Complexities": {
               "Recursive Solution": "O(2^n), where n is the number of matrices. This approach has exponential time complexity due to the recomputation of subproblems.",
@@ -1767,6 +1781,7 @@
           "Algorithms": {
             "Code": "void floydWarshall(int graph[][V]) {\n    int dist[V][V], i, j, k;\n    for (i = 0; i < V; i++)\n        for (j = 0; j < V; j++)\n            dist[i][j] = graph[i][j];\n    for (k = 0; k < V; k++) {\n        for (i = 0; i < V; i++) {\n            for (j = 0; j < V; j++) {\n                if (dist[i][k] + dist[k][j] < dist[i][j])\n                    dist[i][j] = dist[i][k] + dist[k][j];\n            }\n        }\n    }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=11oFculzsqvdtqbEKNG1_UJV7l1ZTwpoh"],
           "Complexities": {
             "Time Complexity": "O(V^3) - The algorithm runs three nested loops over the graph's vertices, where V is the number of vertices in the graph.",
             "Space Complexity": "O(V^2) - Space needed to store the distance matrix."
@@ -1780,6 +1795,7 @@
           "Algorithms": {
             "Floyd-Warshall Algorithm for Transitive Closure": "void transitiveClosure(vector<vector<int>>& graph) {\n  int V = graph.size();\n  vector<vector<int>> tc(V, vector<int>(V));\n  for (int i = 0; i < V; i++)\n    for (int j = 0; j < V; j++)\n      tc[i][j] = graph[i][j];\n  for (int k = 0; k < V; k++) {\n    for (int i = 0; i < V; i++) {\n      for (int j = 0; j < V; j++) {\n        if (tc[i][k] + tc[k][j] < tc[i][j])\n          tc[i][j] = tc[i][k] + tc[k][j];\n      }\n    }\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1npOMjRhksNHgypvK3kcqhyQdDHwPZfgy"],
           "Complexities": {
             "Time Complexities": {
               "Floyd-Warshall Algorithm": "O(V^3), where V is the number of vertices in the graph."
@@ -1797,6 +1813,7 @@
           "Algorithms": {
             "Code": "void buildHuffmanTree(vector<char>& data, vector<int>& freq, int size) {\n    priority_queue<HuffmanNode*, vector<HuffmanNode*>, compare> minHeap;\n    for (int i = 0; i < size; ++i)\n        minHeap.push(new HuffmanNode(data[i], freq[i]));\n    while (minHeap.size() != 1) {\n        HuffmanNode* left = minHeap.top(); minHeap.pop();\n        HuffmanNode* right = minHeap.top(); minHeap.pop();\n        HuffmanNode* top = new HuffmanNode('$', left->freq + right->freq);\n        top->left = left;\n        top->right = right;\n        minHeap.push(top);\n    }\n    printCodes(minHeap.top(), \"\");\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=18ccwIIyGlc-f54JmDR_JPQkWuFJcahyF"],
           "Complexities": {
             "Time Complexity": "O(n log n) - Where n is the number of unique characters. If there are N nodes, there will be N-1 merge operations and each operation involves a heap operation of O(log n).",
             "Space Complexity": "O(n) - To store the tree."
@@ -1810,6 +1827,7 @@
           "Algorithms": {
             "Code": "void shellSort(int arr[], int n) {\n    for (int gap = n/2; gap > 0; gap /= 2) {\n        for (int i = gap; i < n; i += 1) {\n            int temp = arr[i];\n            int j;\n            for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)\n                arr[j] = arr[j - gap];\n            arr[j] = temp;\n        }\n    }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1a0KchxHx41hsMxa6Au22TV8zCX-iE2MU"],
           "Complexities": {
             "Time Complexity": "Worst-case time complexity is O(n^2), but it can perform better on partially sorted arrays. The best case is O(n log n).",
             "Space Complexity": "O(1) - It is an in-place sorting algorithm."
@@ -1824,6 +1842,7 @@
             "DFS for Undirected Graphs": "bool isCyclicUtil(int v, bool visited[], int parent, vector<int> adj[]) {\n  visited[v] = true;\n  for (auto i = adj[v].begin(); i != adj[v].end(); ++i) {\n    if (!visited[*i]) {\n      if (isCyclicUtil(*i, visited, v, adj))\n        return true;\n    } else if (*i != parent)\n      return true;\n  }\n  return false;\n}",
             "DFS for Directed Graphs": "bool isCyclicUtil(int v, bool visited[], bool *recStack, vector<int> adj[]) {\n  if(visited[v] == false) {\n    visited[v] = true;\n    recStack[v] = true;\n    for(auto i = adj[v].begin(); i != adj[v].end(); ++i) {\n      if (!visited[*i] && isCyclicUtil(*i, visited, recStack, adj))\n        return true;\n      else if (recStack[*i])\n        return true;\n    }\n  }\n  recStack[v] = false;\n  return false;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1u9dYFE6QAWbHCrfhlrV4KtEBTA5sXIE8","https://drive.google.com/uc?export=view&id=1Hqu6RSZZ4E15bB2GOESyzAF8hCxoBMLz"],
           "Complexities": {
             "Time Complexities": {
               "DFS for Undirected Graphs": "O(V+E), where V is the number of vertices and E is the number of edges",
@@ -1844,6 +1863,7 @@
             "Using DFS": "bool isBipartiteDFS(vector<vector<int>>& graph) {\n  vector<int> colors(graph.size(), -1);\n  for (int i = 0; i < graph.size(); i++) {\n    if (colors[i] == -1) {\n      if (!dfsCheck(graph, i, colors, 0)) return false;\n    }\n  }\n  return true;\n}\nbool dfsCheck(const vector<vector<int>>& graph, int node, vector<int>& colors, int color) {\n  if (colors[node] != -1) return colors[node] == color;\n  colors[node] = color;\n  for (int next : graph[node]) {\n    if (!dfsCheck(graph, next, colors, 1 - color)) return false;\n  }\n  return true;\n}",
             "Using BFS": "bool isBipartiteBFS(vector<vector<int>>& graph) {\n  vector<int> colors(graph.size(), -1);\n  for (int i = 0; i < graph.size(); i++) {\n    if (colors[i] == -1) {\n      queue<int> q;\n      q.push(i);\n      colors[i] = 0;\n      while (!q.empty()) {\n        int node = q.front(); q.pop();\n        for (int next : graph[node]) {\n          if (colors[next] == -1) {\n            colors[next] = 1 - colors[node];\n            q.push(next);\n          } else if (colors[next] == colors[node]) return false;\n        }\n      }\n    }\n  }\n  return true;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1Xs0bTXR08gYsgWWmHmhvfuL2M-OXL-7G","https://drive.google.com/uc?export=view&id=1dOZvIhPzEo8fDyUZE2ovD1JasIizSDe_"],
           "Complexities": {
             "Time Complexity": {
               "Using DFS": "O(V+E), where V is the number of vertices and E is the number of edges in the graph. This reflects the need to visit each vertex and traverse each edge.",
@@ -1858,9 +1878,10 @@
         "Info": {
           "Definition": "In graph theory, a bridge (also known as a cut-edge) is an edge of a graph whose removal increases the graph's number of connected components. Identifying bridges in a graph is crucial in understanding its structure, such as in network connectivity and topology analysis. Bridges indicate points of vulnerability in a network and are important for designing robust networks.",
           "Algorithms": {
-            "Finding Bridges Algorithm": "void findBridges(vector<vector<int>>& graph) {\n  vector<int> disc(graph.size(), -1), low(graph.size(), -1);\n  int time = 0;\n  vector<pair<int, int>> bridges;\n  function<void(int, int)> dfs = [&](int u, int parent) {\n    disc[u] = low[u] = time++;\n    for (int v : graph[u]) {\n      if (v == parent) continue;\n      if (disc[v] == -1) { // If v is not visited\n        dfs(v, u);\n        low[u] = min(low[u], low[v]);\n        if (low[v] > disc[u]) {\n          bridges.push_back({u, v});\n        }\n      } else { // Update low value\n        low[u] = min(low[u], disc[v]);\n      }\n    }\n  };\n  for (int i = 0; i < graph.size(); i++) {\n    if (disc[i] == -1) {\n      dfs(i, -1);\n    }\n  }\n  // bridges vector contains all the bridges in the graph\n}",
-            "Note": "This algorithm uses Depth-First Search (DFS) to find bridges. The disc and low arrays keep track of discovery times of vertices and the earliest visited vertex reachable from the subtree rooted with the vertex respectively."
+            "Finding Bridges Algorithm": "void findBridges(vector<vector<int>>& graph) {\n  vector<int> disc(graph.size(), -1), low(graph.size(), -1);\n  int time = 0;\n  vector<pair<int, int>> bridges;\n  function<void(int, int)> dfs = [&](int u, int parent) {\n    disc[u] = low[u] = time++;\n    for (int v : graph[u]) {\n      if (v == parent) continue;\n      if (disc[v] == -1) { // If v is not visited\n        dfs(v, u);\n        low[u] = min(low[u], low[v]);\n        if (low[v] > disc[u]) {\n          bridges.push_back({u, v});\n        }\n      } else { // Update low value\n        low[u] = min(low[u], disc[v]);\n      }\n    }\n  };\n  for (int i = 0; i < graph.size(); i++) {\n    if (disc[i] == -1) {\n      dfs(i, -1);\n    }\n  }\n  // bridges vector contains all the bridges in the graph\n}"
+            
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1h99saJqag9xIAb7ILQrD-Gi6HmUM_RnB"],
           "Complexities": {
             "Time Complexity": "O(V+E), where V is the number of vertices and E is the number of edges in the graph. This complexity arises from the DFS traversal of the graph.",
             "Space Complexity": "O(V), for the storage of disc and low arrays, along with the recursion stack space."
@@ -1872,9 +1893,9 @@
         "Info": {
           "Definition": "The Vertex Cover Problem is a fundamental problem in graph theory and computer science, where it involves finding a minimum set of vertices in a graph such that each edge of the graph is incident to at least one vertex in the set. The problem is NP-complete, indicating that there is no known polynomial-time solution for finding the minimum vertex cover in a general graph.",
           "Algorithms": {
-            "Approximation Algorithm": "vector<int> approximateVertexCover(vector<vector<int>>& graph) {\n  vector<int> vertexCover;\n  vector<bool> visited(graph.size(), false);\n  for (int u = 0; u < graph.size(); u++) {\n    if (!visited[u]) {\n      for (auto v : graph[u]) {\n        if (!visited[v]) {\n          // Add both vertices of the edge to the vertex cover\n          vertexCover.push_back(u);\n          vertexCover.push_back(v);\n          visited[u] = true;\n          visited[v] = true;\n          break; // Move to the next vertex\n        }\n      }\n    }\n  }\n  return vertexCover;\n}",
-            "Note": "This approximation algorithm does not guarantee the minimum vertex cover but finds a cover that is within a factor of 2 of the optimal size. The algorithm iterates through each vertex and its edges, adding both the current vertex and one of its adjacent vertices to the vertex cover if they haven't been added yet."
+            "Approximation Algorithm": "vector<int> approximateVertexCover(vector<vector<int>>& graph) {\n  vector<int> vertexCover;\n  vector<bool> visited(graph.size(), false);\n  for (int u = 0; u < graph.size(); u++) {\n    if (!visited[u]) {\n      for (auto v : graph[u]) {\n        if (!visited[v]) {\n          // Add both vertices of the edge to the vertex cover\n          vertexCover.push_back(u);\n          vertexCover.push_back(v);\n          visited[u] = true;\n          visited[v] = true;\n          break; // Move to the next vertex\n        }\n      }\n    }\n  }\n  return vertexCover;\n}" 
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1Q_nIOV8zaW4EZSzBC3cbZ18_bPn0uJVn"],
           "Complexities": {
             "Time Complexity": "O(V + E), where V is the number of vertices and E is the number of edges in the graph, as it essentially goes through each edge once.",
             "Space Complexity": "O(V), for storing the vertex cover and visited vertices."
@@ -1889,6 +1910,7 @@
             "Backtracking Algorithm for Hamiltonian Cycles": "bool hamiltonianCycle(vector<vector<int>>& graph) {\n  vector<int> path(graph.size(), -1);\n  path[0] = 0; // start from the first vertex\n  if (hamCycleUtil(graph, path, 1) == false) {\n    return false;\n  }\n  printPath(path);\n  return true;\n}\nbool hamCycleUtil(vector<vector<int>>& graph, vector<int>& path, int pos) {\n  if (pos == graph.size()) {\n    if (graph[path[pos-1]][path[0]] == 1) return true;\n    else return false;\n  }\n  for (int v = 1; v < graph.size(); v++) {\n    if (isSafe(v, graph, path, pos)) {\n      path[pos] = v;\n      if (hamCycleUtil(graph, path, pos + 1) == true) return true;\n      path[pos] = -1; // backtrack\n    }\n  }\n  return false;\n}",
             "isSafe Function": "bool isSafe(int v, vector<vector<int>>& graph, vector<int>& path, int pos) {\n  if (graph[path[pos - 1]][v] == 0) return false;\n  for (int i = 0; i < pos; i++) {\n    if (path[i] == v) return false;\n  }\n  return true;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=16dwXofC8ffrw8bRghvAvMvpHnwoslZ_8","https://drive.google.com/uc?export=view&id=1owk1FnE6Cdt-5AsTsknWncd9Trs5U_gx"],
           "Complexities": {
             "Time Complexity": "O(n!), where n is the number of vertices in the graph. The factorial time complexity is due to the need to generate all possible vertex sequences.",
             "Space Complexity": "O(n), for the recursion stack and the path array where n is the number of vertices in the graph."
@@ -1903,6 +1925,7 @@
             "Kahn's Algorithm": "vector<int> in_degree(V, 0);\nfor (int u = 0; u < V; u++) {\n  for (int v : adj[u])\n    in_degree[v]++;\n}\nqueue<int> q;\nfor (int i = 0; i < V; i++)\n  if (in_degree[i] == 0)\n    q.push(i);\nint cnt = 0;\nvector<int> top_order;\nwhile (!q.empty()) {\n  int u = q.front();\n  q.pop();\n  top_order.push_back(u);\n  for (int v : adj[u])\n    if (--in_degree[v] == 0)\n      q.push(v);\n  cnt++;\n}\nif (cnt != V) {\n  cout << \"There exists a cycle in the graph\\n\";\n  return;\n}",
             "DFS Based Algorithm": "void dfs(int v, vector<bool> &visited, stack<int> &Stack, vector<int> adj[]) {\n  visited[v] = true;\n  for (int i : adj[v])\n    if (!visited[i])\n      dfs(i, visited, Stack, adj);\n  Stack.push(v);\n}\nvoid topologicalSort(vector<int> adj[], int V) {\n  stack<int> Stack;\n  vector<bool> visited(V, false);\n  for (int i = 0; i < V; i++)\n    if (!visited[i])\n      dfs(i, visited, Stack, adj);\n  while (!Stack.empty()) {\n    cout << Stack.top() << \" \";\n    Stack.pop();\n  }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1mfxtgve3IXW9BmlrJNtC-FEc5THpFrZO","https://drive.google.com/uc?export=view&id=1RhtwBcte6_vhZU0WAG8le3is10B2u-DB"],
           "Complexities": {
             "Time Complexities": {
               "Kahn's Algorithm": "O(V+E) - Where V is the number of vertices and E is the number of edges in the graph",
@@ -1919,6 +1942,7 @@
           "Algorithms": {
             "Code": "int fordFulkerson(int graph[V][V], int s, int t) {\n    int u, v;\n    int rGraph[V][V];\n    for (u = 0; u < V; u++)\n        for (v = 0; v < V; v++)\n             rGraph[u][v] = graph[u][v];\n    int parent[V];\n    int max_flow = 0;\n    while (bfs(rGraph, s, t, parent)) {\n        int path_flow = INT_MAX;\n        for (v = t; v != s; v = parent[v]) {\n            u = parent[v];\n            path_flow = min(path_flow, rGraph[u][v]);\n        }\n        for (v = t; v != s; v = parent[v]) {\n            u = parent[v];\n            rGraph[u][v] -= path_flow;\n            rGraph[v][u] += path_flow;\n        }\n        max_flow += path_flow;\n    }\n    return max_flow;\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1Bdij7IVON9bOm9N0sifl6orNxUJ39oc1"],
           "Complexities": {
             "Time Complexity": "O(max_flow * E), where E is the number of edges. The algorithm runs while there are augmenting paths, and each path can add at most 'max_flow' amount of flow.",
             "Space Complexity": "O(V^2), as it requires storing the residual graph."
@@ -1932,6 +1956,7 @@
           "Algorithms": {
             "Code": "void rabinKarp(string const& s, string const& t) {\n    const int p = 31;\n    const int m = 1e9 + 9;\n    int S = s.size(), T = t.size();\n\n    vector<long long> p_pow(max(S, T));\n    p_pow[0] = 1;\n    for (int i = 1; i < (int)p_pow.size(); i++)\n        p_pow[i] = (p_pow[i-1] * p) % m;\n\n    vector<long long> h(T + 1, 0);\n    for (int i = 0; i < T; i++)\n        h[i+1] = (h[i] + (t[i] - 'a' + 1) * p_pow[i]) % m;\n\n    long long h_s = 0;\n    for (int i = 0; i < S; i++)\n        h_s = (h_s + (s[i] - 'a' + 1) * p_pow[i]) % m;\n\n    for (int i = 0; i + S - 1 < T; i++) { \n        long long cur_h = (h[i+S] + m - h[i]) % m; \n        if (cur_h == h_s * p_pow[i] % m)\n            cout << \"Pattern found at index: \" << i << endl;\n    }\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1xueY8kCIgkq5RTqU8CXkL9NDaiVgZ0tO"],
           "Complexities": {
             "Time Complexity": "Average and best case is O(n+m), where n is the length of text and m is the length of the pattern, but its worst case is O(nm), which occurs when all characters of the pattern and text are same as the hash value of all the substrings of the text will be same.",
             "Space Complexity": "O(n), where n is the length of the text, to store the hash values of all possible substrings of the text."
@@ -1945,6 +1970,7 @@
           "Algorithms": {
             "Code": "struct Node {\n    int key;\n    Node *prev, *next;\n    Node *child, *parent;\n    int degree;\n    bool marked;\n};\n\n// Initial creation of a Fibonacci heap\nNode* createHeap() {\n    Node* np = nullptr;\n    return np;\n}\n\n// Insertion operation in a Fibonacci heap\nvoid insert(Node* &heap, Node* node) {\n    // Implementation details\n}\n\n// Decrease key operation in a Fibonacci heap\nvoid decreaseKey(Node* &heap, Node* node, int new_val) {\n    // Implementation details\n}\n\n// Delete node operation from a Fibonacci heap\nvoid deleteNode(Node* &heap, Node* node) {\n    // Implementation details\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1YSk-_HI-aUGx4rQAueJ8NZmt7PWb_8e8"],
           "Complexities": {
             "Time Complexity": {
               "Insert": "O(1)",
@@ -1963,6 +1989,7 @@
             "DecreaseKey Code": "void decreaseKey(Node* &heap, Node* node, int new_val) {\n    if (heap == nullptr || node == nullptr) return;\n    if (node->key < new_val) {\n        cout << \"New key is greater than current key\";\n        return;\n    }\n    node->key = new_val;\n    Node* parent = node->parent;\n    if (parent != nullptr && node->key < parent->key) {\n        cut(heap, node, parent);\n        cascadingCut(heap, parent);\n    }\n    if (node->key < heap->key) {\n        heap = node;\n    }\n}",
             "DeleteNode Code": "void deleteNode(Node* &heap, Node* node) {\n    decreaseKey(heap, node, INT_MIN);\n    Node* min = removeMin(heap);\n    // Assuming removeMin removes and returns the minimum element from the heap\n}"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=13CFiYsjArJFJi_AOaJPM7FP2iZfv24f7","https://drive.google.com/uc?export=view&id=1TvEv1S0DYVCQysTf6JA0-HcCRAOcMMwD"],
           "Complexities": {
             "Time Complexity": "Decrease Key: O(1) amortized, Delete Node: O(log n) amortized",
             "Space Complexity": "O(1), assuming no additional space is required apart from the input."
@@ -1976,6 +2003,7 @@
           "Algorithms": {
             "Code": "int V, E; // V is the number of vertices and E is the number of edges\nstruct Edge { int u, v, w; };\nvector<Edge> edges;\n// Initialization\nvector<int> dist(V, INT_MAX);\ndist[src] = 0;\n// Relaxation\nfor(int i = 0; i < V-1; i++)\n  for(auto &edge : edges)\n    if(dist[edge.u] + edge.w < dist[edge.v])\n      dist[edge.v] = dist[edge.u] + edge.w;\n// Check for negative-weight cycles\nfor(auto &edge : edges)\n  if(dist[edge.u] + edge.w < dist[edge.v])\n    throw \"Graph contains a negative-weight cycle\";"
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1zMJy9pgftcj6Oe-hHanaAL43h5iXjoKL"],
           "Complexities": {
             "Time Complexity": "O(VE) - As it relaxes all edges V-1 times.",
             "Space Complexity": "O(V) - For storing distance and predecessor arrays."
@@ -1989,6 +2017,7 @@
           "Algorithms": {
             "Code": "class Graph {\npublic:\n    int V; // Vertices\n    list<int> *adj; // Adjacency list\n    Graph(int V) { this->V = V; adj = new list<int>[V]; }\n    void addEdge(int v, int w) { adj[v].push_back(w); }\n    void fillOrder(int v, bool visited[], stack<int> &Stack);\n    void DFSUtil(int v, bool visited[]);\n    void printSCCs();\n    Graph getTranspose();\n};\n\nvoid Graph::DFSUtil(int v, bool visited[]) {\n    visited[v] = true;\n    list<int>::iterator i;\n    for(i = adj[v].begin(); i != adj[v].end(); ++i)\n        if(!visited[*i])\n            DFSUtil(*i, visited);\n}\n\nGraph Graph::getTranspose() {\n    Graph g(V);\n    for(int v = 0; v < V; v++)\n        for(list<int>::iterator i = adj[v].begin(); i != adj[v].end(); ++i)\n            g.adj[*i].push_back(v);\n    return g;\n}\n\n// Methods fillOrder and printSCCs to be implemented as per Kosaraju's algorithm steps."
           },
+          "imageLink":["https://drive.google.com/uc?export=view&id=1eSNSiEpX2zJx5rQ5GN0obSt3bVvxSvxz"],
           "Complexities": {
             "Time Complexity": "O(V+E) for both Tarjan's and Kosaraju's algorithms. This is because each edge and vertex in the graph is visited once during the depth-first search process.",
             "Space Complexity": "O(V) for Tarjan's algorithm due to the stack and O(V+E) for Kosaraju's due to the need to store the transpose graph. Additionally, both algorithms require O(V) space for the visited array."
