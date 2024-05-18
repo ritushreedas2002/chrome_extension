@@ -119,12 +119,12 @@ const ReminderModal = ({ onSave, onClose, taskId, taskText }) => {
     onClose();
     try {
       const response = await axios.post(
-        "https://nodemailer-opal.vercel.app/api/sendreminder",
+        "https://bill-reminder-delta.vercel.app/api/sendReminder",
         {
           email,
           reminderDateTime: reminderDateTimeUtc,
-          taskText,
-          userId,
+          billName:"Hello",
+          amount:1000,
         }
       );
       console.log(response.data.msg);
