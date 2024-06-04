@@ -185,7 +185,7 @@ const Revision = () => {
     <div className="relative bg-[#0A2342] flex flex-col items-center justify-center w-full h-screen p-4">
       <h1 className="text-3xl text-white font-bold mb-4">AlgoAce</h1>
       <h2
-        className="text-xl text-slate-500 font-bold mb-2 ml-80 cursor-pointer"
+        className="text-xl text-slate-500 font-bold mb-2 ml-[430px] cursor-pointer"
         onClick={() => {
           setShowFlowChart(true);
           setModalContent("ProblemList");
@@ -220,14 +220,14 @@ const Revision = () => {
           </button>
         </Link>
         {showFlowChart && (
-          <div className="fixed top-0 right-0 w-5/6 h-full bg-white p-4 shadow-xl z-10 overflow-y-auto">
+          <div className="fixed top-0 right-0 w-5/6 h-full bg-[#2c4856ac] p-4 shadow-xl z-10 overflow-y-auto">
             <div
               id="flowchart-div"
-              className="bg-yellow-100 flex-col justify-start"
+              className=" bg-black flex-col justify-start "
             >
               {modalContent === "ProblemList" && (
-                <div className="text-left">
-                  <h1 className="text-black text-2xl text-center">
+                <div className="text-left p-4 ">
+                  <h1 className="text-white text-2xl text-center">
                     List Of Algorithms
                   </h1>
                   {categorylist.map(
@@ -236,7 +236,7 @@ const Revision = () => {
                       index // Correctly use 'map' here
                     ) => (
                       <li
-                        className="ml-10"
+                        className="ml-10 text-white cursor-pointer"
                         key={index}
                         onClick={() => {
                           changeProblem(index);
@@ -252,7 +252,7 @@ const Revision = () => {
             {/* <img src={currentProblem.Info.imageLink} alt="Flowchart" className="w-full h-auto mt-4" /> */}
             <button
               onClick={() => setShowFlowChart(false)}
-              className="px-4 py-2 text-white bg-red-500 rounded-xl hover:bg-red-700 ml-96 mb-8"
+              className=" px-4 py-2 text-white bg-red-500 rounded-xl hover:bg-red-700 ml-96 mb-3"
             >
               Close
             </button>

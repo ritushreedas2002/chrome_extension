@@ -123,12 +123,12 @@ const QuizPage = () => {
 
   return (
     <div
-      className="quiz-container bg-yellow-100 p-4"
+      className="quiz-container bg-[#0A2342] p-4"
       style={{ width: "700px", minHeight: "500px", position: "relative" }}
     >
-      <h1 className="text-2xl font-bold mb-4">Quiz Questions</h1>
+      <h1 className="text-2xl font-bold mb-4 text-white">Quiz Questions</h1>
       {currentQuestion && (
-        <div className="question-card bg-white p-4 rounded-md shadow-lg">
+        <div className="question-card bg-[#eff6faac] p-4 rounded-md shadow-lg">
           <p className="question mb-4 font-semibold text-lg text-start">
             {currentQuestionIndex + 1}
             {". "}
@@ -187,7 +187,7 @@ const QuizPage = () => {
           </button>
         ) : (
           <button
-            className="next-question bg-blue-500 text-white p-2 rounded-md"
+            className="next-question bg-green-600 text-white p-2 rounded-md text-sm"
             onClick={() => {
               setCurrentQuestionIndex((currentIndex) => currentIndex + 1);
               setSelectedAnswer(null); // Reset selected answer for the next question
