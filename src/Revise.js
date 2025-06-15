@@ -39,6 +39,7 @@ const Revision = () => {
     console.log(codeText);
     console.log(topicName);
     setLoadingExplanation(true);
+    setIsDialogOpen(true);
 
     try {
       const response = await fetch("https://gptserver.vercel.app/api/openai", {
@@ -61,7 +62,7 @@ const Revision = () => {
       setExplanation("Failed to fetch the explanation.");
     } finally {
       setLoadingExplanation(false);
-      setIsDialogOpen(true);
+      // setIsDialogOpen(true);
     }
   };
 
@@ -291,7 +292,7 @@ const Revision = () => {
                 >
                   {loadingExplanation ? (
                     <div className="flex items-center justify-center py-4">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 z-50 border-blue-500"></div>
                       <span className="ml-2">Loading explanation...</span>
                     </div>
                   ) : (
@@ -357,12 +358,12 @@ const Revision = () => {
             <IoChevronForwardCircleOutline />
           </button>
         </div>
-        <button
+        {/* <button
           onClick={handleSendToChatGPT}
           className="absolute bottom-5 left-16 bg-[#479d6b] hover:bg-[#31744d] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-transform duration-100 cursor-pointer hover:scale-110"
         >
           Send to ChatGPT
-        </button>
+        </button> */}
         <label className="text-white -mt-10">
           <input
             type="checkbox"
